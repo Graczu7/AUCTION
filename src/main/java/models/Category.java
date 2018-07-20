@@ -27,15 +27,12 @@ public class Category {
     }
 
 
-
-
-
-    public boolean isSubcategoryPresent(String present){
-        if(this.name != null && this.name.equals(present)){
+    public boolean isSubcategoryPresent(String present) {
+        if (this.name != null && this.name.equals(present)) {
             return true;
         }
-        for(Category subcategory: this.subcategories){
-            if(subcategory.isSubcategoryPresent(present)){
+        for (Category subcategory : this.subcategories) {
+            if (subcategory.isSubcategoryPresent(present)) {
                 return true;
             }
         }

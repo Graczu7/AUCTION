@@ -11,18 +11,18 @@ public class Categories {
         Category parentcategory = new Category(null);
 
         Category elektronika = new Category("Elektronika");
-            Category komputery = new Category("Komputery");
-                Category laptopy = new Category("Laptopy");
-                Category stacjonarne = new Category("Stacjonarne");
-            Category telefony = new Category("Telefony");
-                Category iphone = new Category("iPhone");
-                Category android = new Category("Android");
+        Category komputery = new Category("Komputery");
+        Category laptopy = new Category("Laptopy");
+        Category stacjonarne = new Category("Stacjonarne");
+        Category telefony = new Category("Telefony");
+        Category iphone = new Category("iPhone");
+        Category android = new Category("Android");
 
         Category motoryzacja = new Category("Motoryzacja");
-            Category samochody = new Category("Samochody");
-                Category osobowe = new Category("Osobowe");
-                Category ciezarowe = new Category("Ciezarowe");
-            Category skutery = new Category("Skutery");
+        Category samochody = new Category("Samochody");
+        Category osobowe = new Category("Osobowe");
+        Category ciezarowe = new Category("Ciezarowe");
+        Category skutery = new Category("Skutery");
 
         parentcategory.addSubcategory(elektronika);
         parentcategory.addSubcategory(motoryzacja);
