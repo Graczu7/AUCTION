@@ -9,6 +9,9 @@ public class Offer {
     private String description;
     private Double price;
 
+    public Offer() {
+    }
+
     public Offer(String user, String objectToSell, String description, Double price) {
         this.user = user;
         this.objectToSell = objectToSell;
@@ -76,6 +79,4 @@ public class Offer {
                 ", price=" + price +
                 '}';
     }
-
-
 }

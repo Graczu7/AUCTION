@@ -1,12 +1,14 @@
-import java.util.Scanner;
+package models;
 
-public class Users {
+import exceptions.PasswordToShortException;
+
+public class User {
 
     private String name;
     private String login;
     private String password;
 
-    public Users(String name, String login, String password) {
+    public User(String name, String login, String password) {
         this.name = name;
         this.login = login;
         this.password = password;
