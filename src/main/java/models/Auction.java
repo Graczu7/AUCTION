@@ -10,14 +10,12 @@ public class Auction {
     private Offer lastOffer;
     private String discription;
     private String title;
-    private Product product;
     private double price;
 
-    public Auction(User owner, String discription, String title, Product product, double price) {
+    public Auction(User owner, String discription, String title, double price) {
         this.owner = owner;
         this.discription = discription;
         this.title = title;
-        this.product = product;
         this.price = price;
         this.offersList = new LinkedList<>();
         this.lastOffer = new Offer();
