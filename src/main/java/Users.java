@@ -24,11 +24,12 @@ public class Users {
         return password;
     }
 
-    public class setPassword {
-        Scanner sc = new Scanner(System.in);
-        boolean valid = false;
-        String password;
+    public void setPassword (String newPassword) throws PasswordToShortException {
 
+        if(newPassword.length() < 5){
+            throw new PasswordToShortException();
+        }
+        this.password = newPassword;
     }
 }
 
