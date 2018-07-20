@@ -1,5 +1,6 @@
+package models;
+
 import exceptions.OfferTooLowException;
-import models.Offer;
 
 import java.util.LinkedList;
 

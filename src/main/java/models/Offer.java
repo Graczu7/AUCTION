@@ -1,5 +1,12 @@
 package models;
 
 public class Offer {
-    //comment
+    private double price;
+
+    public Offer() {
+    }
+
+    public double getPrice() {
+        return price;
+    }
 }
