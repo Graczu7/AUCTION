@@ -24,10 +24,10 @@ public class Auction {
         if (newOffer.getPrice() < 0){
             throw new OfferPriceNegativeException();
         }
-        if (this.offersList.peek() == null || this.offersList.peek().getPrice() < newOffer.getPrice()){
-            this.offersList.push(newOffer);
-        } else {
+        if (newOffer.getPrice() < this.price || newOffer.getPrice() < this.offersList.peek().getPrice()) {
             throw new OfferTooLowException();
+        } else{
+            this.offersList.push(newOffer);
         }
     }
 
