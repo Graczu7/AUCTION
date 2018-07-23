@@ -21,10 +21,9 @@ public class Auction {
         this.offersList = new LinkedList<>();
     }
 
-    public void setNewOffer(Offer newOffer) throws OfferTooLowException, NullPointerException, OfferPriceNegativeValueException {
+    public void setNewOffer(Offer newOffer) throws OfferTooLowException {
         if (newOffer.getPrice().compareTo(this.price) <= 0 ||
-                (this.offersList.peek() != null &&
-                        newOffer.getPrice().compareTo(this.offersList.peek().getPrice()) < 0)) {
+            (this.offersList.peek() != null && newOffer.getPrice().compareTo(this.offersList.peek().getPrice()) <= 0)) {
             throw new OfferTooLowException();
         } else {
             this.offersList.push(newOffer);

@@ -68,7 +68,7 @@ public class Offer {
     }
 
     private void setPrice(BigDecimal price) throws OfferPriceNegativeValueException {
-        if (this.price.compareTo(BigDecimal.valueOf(0)) <= 0){
+        if (this.price != null && this.price.compareTo(BigDecimal.valueOf(0)) <= 0){
             throw new OfferPriceNegativeValueException();
         }
         this.price = price;
