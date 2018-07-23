@@ -1,3 +1,4 @@
+import exceptions.NewOffersUserEqualsLastOffersUserException;
 import exceptions.OfferPriceNegativeValueException;
 import exceptions.OfferTooLowException;
 import models.Auction;
@@ -51,23 +52,35 @@ public class AuctionTest {
     }
 
     @Test (expected = NullPointerException.class)
-    public void testSetNewOfferForNullObject() throws OfferTooLowException {
+    public void testSetNewOfferForNullObject() throws OfferTooLowException, NewOffersUserEqualsLastOffersUserException {
         Offer newOffer = null;
         auction.setNewOffer(newOffer);
     }
 
     @Test
-    public void testSetNewOfferForCorrectValue() throws OfferTooLowException, OfferPriceNegativeValueException {
+    public void testSetNewOfferForOfferHigherThanPrice() throws OfferTooLowException, OfferPriceNegativeValueException, NewOffersUserEqualsLastOffersUserException {
         User buyer = new User("buyer", "buyer", "password");
-        BigDecimal expected = new BigDecimal(5);
         Offer newOffer = new Offer(buyer, auction, new BigDecimal(5));
 
         auction.setNewOffer(newOffer);
-        assertEquals(expected, auction.getLastOffer().getPrice());
+        assertEquals(newOffer, auction.getLastOffer());
+    }
+
+    @Test
+    public void testSetNewOfferForOfferHigherThanLastOffer() throws OfferTooLowException, OfferPriceNegativeValueException, NewOffersUserEqualsLastOffersUserException {
+        User oldBuyer = new User("oldbuyer", "oldbuyer", "password");
+        Offer oldOffer = new Offer(oldBuyer, auction, BigDecimal.valueOf(5));
+
+        User buyer = new User("buyer", "buyer", "password");
+        Offer newOffer = new Offer(buyer, auction, BigDecimal.valueOf(7.5));
+
+        auction.setNewOffer(oldOffer);
+        auction.setNewOffer(newOffer);
+        assertEquals(newOffer, auction.getLastOffer());
     }
 
     @Test (expected = OfferTooLowException.class)
-    public void testSetNewOfferForOfferEqualsLastOffer() throws OfferTooLowException, OfferPriceNegativeValueException {
+    public void testSetNewOfferForOfferEqualsLastOffer() throws OfferTooLowException, OfferPriceNegativeValueException, NewOffersUserEqualsLastOffersUserException {
         User oldBuyer = new User("oldbuyer", "oldbuyer", "password");
         Offer oldOffer = new Offer(oldBuyer, auction, BigDecimal.valueOf(5));
 
@@ -79,7 +92,7 @@ public class AuctionTest {
     }
 
     @Test (expected = OfferTooLowException.class)
-    public void testSetNewOfferForOfferLowerThanLastOffer() throws OfferTooLowException, OfferPriceNegativeValueException {
+    public void testSetNewOfferForOfferLowerThanLastOffer() throws OfferTooLowException, OfferPriceNegativeValueException, NewOffersUserEqualsLastOffersUserException {
         User oldBuyer = new User("oldbuyer", "oldbuyer", "password");
         Offer oldOffer = new Offer(oldBuyer, auction, BigDecimal.valueOf(5));
 
@@ -91,7 +104,7 @@ public class AuctionTest {
     }
 
     @Test (expected = OfferTooLowException.class)
-    public void testSetNewOfferForOfferEqualsPrice() throws OfferTooLowException, OfferPriceNegativeValueException {
+    public void testSetNewOfferForOfferEqualsPrice() throws OfferTooLowException, OfferPriceNegativeValueException, NewOffersUserEqualsLastOffersUserException {
         User buyer = new User("buyer", "buyer", "password");
         Offer newOffer = new Offer(buyer, auction, BigDecimal.valueOf(3.5));
 
@@ -99,7 +112,7 @@ public class AuctionTest {
     }
 
     @Test (expected = OfferTooLowException.class)
-    public void testSetNewOfferForOfferLowerThanPrice() throws OfferTooLowException, OfferPriceNegativeValueException {
+    public void testSetNewOfferForOfferLowerThanPrice() throws OfferTooLowException, OfferPriceNegativeValueException, NewOffersUserEqualsLastOffersUserException {
         User buyer = new User("buyer", "buyer", "password");
         Offer newOffer = new Offer(buyer, auction, BigDecimal.valueOf(1.5));
 

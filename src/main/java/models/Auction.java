@@ -1,5 +1,6 @@
 package models;
 
+import exceptions.NewOffersUserEqualsLastOffersUserException;
 import exceptions.OfferPriceNegativeValueException;
 import exceptions.OfferTooLowException;
 
@@ -21,9 +22,13 @@ public class Auction {
         this.offersList = new LinkedList<>();
     }
 
-    public void setNewOffer(Offer newOffer) throws OfferTooLowException {
+    public void setNewOffer(Offer newOffer) throws OfferTooLowException, NewOffersUserEqualsLastOffersUserException {
+        if (this.getLastOffer().getUser() != null && this.getLastOffer().getUser().equals(newOffer.getUser())){
+            throw new NewOffersUserEqualsLastOffersUserException();
+        }
+
         if (newOffer.getPrice().compareTo(this.price) <= 0 ||
-            (this.offersList.peek() != null && newOffer.getPrice().compareTo(this.offersList.peek().getPrice()) <= 0)) {
+            (this.getLastOffer() != null && newOffer.getPrice().compareTo(this.getLastOffer().getPrice()) <= 0)) {
             throw new OfferTooLowException();
         } else {
             this.offersList.push(newOffer);
@@ -52,5 +57,25 @@ public class Auction {
 
     public BigDecimal getPrice() {
         return price;
+    }
+
+    private void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+    private void setOffersList(LinkedList<Offer> offersList) {
+        this.offersList = offersList;
+    }
+
+    private void setDescription(String description) {
+        this.description = description;
+    }
+
+    private void setTitle(String title) {
+        this.title = title;
+    }
+
+    private void setPrice(BigDecimal price) {
+        this.price = price;
     }
 }
