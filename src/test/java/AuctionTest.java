@@ -19,6 +19,11 @@ public class AuctionTest {
         auction = new Auction(seller, "Description", "Title", BigDecimal.valueOf(3.5));
     }
 
+    @Test
+    public void testAuctionConstructorIsActive(){
+        assertTrue(auction.isActive());
+    }
+
     @Test (expected = NullPointerException.class)
     public void testAuctionConstructorForNullUser() throws DescriptionTooShortException, TitleTooShortException, PriceNegativeValueException {
         auction = new Auction(null, "Description", "Title", BigDecimal.valueOf(3.5));
@@ -61,13 +66,13 @@ public class AuctionTest {
     }
 
     @Test (expected = NullPointerException.class)
-    public void testSetNewOfferForNullObject() throws PriceValueTooLowException, NewOffersUserEqualsLastOffersUserException {
+    public void testSetNewOfferForNullObject() throws PriceValueTooLowException, CannotOutbidUsersOwnBidException, CannotBidUsersOwnAuctionException {
         Offer newOffer = null;
         auction.setNewOffer(newOffer);
     }
 
     @Test
-    public void testSetNewOfferForOfferHigherThanPrice() throws PriceValueTooLowException, PriceNegativeValueException, NewOffersUserEqualsLastOffersUserException, PasswordTooShortException {
+    public void testSetNewOfferForOfferHigherThanPrice() throws PriceValueTooLowException, PriceNegativeValueException, CannotOutbidUsersOwnBidException, PasswordTooShortException, CannotBidUsersOwnAuctionException {
         User buyer = new User("buyer", "buyer", "password");
         Offer newOffer = new Offer(buyer, auction, new BigDecimal(5));
 
@@ -76,7 +81,7 @@ public class AuctionTest {
     }
 
     @Test
-    public void testSetNewOfferForOfferHigherThanLastOffer() throws PriceValueTooLowException, PriceNegativeValueException, NewOffersUserEqualsLastOffersUserException, PasswordTooShortException {
+    public void testSetNewOfferForOfferHigherThanLastOffer() throws PriceValueTooLowException, PriceNegativeValueException, CannotOutbidUsersOwnBidException, PasswordTooShortException, CannotBidUsersOwnAuctionException {
         User oldBuyer = new User("oldbuyer", "oldbuyer", "password");
         Offer oldOffer = new Offer(oldBuyer, auction, BigDecimal.valueOf(5));
 
@@ -89,7 +94,7 @@ public class AuctionTest {
     }
 
     @Test (expected = PriceValueTooLowException.class)
-    public void testSetNewOfferForOfferEqualsLastOffer() throws PriceValueTooLowException, PriceNegativeValueException, NewOffersUserEqualsLastOffersUserException, PasswordTooShortException {
+    public void testSetNewOfferForOfferEqualsLastOffer() throws PriceValueTooLowException, PriceNegativeValueException, CannotOutbidUsersOwnBidException, PasswordTooShortException, CannotBidUsersOwnAuctionException {
         User oldBuyer = new User("oldbuyer", "oldbuyer", "password");
         Offer oldOffer = new Offer(oldBuyer, auction, BigDecimal.valueOf(5));
 
@@ -101,7 +106,7 @@ public class AuctionTest {
     }
 
     @Test (expected = PriceValueTooLowException.class)
-    public void testSetNewOfferForOfferLowerThanLastOffer() throws PriceValueTooLowException, PriceNegativeValueException, NewOffersUserEqualsLastOffersUserException, PasswordTooShortException {
+    public void testSetNewOfferForOfferLowerThanLastOffer() throws PriceValueTooLowException, PriceNegativeValueException, CannotOutbidUsersOwnBidException, PasswordTooShortException, CannotBidUsersOwnAuctionException {
         User oldBuyer = new User("oldbuyer", "oldbuyer", "password");
         Offer oldOffer = new Offer(oldBuyer, auction, BigDecimal.valueOf(5));
 
@@ -113,7 +118,7 @@ public class AuctionTest {
     }
 
     @Test (expected = PriceValueTooLowException.class)
-    public void testSetNewOfferForOfferEqualsPrice() throws PriceValueTooLowException, PriceNegativeValueException, NewOffersUserEqualsLastOffersUserException, PasswordTooShortException {
+    public void testSetNewOfferForOfferEqualsPrice() throws PriceValueTooLowException, PriceNegativeValueException, CannotOutbidUsersOwnBidException, PasswordTooShortException, CannotBidUsersOwnAuctionException {
         User buyer = new User("buyer", "buyer", "password");
         Offer newOffer = new Offer(buyer, auction, BigDecimal.valueOf(3.5));
 
@@ -121,7 +126,7 @@ public class AuctionTest {
     }
 
     @Test (expected = PriceValueTooLowException.class)
-    public void testSetNewOfferForOfferLowerThanPrice() throws PriceValueTooLowException, PriceNegativeValueException, NewOffersUserEqualsLastOffersUserException, PasswordTooShortException {
+    public void testSetNewOfferForOfferLowerThanPrice() throws PriceValueTooLowException, PriceNegativeValueException, CannotOutbidUsersOwnBidException, PasswordTooShortException, CannotBidUsersOwnAuctionException {
         User buyer = new User("buyer", "buyer", "password");
         Offer newOffer = new Offer(buyer, auction, BigDecimal.valueOf(1.5));
 
@@ -150,12 +155,18 @@ public class AuctionTest {
 
     @Test (expected = NullPointerException.class)
     public void testSetPriceForNull() throws PriceNegativeValueException {
-        auction.setPrice(null);
+        auction.changeStartingPrice(null);
     }
 
     @Test (expected = PriceNegativeValueException.class)
     public void testSetPriceForNegativeValue() throws PriceNegativeValueException {
-        auction.setPrice(BigDecimal.valueOf(-5));
+        auction.changeStartingPrice(BigDecimal.valueOf(-5));
+    }
+
+    @Test
+    public void testSetActiveFalse(){
+        auction.disable();
+        assertFalse(auction.isActive());
     }
 
     @Test
@@ -175,7 +186,7 @@ public class AuctionTest {
 
     @Test
     public void testAuctionGetsPrice(){
-        assertEquals(BigDecimal.valueOf(3.5), auction.getPrice());
+        assertEquals(BigDecimal.valueOf(3.5), auction.getStartingPrice());
     }
 
     @Test
@@ -187,6 +198,4 @@ public class AuctionTest {
     public void testAuctionOffersListEmpty(){
         assertTrue(auction.getOffersList().isEmpty());
     }
-
-
 }

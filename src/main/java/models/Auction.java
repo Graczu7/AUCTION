@@ -10,23 +10,29 @@ public class Auction {
     private LinkedList<Offer> offersList;
     private String description;
     private String title;
-    private BigDecimal price;
+    private BigDecimal startingPrice;
+    private boolean isActive;
 
-    public Auction(User owner, String description, String title, BigDecimal price) throws DescriptionTooShortException, TitleTooShortException, PriceNegativeValueException {
+    public Auction(User owner, String description, String title, BigDecimal startingPrice) throws DescriptionTooShortException, TitleTooShortException, PriceNegativeValueException {
         setOwner(owner);
         setDescription(description);
         setTitle(title);
-        setPrice(price);
+        changeStartingPrice(startingPrice);
+        this.isActive = true;
         this.offersList = new LinkedList<>();
     }
 
-    public void setNewOffer(Offer newOffer) throws PriceValueTooLowException, NewOffersUserEqualsLastOffersUserException {
-        if (this.getLastOffer() != null && this.getLastOffer().getUser().equals(newOffer.getUser())) {
-            throw new NewOffersUserEqualsLastOffersUserException();
+    public void setNewOffer(Offer newOffer) throws PriceValueTooLowException, CannotOutbidUsersOwnBidException, CannotBidUsersOwnAuctionException {
+        if (this.owner.equals(newOffer.getUser())){
+            throw new CannotBidUsersOwnAuctionException();
         }
-
-        if (newOffer.getPrice().compareTo(this.price) <= 0 ||
-                (this.getLastOffer() != null && newOffer.getPrice().compareTo(this.getLastOffer().getPrice()) <= 0)) {
+        if (this.getLastOffer() != null &&
+                this.getLastOffer().getUser().equals(newOffer.getUser())) {
+            throw new CannotOutbidUsersOwnBidException();
+        }
+        if (newOffer.getPrice().compareTo(this.startingPrice) <= 0 ||
+                (this.getLastOffer() != null &&
+                        newOffer.getPrice().compareTo(this.getLastOffer().getPrice()) <= 0)) {
             throw new PriceValueTooLowException();
         } else {
             this.offersList.push(newOffer);
@@ -54,11 +60,15 @@ public class Auction {
         this.title = title;
     }
 
-    public void setPrice(BigDecimal price) throws PriceNegativeValueException {
-        if (price.compareTo(BigDecimal.valueOf(0)) < 0) {
+    public void changeStartingPrice(BigDecimal startingPrice) throws PriceNegativeValueException {
+        if (startingPrice.compareTo(BigDecimal.valueOf(0)) < 0) {
             throw new PriceNegativeValueException();
         }
-        this.price = price;
+        this.startingPrice = startingPrice;
+    }
+
+    public void disable() {
+        this.isActive = false;
     }
 
     public User getOwner() {
@@ -81,7 +91,11 @@ public class Auction {
         return title;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public BigDecimal getStartingPrice() {
+        return startingPrice;
+    }
+
+    public boolean isActive() {
+        return isActive;
     }
 }

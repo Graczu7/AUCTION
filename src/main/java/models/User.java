@@ -7,6 +7,8 @@ public class User {
     private String name;
     private String login;
     private String password;
+    //TODO add list auctions owned
+    //TODO add list of won auctions
 
     public User(String name, String login, String password) throws PasswordTooShortException {
         this.name = name;
