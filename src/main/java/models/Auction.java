@@ -1,5 +1,6 @@
 package models;
 
+import exceptions.OfferPriceNegativeException;
 import exceptions.OfferTooLowException;
 
 import java.util.LinkedList;
@@ -7,7 +8,6 @@ import java.util.LinkedList;
 public class Auction {
     private User owner;
     private LinkedList<Offer> offersList;
-    private Offer lastOffer;
     private String discription;
     private String title;
     private double price;
@@ -18,18 +18,17 @@ public class Auction {
         this.title = title;
         this.price = price;
         this.offersList = new LinkedList<>();
-        this.lastOffer = new Offer();
     }
 
-    public void setNewOffer(Offer newOffer) throws OfferTooLowException, NullPointerException {
-        if (newOffer == null){
-            throw new NullPointerException();
+    public void setNewOffer(Offer newOffer) throws OfferTooLowException, NullPointerException, OfferPriceNegativeException {
+        if (newOffer.getPrice() < 0){
+            throw new OfferPriceNegativeException();
         }
-        if (this.lastOffer == null || this.lastOffer.getPrice() < newOffer.getPrice()){
-            this.lastOffer = newOffer;
+        if (this.offersList.peek() == null || this.offersList.peek().getPrice() < newOffer.getPrice()){
             this.offersList.push(newOffer);
+        } else {
+            throw new OfferTooLowException();
         }
-        throw new OfferTooLowException();
     }
 
     public User getOwner() {
@@ -41,7 +40,7 @@ public class Auction {
     }
 
     public Offer getLastOffer() {
-        return lastOffer;
+        return offersList.peek();
     }
 
     public String getDiscription() {
