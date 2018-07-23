@@ -1,5 +1,7 @@
 package models;
 
+import exceptions.OfferPriceNegativeValueException;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -9,10 +11,10 @@ public class Offer {
     private Auction objectToSell;
     private BigDecimal price;
 
-    public Offer(User user, Auction objectToSell, BigDecimal price) {
+    public Offer(User user, Auction objectToSell, BigDecimal price) throws OfferPriceNegativeValueException {
         this.user = user;
         this.objectToSell = objectToSell;
-        this.price = price;
+        setPrice(price);
     }
 
 
@@ -65,7 +67,10 @@ public class Offer {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    private void setPrice(BigDecimal price) throws OfferPriceNegativeValueException {
+        if (this.price.compareTo(BigDecimal.valueOf(0)) <= 0){
+            throw new OfferPriceNegativeValueException();
+        }
         this.price = price;
     }
 

@@ -1,3 +1,4 @@
+import exceptions.OfferPriceNegativeValueException;
 import models.Auction;
 import models.Offer;
 import models.User;
@@ -10,37 +11,28 @@ import static junit.framework.TestCase.assertNotNull;
 
 public class OfferTest {
 
-
     @Test
-
-    public void testOfferNotNull(){
-
+    public void testOfferNotNull() throws OfferPriceNegativeValueException {
         //given
         User user = new User("Jacek", "Placek","burek");
         Auction salceson = new Auction(user, "Salceson","dasdfas", BigDecimal.valueOf(23.3));
         Offer offer = new Offer(user, salceson, BigDecimal.valueOf(99));
-
-        //when
 
         //then
         assertNotNull(offer);
     }
 
     @Test
-
-    public void testOfferAssert(){
+    public void testOfferAssert() throws OfferPriceNegativeValueException {
         //given
         User second = new User("Henry", "James", "Zwrotnik");
         Auction salceson = new Auction(second, "Salceson","dasdfas", BigDecimal.valueOf(23.3));
         Offer offer = new Offer(second, salceson, BigDecimal.valueOf(99));
 
         //when
-
         Offer result= new Offer(second, salceson, BigDecimal.valueOf(99));
 
         //then
         Assert.assertEquals(offer, result);
-
-
     }
 }
