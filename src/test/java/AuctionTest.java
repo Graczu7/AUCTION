@@ -22,7 +22,8 @@ public class AuctionTest {
 
         Auction auction = new Auction(new User("Name", "Login", "Password"), "Discription", "Title", 3.5);
         auction.setNewOffer(newOffer);
-        assertEquals(3.5, auction.getLastOffer().getPrice());
+        double expected = 3.5;
+        assertEquals(expected, auction.getLastOffer().getPrice(), 0.001);
     }
 
     @Test (expected = OfferTooLowException.class)
