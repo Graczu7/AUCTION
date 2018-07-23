@@ -9,13 +9,13 @@ import java.util.LinkedList;
 public class Auction {
     private User owner;
     private LinkedList<Offer> offersList;
-    private String discription;
+    private String description;
     private String title;
     private BigDecimal price;
 
-    public Auction(User owner, String discription, String title, BigDecimal price) {
+    public Auction(User owner, String description, String title, BigDecimal price) {
         this.owner = owner;
-        this.discription = discription;
+        this.description = description;
         this.title = title;
         this.price = price;
         this.offersList = new LinkedList<>();
@@ -46,8 +46,8 @@ public class Auction {
         return offersList.peek();
     }
 
-    public String getDiscription() {
-        return discription;
+    public String getDescription() {
+        return description;
     }
 
     public String getTitle() {

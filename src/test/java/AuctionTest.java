@@ -14,7 +14,7 @@ public class AuctionTest {
     @Test (expected = NullPointerException.class)
     public void testSetNewOfferForNullObject() throws OfferTooLowException, OfferPriceNegativeException {
         Offer newOffer = null;
-        Auction auction = new Auction(new User("Name", "Login", "Password"), "Discription", "Title", BigDecimal.valueOf(3.5));
+        Auction auction = new Auction(new User("Name", "Login", "Password"), "Description", "Title", BigDecimal.valueOf(3.5));
         auction.setNewOffer(newOffer);
     }
 
