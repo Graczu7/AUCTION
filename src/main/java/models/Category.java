@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Category {
+
+
     private Set<Auction> auctions;
     private Set<Category> subcategories;
     private String name;
@@ -40,4 +42,11 @@ public class Category {
         return false;
     }
 
+    public Set<Auction> getAuctions() {
+        return auctions;
+    }
+
+    public Set<Category> getSubcategories() {
+        return subcategories;
+    }
 }
