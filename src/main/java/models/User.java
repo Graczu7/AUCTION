@@ -1,6 +1,6 @@
 package models;
 
-import exceptions.PasswordToShortException;
+import exceptions.PasswordTooShortException;
 
 public class User {
 
@@ -26,10 +26,10 @@ public class User {
         return password;
     }
 
-    public void setPassword (String newPassword) throws PasswordToShortException {
+    public void setPassword (String newPassword) throws PasswordTooShortException {
 
         if(newPassword.length() < 5){
-            throw new PasswordToShortException();
+            throw new PasswordTooShortException();
         }
         this.password = newPassword;
     }
