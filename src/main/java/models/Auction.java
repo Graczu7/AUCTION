@@ -1,8 +1,6 @@
 package models;
 
-import exceptions.NewOffersUserEqualsLastOffersUserException;
-import exceptions.OfferPriceNegativeValueException;
-import exceptions.OfferTooLowException;
+import exceptions.*;
 
 import java.math.BigDecimal;
 import java.util.LinkedList;
@@ -23,16 +21,44 @@ public class Auction {
     }
 
     public void setNewOffer(Offer newOffer) throws OfferTooLowException, NewOffersUserEqualsLastOffersUserException {
-        if (this.getLastOffer().getUser() != null && this.getLastOffer().getUser().equals(newOffer.getUser())){
+        if (this.getLastOffer().getUser() != null && this.getLastOffer().getUser().equals(newOffer.getUser())) {
             throw new NewOffersUserEqualsLastOffersUserException();
         }
 
         if (newOffer.getPrice().compareTo(this.price) <= 0 ||
-            (this.getLastOffer() != null && newOffer.getPrice().compareTo(this.getLastOffer().getPrice()) <= 0)) {
+                (this.getLastOffer() != null && newOffer.getPrice().compareTo(this.getLastOffer().getPrice()) <= 0)) {
             throw new OfferTooLowException();
         } else {
             this.offersList.push(newOffer);
         }
+    }
+
+    public void setOwner(User owner) throws NullPointerException {
+        if (owner == null) {
+            throw new NullPointerException();
+        }
+        this.owner = owner;
+    }
+
+    private void setDescription(String description) throws DescriptionTooShortException {
+        if (description.length() == 0){
+            throw new DescriptionTooShortException();
+        }
+        this.description = description;
+    }
+
+    private void setTitle(String title) throws TitleTooShortException {
+        if (title.length() < 5){
+            throw new TitleTooShortException();
+        }
+        this.title = title;
+    }
+
+    private void setPrice(BigDecimal price) throws PriceValueZeroOrLessException {
+        if (price.compareTo(BigDecimal.valueOf(0)) <= 0) {
+            throw new PriceValueZeroOrLessException();
+        }
+        this.price = price;
     }
 
     public User getOwner() {
@@ -57,25 +83,5 @@ public class Auction {
 
     public BigDecimal getPrice() {
         return price;
-    }
-
-    private void setOwner(User owner) {
-        this.owner = owner;
-    }
-
-    private void setOffersList(LinkedList<Offer> offersList) {
-        this.offersList = offersList;
-    }
-
-    private void setDescription(String description) {
-        this.description = description;
-    }
-
-    private void setTitle(String title) {
-        this.title = title;
-    }
-
-    private void setPrice(BigDecimal price) {
-        this.price = price;
     }
 }

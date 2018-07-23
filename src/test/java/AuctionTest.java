@@ -119,4 +119,6 @@ public class AuctionTest {
         auction.setNewOffer(newOffer);
     }
 
+
+
 }
