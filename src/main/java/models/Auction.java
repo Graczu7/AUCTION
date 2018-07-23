@@ -21,12 +21,14 @@ public class Auction {
     }
 
     public void setNewOffer(Offer newOffer) throws OfferTooLowException, NullPointerException, OfferPriceNegativeException {
-        if (newOffer.getPrice() < 0){
+        if (newOffer.getPrice() < 0) {
             throw new OfferPriceNegativeException();
         }
-        if (newOffer.getPrice() < this.price || newOffer.getPrice() < this.offersList.peek().getPrice()) {
+        if (newOffer.getPrice() < this.price ||
+                (this.offersList.peek() != null &&
+                newOffer.getPrice() < this.offersList.peek().getPrice())) {
             throw new OfferTooLowException();
-        } else{
+        } else {
             this.offersList.push(newOffer);
         }
     }
