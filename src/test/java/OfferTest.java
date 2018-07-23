@@ -12,7 +12,7 @@ import static junit.framework.TestCase.assertNotNull;
 public class OfferTest {
 
     @Test
-    public void testOfferNotNull() throws PriceNegativeValueException, DescriptionTooShortException, TitleTooShortException {
+    public void testOfferNotNull() throws PriceNegativeValueException, DescriptionTooShortException, TitleTooShortException, PasswordTooShortException {
         //given
         User user = new User("Jacek", "Placek","burek");
         Auction salceson = new Auction(user, "Salceson","dasdfas", BigDecimal.valueOf(23.3));
@@ -23,7 +23,7 @@ public class OfferTest {
     }
 
     @Test
-    public void testOfferAssert() throws PriceNegativeValueException, DescriptionTooShortException, TitleTooShortException {
+    public void testOfferAssert() throws PriceNegativeValueException, DescriptionTooShortException, TitleTooShortException, PasswordTooShortException {
         //given
         User second = new User("Henry", "James", "Zwrotnik");
         Auction salceson = new Auction(second, "Salceson","dasdfas", BigDecimal.valueOf(23.3));
