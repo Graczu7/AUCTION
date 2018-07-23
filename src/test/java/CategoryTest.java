@@ -1,17 +1,15 @@
-import helpers.Categories;
+import exceptions.DescriptionTooShortException;
+import exceptions.PriceNegativeValueException;
+import exceptions.TitleTooShortException;
 
 import models.Auction;
 import models.Category;
 
 import models.User;
-import org.junit.Assert;
-
-import models.Category;
 
 import org.junit.Test;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 
 import static helpers.Categories.initializeCategories;
 import static org.junit.Assert.assertEquals;
@@ -103,7 +101,7 @@ public class CategoryTest {
     }
 
     @Test
-    public void testAddAuction(){
+    public void testAddAuction() throws DescriptionTooShortException, TitleTooShortException, PriceNegativeValueException {
         //Given
         User user = new User("Kowalski", "kowalski", "abc123");
         Auction auction = new Auction(user, "desc1", "auctionTit", BigDecimal.valueOf(123));
@@ -117,7 +115,7 @@ public class CategoryTest {
     }
 
     @Test
-    public void testAddSubcategories(){
+    public void testAddSubcategories() throws DescriptionTooShortException, TitleTooShortException, PriceNegativeValueException {
         //Given
         User user = new User("Nowak", "kowalski", "abc123");
         Auction auction = new Auction(user, "desc1", "auctionTit", BigDecimal.valueOf(123));
