@@ -10,6 +10,7 @@ import models.Category;
 
 import org.junit.Test;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import static helpers.Categories.initializeCategories;
@@ -105,7 +106,7 @@ public class CategoryTest {
     public void testAddAuction(){
         //Given
         User user = new User("Kowalski", "kowalski", "abc123");
-        Auction auction = new Auction(user, "desc1", "auctionTit",  123);
+        Auction auction = new Auction(user, "desc1", "auctionTit", BigDecimal.valueOf(123));
         Category category = new Category("test");
         //When
         category.addAuction(auction);
@@ -119,7 +120,7 @@ public class CategoryTest {
     public void testAddSubcategories(){
         //Given
         User user = new User("Nowak", "kowalski", "abc123");
-        Auction auction = new Auction(user, "desc1", "auctionTit", 123);
+        Auction auction = new Auction(user, "desc1", "auctionTit", BigDecimal.valueOf(123));
         Category category = new Category("testcategory");
         Category subcategory = new Category("testsubcategory");
 

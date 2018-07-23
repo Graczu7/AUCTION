@@ -17,7 +17,7 @@ public class OfferTest {
 
         //given
         User user = new User("Jacek", "Placek","burek");
-        Auction salceson = new Auction(user, "Salceson","dasdfas",23.3);
+        Auction salceson = new Auction(user, "Salceson","dasdfas", BigDecimal.valueOf(23.3));
         Offer offer = new Offer(user, salceson, BigDecimal.valueOf(99));
 
         //when
@@ -31,7 +31,7 @@ public class OfferTest {
     public void testOfferAssert(){
         //given
         User second = new User("Henry", "James", "Zwrotnik");
-        Auction salceson = new Auction(second, "Salceson","dasdfas",23.3);
+        Auction salceson = new Auction(second, "Salceson","dasdfas", BigDecimal.valueOf(23.3));
         Offer offer = new Offer(second, salceson, BigDecimal.valueOf(99));
 
         //when

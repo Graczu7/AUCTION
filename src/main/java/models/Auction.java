@@ -3,6 +3,7 @@ package models;
 import exceptions.OfferPriceNegativeException;
 import exceptions.OfferTooLowException;
 
+import java.math.BigDecimal;
 import java.util.LinkedList;
 
 public class Auction {
@@ -10,9 +11,9 @@ public class Auction {
     private LinkedList<Offer> offersList;
     private String discription;
     private String title;
-    private double price;
+    private BigDecimal price;
 
-    public Auction(User owner, String discription, String title, double price) {
+    public Auction(User owner, String discription, String title, BigDecimal price) {
         this.owner = owner;
         this.discription = discription;
         this.title = title;
@@ -21,12 +22,12 @@ public class Auction {
     }
 
     public void setNewOffer(Offer newOffer) throws OfferTooLowException, NullPointerException, OfferPriceNegativeException {
-        if (newOffer.getPrice() < 0) {
+        if (newOffer.getPrice().compareTo(BigDecimal.valueOf(0)) < 0) {
             throw new OfferPriceNegativeException();
         }
-        if (newOffer.getPrice() < this.price ||
+        if (newOffer.getPrice().compareTo(this.price) <= 0 ||
                 (this.offersList.peek() != null &&
-                newOffer.getPrice() < this.offersList.peek().getPrice())) {
+                        newOffer.getPrice().compareTo(this.offersList.peek().getPrice()) < 0)) {
             throw new OfferTooLowException();
         } else {
             this.offersList.push(newOffer);
@@ -53,7 +54,7 @@ public class Auction {
         return title;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 }
