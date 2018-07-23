@@ -1,3 +1,4 @@
+import exceptions.OfferPriceNegativeException;
 import exceptions.OfferTooLowException;
 import models.Auction;
 import models.Offer;
@@ -9,14 +10,14 @@ import static org.junit.Assert.assertEquals;
 public class AuctionTest {
 
     @Test (expected = NullPointerException.class)
-    public void testSetNewOfferForNullObject() throws OfferTooLowException {
+    public void testSetNewOfferForNullObject() throws OfferTooLowException, OfferPriceNegativeException {
         Offer newOffer = null;
         Auction auction = new Auction(new User("Name", "Login", "Password"), "Discription", "Title", 3.5);
         auction.setNewOffer(newOffer);
     }
 
     @Test
-    public void testSetNewOfferForCorrectValue() throws OfferTooLowException {
+    public void testSetNewOfferForCorrectValue() throws OfferTooLowException, OfferPriceNegativeException {
         Offer newOffer = new Offer("name", "title", "description", 3.5);
 
         Auction auction = new Auction(new User("Name", "Login", "Password"), "Discription", "Title", 3.5);
@@ -25,7 +26,7 @@ public class AuctionTest {
     }
 
     @Test (expected = OfferTooLowException.class)
-    public void testSetNewOfferForOfferTooLow() throws OfferTooLowException {
+    public void testSetNewOfferForOfferTooLow() throws OfferTooLowException, OfferPriceNegativeException {
         Offer newOffer = new Offer();
         newOffer.setPrice(3.5);
 
