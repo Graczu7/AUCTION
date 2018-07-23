@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Category {
+
+
     private Set<Auction> auctions;
     private Set<Category> subcategories;
     private String name;
@@ -27,15 +29,12 @@ public class Category {
     }
 
 
-
-
-
-    public boolean isSubcategoryPresent(String present){
-        if(this.name != null && this.name.equals(present)){
+    public boolean isSubcategoryPresent(String present) {
+        if (this.name != null && this.name.equals(present)) {
             return true;
         }
-        for(Category subcategory: this.subcategories){
-            if(subcategory.isSubcategoryPresent(present)){
+        for (Category subcategory : this.subcategories) {
+            if (subcategory.isSubcategoryPresent(present)) {
                 return true;
             }
         }
@@ -43,4 +42,11 @@ public class Category {
         return false;
     }
 
+    public Set<Auction> getAuctions() {
+        return auctions;
+    }
+
+    public Set<Category> getSubcategories() {
+        return subcategories;
+    }
 }
