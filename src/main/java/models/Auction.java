@@ -16,7 +16,7 @@ public class Auction {
     private boolean isActive = true;
 
     public Auction(User owner, Category category, String description, String title, BigDecimal startingPrice) throws DescriptionTooShortException, TitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
-       setCategory(category);
+        setCategory(category);
         setOwner(owner);
         setDescription(description);
         setTitle(title);
@@ -25,7 +25,7 @@ public class Auction {
     }
 
     public void setNewOffer(Offer newOffer) throws PriceValueTooLowException, CannotOutbidUsersOwnBidException, CannotBidUsersOwnAuctionException, CannotBidAuctionThatEndedException {
-        if (!this.isActive){
+        if (!this.isActive) {
             throw new CannotBidAuctionThatEndedException();
         }
         if (this.owner.equals(newOffer.getUser())) {
@@ -45,7 +45,7 @@ public class Auction {
     }
 
     private void setOwner(User owner) throws NullPointerException, CannotModifyAuctionThatEndedException {
-        if (!this.isActive){
+        if (!this.isActive) {
             throw new CannotModifyAuctionThatEndedException();
         }
         if (owner == null) {
@@ -55,14 +55,14 @@ public class Auction {
     }
 
     public void setCategory(Category category) throws NullPointerException {
-        if (category == null){
+        if (category == null) {
             throw new NullPointerException();
         }
         this.category = category;
     }
 
     public void setDescription(String description) throws DescriptionTooShortException, CannotModifyAuctionThatEndedException {
-        if (!this.isActive){
+        if (!this.isActive) {
             throw new CannotModifyAuctionThatEndedException();
         }
         if (description.length() == 0) {
@@ -72,7 +72,7 @@ public class Auction {
     }
 
     public void setTitle(String title) throws TitleTooShortException, CannotModifyAuctionThatEndedException {
-        if (!this.isActive){
+        if (!this.isActive) {
             throw new CannotModifyAuctionThatEndedException();
         }
         if (title.length() < 5) {
@@ -82,7 +82,7 @@ public class Auction {
     }
 
     public void changeStartingPrice(BigDecimal startingPrice) throws PriceNegativeValueException, CannotModifyAuctionThatEndedException {
-        if (!this.isActive){
+        if (!this.isActive) {
             throw new CannotModifyAuctionThatEndedException();
         }
         if (startingPrice.compareTo(BigDecimal.valueOf(0)) < 0) {
@@ -149,5 +149,25 @@ public class Auction {
     public int hashCode() {
 
         return Objects.hash(owner, category, offersList, description, title, startingPrice, isActive);
+    }
+
+    @Override
+    public String toString() {
+        if (this.getOffersList().isEmpty()) {
+            return "Auction{" +
+                    "title='" + title + '\'' +
+                    ", category=" + category +
+                    ", starting price=" + startingPrice +
+                    ", owner=" + owner.getLogin() +
+                    '}';
+        } else {
+            return "Auction{" +
+                    "title='" + title + '\'' +
+                    ", category=" + category +
+                    ", price=" + getLastOffer().getPrice() +
+                    ", owner=" + owner.getLogin() +
+                    ", highest bidder=" + getLastOffer().getUser().getLogin() +
+                    '}';
+        }
     }
 }
