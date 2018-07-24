@@ -13,12 +13,6 @@ public class User {
     private ArrayList<Auction> ownedAuctions;
     private ArrayList<Auction> wonAuctions;
 
-    //TODO add list auctions owned
-
-    //TODO add list of won auctions
-
-    //TODO add list of users bids
-
     public User(String name, String login, String password) throws PasswordTooShortException {
         this.name = name;
         this.login = login;
