@@ -5,9 +5,9 @@ import java.util.Set;
 
 public class Category {
 
-    //TODO getSubcategoryByName
-    //TODO subcategoriesAsList
-    //TODO getCategoryTree
+    //TODO getSubcategoryByName()
+    //TODO subcategoriesAsList()
+    //TODO getCategoryTree()
     private String name;
     private Set<Auction> auctions;
     private Set<Category> subcategories;
@@ -18,10 +18,12 @@ public class Category {
         this.subcategories = new HashSet<>();
     }
 
+    //TODO make sure Auctions can be added only to category that has no subcategories in it
     public void addAuction(Auction auction) {
         this.auctions.add(auction);
     }
 
+    //TODO make sure subcategory cannot be added to category that has auctions in it
     public void addSubcategory(Category category) {
         this.subcategories.add(category);
     }
