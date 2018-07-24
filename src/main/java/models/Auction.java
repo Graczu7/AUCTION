@@ -7,6 +7,8 @@ import java.util.LinkedList;
 import java.util.Objects;
 
 public class Auction {
+    private static Integer count = 0;
+    private Integer id;
     private User owner;
     private Category category;
     private LinkedList<Offer> offersList;
@@ -22,6 +24,8 @@ public class Auction {
         setTitle(title);
         changeStartingPrice(startingPrice);
         this.offersList = new LinkedList<>();
+        this.id = count;
+        count++;
     }
 
     public void setNewOffer(Offer newOffer) throws PriceValueTooLowException, CannotOutbidUsersOwnBidException, CannotBidUsersOwnAuctionException, CannotBidAuctionThatEndedException {
@@ -99,6 +103,10 @@ public class Auction {
         return offersList.size() >= 3;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
     public User getOwner() {
         return owner;
     }
@@ -136,7 +144,8 @@ public class Auction {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Auction auction = (Auction) o;
-        return isActive == auction.isActive &&
+        return id == auction.id &&
+                isActive == auction.isActive &&
                 Objects.equals(owner, auction.owner) &&
                 Objects.equals(category, auction.category) &&
                 Objects.equals(offersList, auction.offersList) &&
@@ -148,7 +157,7 @@ public class Auction {
     @Override
     public int hashCode() {
 
-        return Objects.hash(owner, category, offersList, description, title, startingPrice, isActive);
+        return Objects.hash(id, owner, category, offersList, description, title, startingPrice, isActive);
     }
 
     @Override
