@@ -1,11 +1,9 @@
 package controllers;
 
+import exceptions.*;
+import exceptions.offerExceptions.*;
+import exceptions.categoryExceptions.*;
 import exceptions.auctionExceptions.*;
-import exceptions.categoryExceptions.CannotAddAuctionToCategoryContainingSubcategoriesException;
-import exceptions.offerExceptions.CannotBidAuctionThatEndedException;
-import exceptions.offerExceptions.CannotBidUsersOwnAuctionException;
-import exceptions.offerExceptions.CannotOutbidUsersOwnBidException;
-import exceptions.PriceValueTooLowException;
 import models.*;
 
 public class AuctionController {
