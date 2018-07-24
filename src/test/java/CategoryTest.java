@@ -1,7 +1,4 @@
-import exceptions.DescriptionTooShortException;
-import exceptions.PasswordTooShortException;
-import exceptions.PriceNegativeValueException;
-import exceptions.TitleTooShortException;
+import exceptions.*;
 
 import models.Auction;
 import models.Category;
@@ -102,7 +99,7 @@ public class CategoryTest {
     }
 
     @Test
-    public void testAddAuction() throws DescriptionTooShortException, TitleTooShortException, PriceNegativeValueException, PasswordTooShortException {
+    public void testAddAuction() throws DescriptionTooShortException, TitleTooShortException, PriceNegativeValueException, PasswordTooShortException, CannotModifyAuctionThatEndedException {
         //Given
         User user = new User("Kowalski", "kowalski", "abc123");
         Auction auction = new Auction(user, "desc1", "auctionTit", BigDecimal.valueOf(123));
@@ -116,7 +113,7 @@ public class CategoryTest {
     }
 
     @Test
-    public void testAddSubcategories() throws DescriptionTooShortException, TitleTooShortException, PriceNegativeValueException, PasswordTooShortException {
+    public void testAddSubcategories() throws DescriptionTooShortException, TitleTooShortException, PriceNegativeValueException, PasswordTooShortException, CannotModifyAuctionThatEndedException {
         //Given
         User user = new User("Nowak", "kowalski", "abc123");
         Auction auction = new Auction(user, "desc1", "auctionTit", BigDecimal.valueOf(123));

@@ -11,14 +11,13 @@ public class Auction {
     private String description;
     private String title;
     private BigDecimal startingPrice;
-    private boolean isActive;
+    private boolean isActive = true;
 
     public Auction(User owner, String description, String title, BigDecimal startingPrice) throws DescriptionTooShortException, TitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
         setOwner(owner);
         setDescription(description);
         setTitle(title);
         changeStartingPrice(startingPrice);
-        this.isActive = true;
         this.offersList = new LinkedList<>();
     }
 
