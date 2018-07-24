@@ -4,19 +4,48 @@ import exceptions.userExceptions.PasswordTooShortException;
 
 import java.util.Objects;
 
+import java.util.ArrayList;
+
 public class User {
 
     private String name;
     private String login;
     private String password;
-    //TODO add list auctions owned
-    //TODO add list of won auctions
-    //TODO add list of users bids
+    private ArrayList<Offer> userOffers;
+    private ArrayList<Auction> ownedAuctions;
+    private ArrayList<Auction> wonAuctions;
 
     public User(String name, String login, String password) throws PasswordTooShortException {
         this.name = name;
         this.login = login;
         setPassword(password);
+        this.userOffers = new ArrayList<>();
+        this.ownedAuctions = new ArrayList<>();
+        this.wonAuctions = new ArrayList<>();
+    }
+
+    public void addUsersOffer(Offer offer){
+        this.userOffers.add(offer);
+    }
+
+    public void addOwnedAuction(Auction auction){
+        this.ownedAuctions.add(auction);
+    }
+
+    public void addWonAuction(Auction auction){
+        this.wonAuctions.add(auction);
+    }
+
+    public ArrayList<Offer> getUserOffers() {
+        return userOffers;
+    }
+
+    public ArrayList<Auction> getOwnedAuctions() {
+        return ownedAuctions;
+    }
+
+    public ArrayList<Auction> getWonAuctions() {
+        return wonAuctions;
     }
 
     public String getName() {
@@ -62,4 +91,3 @@ public class User {
                 '}';
     }
 }
-
