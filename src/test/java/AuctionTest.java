@@ -34,6 +34,11 @@ public class AuctionTest {
 
     //  Auction constructor tests
     @Test
+    public void testAuctionNotNull(){
+        assertNotNull(auction);
+    }
+
+    @Test
     public void testAuctionConstructorIsActive() {
         assertTrue(auction.isActive());
     }
