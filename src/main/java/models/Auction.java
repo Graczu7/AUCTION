@@ -21,10 +21,6 @@ public class Auction {
         this.offersList = new LinkedList<>();
     }
 
-    public boolean isAuctionWon() {
-        return offersList.size() >= 3;
-    }
-
     public void setNewOffer(Offer newOffer) throws PriceValueTooLowException, CannotOutbidUsersOwnBidException, CannotBidUsersOwnAuctionException, CannotBidAuctionThatEndedException {
         if (!this.isActive){
             throw new CannotBidAuctionThatEndedException();
@@ -87,6 +83,10 @@ public class Auction {
 
     public void disable() {
         this.isActive = false;
+    }
+
+    public boolean isAuctionWon() {
+        return offersList.size() >= 3;
     }
 
     public User getOwner() {

@@ -6,9 +6,9 @@ import java.util.Set;
 public class Category {
 
 
+    private String name;
     private Set<Auction> auctions;
     private Set<Category> subcategories;
-    private String name;
 
     public Category(String name) {
         this.name = name;
@@ -24,11 +24,6 @@ public class Category {
         this.subcategories.add(category);
     }
 
-    public String getName() {
-        return name;
-    }
-
-
     public boolean isSubcategoryPresent(String present) {
         if (this.name != null && this.name.equals(present)) {
             return true;
@@ -38,8 +33,11 @@ public class Category {
                 return true;
             }
         }
-
         return false;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public Set<Auction> getAuctions() {
