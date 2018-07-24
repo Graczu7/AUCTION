@@ -38,4 +38,60 @@ public class OfferTest {
         //then
         Assert.assertEquals(offer, result);
     }
+
+    @Test (expected = NullPointerException.class)
+    public void testSetPriceIfNewPriceIsNull() throws PasswordTooShortException, DescriptionTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException, TitleTooShortException {
+
+        //given
+        User second = new User("Henry", "James", "Zwrotnik");
+        Category category = new Category("Category");
+        Auction salceson = new Auction(second, category, "Salceson","dasdfas", BigDecimal.valueOf(23.3));
+        Offer offer = new Offer(second, salceson, BigDecimal.valueOf(0));
+
+        offer.setPrice(null);
+   }
+
+   @Test (expected = PriceNegativeValueException.class)
+    public void testSetPriceIsNegativeValue() throws PasswordTooShortException, DescriptionTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException, TitleTooShortException {
+
+       User second = new User("Henry", "James", "Zwrotnik");
+       Category category = new Category("Category");
+       Auction salceson = new Auction(second, category, "Salceson","dasdfas", BigDecimal.valueOf(23.3));
+       Offer offer = new Offer(second, salceson, BigDecimal.valueOf(0));
+
+       offer.setPrice(BigDecimal.valueOf(-5));
+
+   }
+
+   @Test
+
+    public void testSetPriceIsPositive() throws PasswordTooShortException, DescriptionTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException, TitleTooShortException {
+
+       User second = new User("Henry", "James", "Zwrotnik");
+       Category category = new Category("Category");
+       Auction salceson = new Auction(second, category, "Salceson", "dasdfas", BigDecimal.valueOf(23.3));
+       Offer offer = new Offer(second, salceson, BigDecimal.valueOf(0));
+
+       offer.setPrice(BigDecimal.valueOf(5));
+
+       Assert.assertEquals(BigDecimal.valueOf(5), offer.getPrice());
+
+   }
+
+   @Test
+
+    public void testSetPriceSetLowerPrice() throws PasswordTooShortException, DescriptionTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException, TitleTooShortException {
+
+       User second = new User("Henry", "James", "Zwrotnik");
+       Category category = new Category("Category");
+       Auction salceson = new Auction(second, category, "Salceson", "dasdfas", BigDecimal.valueOf(23.3));
+       Offer offer = new Offer(second, salceson, BigDecimal.valueOf(10));
+
+       offer.setPrice(BigDecimal.valueOf(5));
+
+
+       Assert.assertEquals(BigDecimal.valueOf(5), offer.getPrice());
+   }
+
 }
+
