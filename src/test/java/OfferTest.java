@@ -92,6 +92,5 @@ public class OfferTest {
 
        Assert.assertEquals(BigDecimal.valueOf(5), offer.getPrice());
    }
-
 }
 
