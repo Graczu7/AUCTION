@@ -1,6 +1,9 @@
 import exceptions.*;
 
-import helpers.Categories;
+import exceptions.auctionExceptions.CannotModifyAuctionThatEndedException;
+import exceptions.auctionExceptions.AuctionDescriptionTooShortException;
+import exceptions.auctionExceptions.AuctionTitleTooShortException;
+import exceptions.userExceptions.PasswordTooShortException;
 import models.Auction;
 import models.Category;
 
@@ -9,8 +12,6 @@ import models.User;
 import org.junit.Test;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import static helpers.Categories.initializeCategories;
@@ -101,7 +102,7 @@ public class CategoryTest {
     }
 
     @Test
-    public void testAddAuction() throws DescriptionTooShortException, TitleTooShortException, PriceNegativeValueException, PasswordTooShortException, CannotModifyAuctionThatEndedException {
+    public void testAddAuction() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceNegativeValueException, PasswordTooShortException, CannotModifyAuctionThatEndedException {
         //Given
         User user = new User("Kowalski", "kowalski", "abc123");
         Auction auction = new Auction(user, new Category("Category"), "desc1", "auctionTit", BigDecimal.valueOf(123));
@@ -115,7 +116,7 @@ public class CategoryTest {
     }
 
     @Test
-    public void testAddSubcategories() throws DescriptionTooShortException, TitleTooShortException, PriceNegativeValueException, PasswordTooShortException, CannotModifyAuctionThatEndedException {
+    public void testAddSubcategories() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceNegativeValueException, PasswordTooShortException, CannotModifyAuctionThatEndedException {
         //Given
         User user = new User("Nowak", "kowalski", "abc123");
 

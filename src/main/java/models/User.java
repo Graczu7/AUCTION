@@ -1,6 +1,6 @@
 package models;
 
-import exceptions.PasswordTooShortException;
+import exceptions.userExceptions.PasswordTooShortException;
 
 import java.util.Objects;
 

@@ -1,4 +1,11 @@
 import exceptions.*;
+import exceptions.offerExceptions.CannotBidAuctionThatEndedException;
+import exceptions.offerExceptions.CannotBidUsersOwnAuctionException;
+import exceptions.offerExceptions.CannotOutbidUsersOwnBidException;
+import exceptions.auctionExceptions.CannotModifyAuctionThatEndedException;
+import exceptions.auctionExceptions.AuctionDescriptionTooShortException;
+import exceptions.auctionExceptions.AuctionTitleTooShortException;
+import exceptions.userExceptions.PasswordTooShortException;
 import models.Auction;
 import models.Category;
 import models.Offer;
@@ -27,7 +34,7 @@ public class AuctionTest {
     }
 
     @Before
-    public void setUp() throws DescriptionTooShortException, TitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
+    public void setUp() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
         auction = new Auction(seller, category, "Description", "Title", BigDecimal.valueOf(3.5));
     }
 
@@ -49,7 +56,7 @@ public class AuctionTest {
     }
 
     @Test(expected = NullPointerException.class)
-    public void testAuctionConstructorForNullUser() throws DescriptionTooShortException, TitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
+    public void testAuctionConstructorForNullUser() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
         auction = new Auction(null, category, "Description", "Title", BigDecimal.valueOf(3.5));
     }
 
@@ -59,7 +66,7 @@ public class AuctionTest {
     }
 
     @Test(expected = NullPointerException.class)
-    public void testAuctionConstructorForNullCategory() throws DescriptionTooShortException, TitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
+    public void testAuctionConstructorForNullCategory() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
         auction = new Auction(seller, null, "Description", "Title", BigDecimal.valueOf(3.5));
     }
 
@@ -69,12 +76,12 @@ public class AuctionTest {
     }
 
     @Test(expected = NullPointerException.class)
-    public void testAuctionConstructorForNullDescription() throws DescriptionTooShortException, TitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
+    public void testAuctionConstructorForNullDescription() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
         auction = new Auction(seller, category, null, "Title", BigDecimal.valueOf(3.5));
     }
 
-    @Test(expected = DescriptionTooShortException.class)
-    public void testAuctionConstructorForEmptyDescription() throws DescriptionTooShortException, TitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
+    @Test(expected = AuctionDescriptionTooShortException.class)
+    public void testAuctionConstructorForEmptyDescription() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
         auction = new Auction(seller, category, "", "Title", BigDecimal.valueOf(3.5));
     }
 
@@ -84,12 +91,12 @@ public class AuctionTest {
     }
 
     @Test(expected = NullPointerException.class)
-    public void testAuctionConstructorForNullTitle() throws DescriptionTooShortException, TitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
+    public void testAuctionConstructorForNullTitle() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
         auction = new Auction(seller, category, "Description", null, BigDecimal.valueOf(3.5));
     }
 
-    @Test(expected = TitleTooShortException.class)
-    public void testAuctionConstructorForTitleTooShort() throws DescriptionTooShortException, TitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
+    @Test(expected = AuctionTitleTooShortException.class)
+    public void testAuctionConstructorForTitleTooShort() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
         auction = new Auction(seller, category, "Description", "1234", BigDecimal.valueOf(3.5));
     }
 
@@ -99,12 +106,12 @@ public class AuctionTest {
     }
 
     @Test(expected = NullPointerException.class)
-    public void testAuctionConstructorForPriceNull() throws DescriptionTooShortException, TitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
+    public void testAuctionConstructorForPriceNull() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
         auction = new Auction(seller, category, "Description", "title", null);
     }
 
     @Test(expected = PriceNegativeValueException.class)
-    public void testAuctionConstructorForPriceNegativeValue() throws DescriptionTooShortException, TitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
+    public void testAuctionConstructorForPriceNegativeValue() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
         auction = new Auction(seller, category, "Description", "title", BigDecimal.valueOf(-5));
     }
 
@@ -207,46 +214,46 @@ public class AuctionTest {
 
     //  Auction setters tests
     @Test(expected = CannotModifyAuctionThatEndedException.class)
-    public void testSetDescriptionWhenAuctionNotActive() throws DescriptionTooShortException, CannotModifyAuctionThatEndedException {
+    public void testSetDescriptionWhenAuctionNotActive() throws AuctionDescriptionTooShortException, CannotModifyAuctionThatEndedException {
         auction.disable();
         auction.setDescription("exception expected");
     }
 
     @Test
-    public void testSetDescriptionSetsDescriptionCorrectly() throws DescriptionTooShortException, CannotModifyAuctionThatEndedException {
+    public void testSetDescriptionSetsDescriptionCorrectly() throws AuctionDescriptionTooShortException, CannotModifyAuctionThatEndedException {
         auction.setDescription("test description");
         assertEquals("test description", auction.getDescription());
     }
 
     @Test(expected = NullPointerException.class)
-    public void testSetDescriptionForNull() throws DescriptionTooShortException, CannotModifyAuctionThatEndedException {
+    public void testSetDescriptionForNull() throws AuctionDescriptionTooShortException, CannotModifyAuctionThatEndedException {
         auction.setDescription(null);
     }
 
-    @Test(expected = DescriptionTooShortException.class)
-    public void testSetDescriptionForDescriptionTooShort() throws DescriptionTooShortException, CannotModifyAuctionThatEndedException {
+    @Test(expected = AuctionDescriptionTooShortException.class)
+    public void testSetDescriptionForDescriptionTooShort() throws AuctionDescriptionTooShortException, CannotModifyAuctionThatEndedException {
         auction.setDescription("");
     }
 
     @Test(expected = CannotModifyAuctionThatEndedException.class)
-    public void testSetTitleWhenAuctionNotActive() throws TitleTooShortException, CannotModifyAuctionThatEndedException {
+    public void testSetTitleWhenAuctionNotActive() throws AuctionTitleTooShortException, CannotModifyAuctionThatEndedException {
         auction.disable();
         auction.setTitle("exception expected");
     }
 
     @Test
-    public void testSetTitleSetsTitleCorrectly() throws TitleTooShortException, CannotModifyAuctionThatEndedException {
+    public void testSetTitleSetsTitleCorrectly() throws AuctionTitleTooShortException, CannotModifyAuctionThatEndedException {
         auction.setTitle("12345");
         assertEquals("12345", auction.getTitle());
     }
 
     @Test(expected = NullPointerException.class)
-    public void testSetTitleForNull() throws TitleTooShortException, CannotModifyAuctionThatEndedException {
+    public void testSetTitleForNull() throws AuctionTitleTooShortException, CannotModifyAuctionThatEndedException {
         auction.setTitle(null);
     }
 
-    @Test(expected = TitleTooShortException.class)
-    public void testSetTitleForTitleTooShort() throws TitleTooShortException, CannotModifyAuctionThatEndedException {
+    @Test(expected = AuctionTitleTooShortException.class)
+    public void testSetTitleForTitleTooShort() throws AuctionTitleTooShortException, CannotModifyAuctionThatEndedException {
         auction.setTitle("1234");
     }
 

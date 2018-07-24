@@ -1,4 +1,8 @@
 import exceptions.*;
+import exceptions.auctionExceptions.CannotModifyAuctionThatEndedException;
+import exceptions.auctionExceptions.AuctionDescriptionTooShortException;
+import exceptions.auctionExceptions.AuctionTitleTooShortException;
+import exceptions.userExceptions.PasswordTooShortException;
 import models.Auction;
 import models.Category;
 import models.Offer;
@@ -13,7 +17,7 @@ import static junit.framework.TestCase.assertNotNull;
 public class OfferTest {
 
     @Test
-    public void testOfferNotNull() throws PriceNegativeValueException, DescriptionTooShortException, TitleTooShortException, PasswordTooShortException, CannotModifyAuctionThatEndedException {
+    public void testOfferNotNull() throws PriceNegativeValueException, AuctionDescriptionTooShortException, AuctionTitleTooShortException, PasswordTooShortException, CannotModifyAuctionThatEndedException {
         //given
         User user = new User("Jacek", "Placek","burek");
         Category category = new Category("Category");
@@ -25,7 +29,7 @@ public class OfferTest {
     }
 
     @Test
-    public void testOfferAssert() throws PriceNegativeValueException, DescriptionTooShortException, TitleTooShortException, PasswordTooShortException, CannotModifyAuctionThatEndedException {
+    public void testOfferAssert() throws PriceNegativeValueException, AuctionDescriptionTooShortException, AuctionTitleTooShortException, PasswordTooShortException, CannotModifyAuctionThatEndedException {
         //given
         User second = new User("Henry", "James", "Zwrotnik");
         Category category = new Category("Category");
@@ -40,7 +44,7 @@ public class OfferTest {
     }
 
     @Test (expected = NullPointerException.class)
-    public void testSetPriceIfNewPriceIsNull() throws PasswordTooShortException, DescriptionTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException, TitleTooShortException {
+    public void testSetPriceIfNewPriceIsNull() throws PasswordTooShortException, AuctionDescriptionTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException, AuctionTitleTooShortException {
 
         //given
         User second = new User("Henry", "James", "Zwrotnik");
@@ -52,7 +56,7 @@ public class OfferTest {
    }
 
    @Test (expected = PriceNegativeValueException.class)
-    public void testSetPriceIsNegativeValue() throws PasswordTooShortException, DescriptionTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException, TitleTooShortException {
+    public void testSetPriceIsNegativeValue() throws PasswordTooShortException, AuctionDescriptionTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException, AuctionTitleTooShortException {
 
        User second = new User("Henry", "James", "Zwrotnik");
        Category category = new Category("Category");
@@ -65,7 +69,7 @@ public class OfferTest {
 
    @Test
 
-    public void testSetPriceIsPositive() throws PasswordTooShortException, DescriptionTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException, TitleTooShortException {
+    public void testSetPriceIsPositive() throws PasswordTooShortException, AuctionDescriptionTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException, AuctionTitleTooShortException {
 
        User second = new User("Henry", "James", "Zwrotnik");
        Category category = new Category("Category");
@@ -80,7 +84,7 @@ public class OfferTest {
 
    @Test
 
-    public void testSetPriceSetLowerPrice() throws PasswordTooShortException, DescriptionTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException, TitleTooShortException {
+    public void testSetPriceSetLowerPrice() throws PasswordTooShortException, AuctionDescriptionTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException, AuctionTitleTooShortException {
 
        User second = new User("Henry", "James", "Zwrotnik");
        Category category = new Category("Category");

@@ -1,7 +1,7 @@
 package models;
 
-import exceptions.NoSuchUserException;
-import exceptions.SuchUserAlreadyExistsException;
+import exceptions.userExceptions.NoSuchUserException;
+import exceptions.userExceptions.SuchUserAlreadyExistsException;
 
 import java.util.HashMap;
 import java.util.Map;

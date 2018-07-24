@@ -1,6 +1,12 @@
 package models;
 
 import exceptions.*;
+import exceptions.offerExceptions.CannotBidAuctionThatEndedException;
+import exceptions.offerExceptions.CannotBidUsersOwnAuctionException;
+import exceptions.offerExceptions.CannotOutbidUsersOwnBidException;
+import exceptions.auctionExceptions.CannotModifyAuctionThatEndedException;
+import exceptions.auctionExceptions.AuctionDescriptionTooShortException;
+import exceptions.auctionExceptions.AuctionTitleTooShortException;
 
 import java.math.BigDecimal;
 import java.util.LinkedList;
@@ -17,7 +23,7 @@ public class Auction {
     private BigDecimal startingPrice;
     private boolean isActive = true;
 
-    public Auction(User owner, Category category, String description, String title, BigDecimal startingPrice) throws DescriptionTooShortException, TitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
+    public Auction(User owner, Category category, String description, String title, BigDecimal startingPrice) throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
         setCategory(category);
         setOwner(owner);
         setDescription(description);
@@ -65,22 +71,22 @@ public class Auction {
         this.category = category;
     }
 
-    public void setDescription(String description) throws DescriptionTooShortException, CannotModifyAuctionThatEndedException {
+    public void setDescription(String description) throws AuctionDescriptionTooShortException, CannotModifyAuctionThatEndedException {
         if (!this.isActive) {
             throw new CannotModifyAuctionThatEndedException();
         }
         if (description.length() == 0) {
-            throw new DescriptionTooShortException();
+            throw new AuctionDescriptionTooShortException();
         }
         this.description = description;
     }
 
-    public void setTitle(String title) throws TitleTooShortException, CannotModifyAuctionThatEndedException {
+    public void setTitle(String title) throws AuctionTitleTooShortException, CannotModifyAuctionThatEndedException {
         if (!this.isActive) {
             throw new CannotModifyAuctionThatEndedException();
         }
         if (title.length() < 5) {
-            throw new TitleTooShortException();
+            throw new AuctionTitleTooShortException();
         }
         this.title = title;
     }

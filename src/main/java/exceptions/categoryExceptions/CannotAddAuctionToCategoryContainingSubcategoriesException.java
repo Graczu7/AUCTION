@@ -1,0 +1,4 @@
+package exceptions.categoryExceptions;
+
+public class CannotAddAuctionToCategoryContainingSubcategoriesException extends CategoryException {
+}

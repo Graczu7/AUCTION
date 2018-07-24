@@ -1,8 +1,8 @@
 package controllers;
 
-import exceptions.CannotBidAuctionThatEndedException;
-import exceptions.CannotBidUsersOwnAuctionException;
-import exceptions.CannotOutbidUsersOwnBidException;
+import exceptions.offerExceptions.CannotBidAuctionThatEndedException;
+import exceptions.offerExceptions.CannotBidUsersOwnAuctionException;
+import exceptions.offerExceptions.CannotOutbidUsersOwnBidException;
 import exceptions.PriceValueTooLowException;
 import models.Auction;
 import models.Offer;

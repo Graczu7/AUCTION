@@ -1,6 +1,6 @@
 package models;
 
-import exceptions.*;
+import exceptions.auctionExceptions.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,24 +24,24 @@ public class AuctionsDatabase {
         return instance;
     }
 
-    public void addAuctionToDatabase(Auction auctionToAdd) throws SuchAuctionAlreadyExistsException, CannotAddAuctionThatIsNotActiveException {
+    public void addAuctionToDatabase(Auction auctionToAdd) throws AuctionAlreadyInDatabaseException, CannotAddInactiveAuctionToDatabaseException {
         if (!auctionToAdd.isActive()){
-            throw new CannotAddAuctionThatIsNotActiveException();
+            throw new CannotAddInactiveAuctionToDatabaseException();
         }
         if (this.activeAuctions.containsKey(auctionToAdd.getId())){
-            throw new SuchAuctionAlreadyExistsException();
+            throw new AuctionAlreadyInDatabaseException();
         }
         this.activeAuctions.put(auctionToAdd.getId(), auctionToAdd);
     }
 
-    public void archiveAuction(Auction auction) throws AuctionCanBeExistsInOnlyOneDatabaseException, AuctionAlreadyArchivedException {
+    public void archiveAuction(Auction auction) throws AuctionCanExistInOnlyOneDatabaseException, AuctionAlreadyArchivedInDatabaseException {
         if (activeAuctions.containsKey(auction.getId()) && !archivedAuctions.containsKey(auction.getId())){
             archivedAuctions.put(auction.getId(), auction);
             activeAuctions.remove(auction.getId());
         } else if (activeAuctions.containsKey(auction.getId()) && archivedAuctions.containsKey(auction.getId())){
-            throw new AuctionCanBeExistsInOnlyOneDatabaseException();
+            throw new AuctionCanExistInOnlyOneDatabaseException();
         } else if (!activeAuctions.containsKey(auction.getId()) && archivedAuctions.containsKey(auction.getId())){
-            throw new AuctionAlreadyArchivedException();
+            throw new AuctionAlreadyArchivedInDatabaseException();
         } else {
             throw new UnknownError();
         }
@@ -63,13 +63,13 @@ public class AuctionsDatabase {
         return auctions;
     }
 
-    public Auction getAuctionById(Integer id) throws NoSuchAuctionInDatabaseException {
+    public Auction getAuctionById(Integer id) throws AuctionNotFoundInDatabaseException {
         if (activeAuctions.containsKey(id)){
             return activeAuctions.get(id);
         } else if (archivedAuctions.containsKey(id)){
             return archivedAuctions.get(id);
         } else {
-            throw new NoSuchAuctionInDatabaseException();
+            throw new AuctionNotFoundInDatabaseException();
         }
     }
 }

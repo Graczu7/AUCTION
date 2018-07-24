@@ -1,4 +1,4 @@
-import exceptions.PasswordTooShortException;
+import exceptions.userExceptions.PasswordTooShortException;
 import models.User;
 import org.junit.Assert;
 import org.junit.Test;
