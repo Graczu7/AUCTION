@@ -1,5 +1,4 @@
 import exceptions.*;
-import helpers.Categories;
 import models.Auction;
 import models.Category;
 import models.Offer;
@@ -18,7 +17,7 @@ public class AuctionTest {
     private boolean isSetupDone = false;
 
     @Before
-    public void oneTimeSetup() throws PasswordTooShortException {
+    public void oneTimeSetUp() throws PasswordTooShortException {
         if (!isSetupDone){
             category = new Category("Category");
             seller = new User("Name", "Login", "Password");
@@ -28,7 +27,7 @@ public class AuctionTest {
     }
 
     @Before
-    public void setup() throws DescriptionTooShortException, TitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
+    public void setUp() throws DescriptionTooShortException, TitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
         auction = new Auction(seller, category, "Description", "Title", BigDecimal.valueOf(3.5));
     }
 
