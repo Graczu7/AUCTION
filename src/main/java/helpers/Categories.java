@@ -1,12 +1,13 @@
 package helpers;
 
+import exceptions.categoryExceptions.CannotAddSubcategoryToCategoryContaingAuctionException;
 import models.Category;
 
 
 public class Categories {
 
 
-    public static Category initializeCategories() {
+    public static Category initializeCategories() throws CannotAddSubcategoryToCategoryContaingAuctionException {
 
         Category parentcategory = new Category(null);
 

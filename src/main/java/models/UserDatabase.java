@@ -1,7 +1,7 @@
 package models;
 
-import exceptions.userExceptions.NoSuchUserException;
-import exceptions.userExceptions.SuchUserAlreadyExistsException;
+import exceptions.userExceptions.NoSuchUserInDatabaseException;
+import exceptions.userExceptions.LoginAlreadyExistsInDatabaseException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,18 +22,18 @@ public class UserDatabase {
         return instance;
     }
 
-    public User findUser(String login, String password) throws NoSuchUserException {
+    public User findUser(String login, String password) throws NoSuchUserInDatabaseException {
         if (this.users.containsKey(login) &&
                 this.users.get(login).getPassword().equals(password)) {
             return this.users.get(login);
         } else {
-            throw new NoSuchUserException();
+            throw new NoSuchUserInDatabaseException();
         }
     }
 
-    public void addUserToDataBase(User user) throws SuchUserAlreadyExistsException {
+    public void addUserToDataBase(User user) throws LoginAlreadyExistsInDatabaseException {
         if(this.users.containsKey(user.getLogin())){
-            throw new SuchUserAlreadyExistsException();
+            throw new LoginAlreadyExistsInDatabaseException();
         }
         this.users.put(user.getLogin(), user);
     }

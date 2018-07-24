@@ -1,6 +1,10 @@
 package controllers;
 
-import exceptions.userExceptions.NoSuchUserException;
+import exceptions.userExceptions.AnotherUserAlreadyLoggedInException;
+import exceptions.userExceptions.NoSuchUserInDatabaseException;
+import exceptions.userExceptions.PasswordTooShortException;
+import exceptions.userExceptions.LoginAlreadyExistsInDatabaseException;
+import models.LoggedUser;
 import models.User;
 import models.UserDatabase;
 import views.UserView;
@@ -8,17 +12,32 @@ import views.UserView;
 public class UserController {
 
     public static User login(String login, String password) {
+        User user = null;
         try {
-            User user = UserDatabase.getInstance().findUser(login, password);
+            user = UserDatabase.getInstance().findUser(login, password);
+            user = LoggedUser.getInstance().login(user);
             UserView.printUserLoginConfirmation(user);
             return user;
-
-        } catch (NoSuchUserException e) {
+        } catch (NoSuchUserInDatabaseException e) {
+            UserView.printUserDoesNotExistError(login);
             return null;
+        } catch (AnotherUserAlreadyLoggedInException e) {
+            UserView.printDifferentUserLoggedIn(user);
+            return user;
         }
     }
 
-//    public static boolean register(String login, String password) {
-//
-//    }
+    public boolean register(String name, String login, String password) {
+        try {
+            User user = new User(name, login, password);
+            UserDatabase.getInstance().addUserToDataBase(user);
+            return true;
+        } catch (PasswordTooShortException e){
+            UserView.printUserPasswordTooShortError();
+            return false;
+        } catch (LoginAlreadyExistsInDatabaseException e){
+            UserView.printLoginTakenError(login);
+            return false;
+        }
+    }
 }
