@@ -1,4 +1,4 @@
 package exceptions;
 
-public class CannotAddSubcategoryToCategoryContaingAuctionException {
+public class CannotAddSubcategoryToCategoryContaingAuctionException extends Exception {
 }

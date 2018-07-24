@@ -10,38 +10,40 @@ public class Categories {
 
         Category parentcategory = new Category(null);
 
-        Category elektronika = new Category("Elektronika");
-        Category komputery = new Category("Komputery");
-        Category laptopy = new Category("Laptopy");
-        Category stacjonarne = new Category("Stacjonarne");
-        Category telefony = new Category("Telefony");
-        Category iphone = new Category("iPhone");
-        Category android = new Category("Android");
+        Category electronics = new Category("Electronics");
+        Category computers = new Category("Computers");
+        Category laptops = new Category("Laptops");
+        Category desctops = new Category("Desctops");
+        Category phones = new Category("Phones");
+        Category iphones = new Category("iPhones");
+        Category androids = new Category("Androids");
 
-        Category motoryzacja = new Category("Motoryzacja");
-        Category samochody = new Category("Samochody");
-        Category osobowe = new Category("Osobowe");
-        Category ciezarowe = new Category("Ciezarowe");
-        Category skutery = new Category("Skutery");
+        Category automotive = new Category("Automotive");
+        Category cars = new Category("Cars");
+        Category vans = new Category("Vans");
+        Category trucks = new Category("Trucks");
+        Category motorcycles = new Category("Motorcycles");
 
-        parentcategory.addSubcategory(elektronika);
-        parentcategory.addSubcategory(motoryzacja);
+        parentcategory.addSubcategory(electronics);
+        parentcategory.addSubcategory(automotive);
 
-        elektronika.addSubcategory(komputery);
-        komputery.addSubcategory(laptopy);
-        komputery.addSubcategory(stacjonarne);
-        elektronika.addSubcategory(telefony);
-        telefony.addSubcategory(iphone);
-        telefony.addSubcategory(android);
+        electronics.addSubcategory(computers);
+        computers.addSubcategory(laptops);
+        computers.addSubcategory(desctops);
+        electronics.addSubcategory(phones);
+        phones.addSubcategory(iphones);
+        phones.addSubcategory(androids);
 
-        motoryzacja.addSubcategory(samochody);
-        samochody.addSubcategory(osobowe);
-        samochody.addSubcategory(ciezarowe);
+        automotive.addSubcategory(cars);
+        cars.addSubcategory(vans);
+        cars.addSubcategory(trucks);
 
-        motoryzacja.addSubcategory(skutery);
+        automotive.addSubcategory(motorcycles);
 
 
         return parentcategory;
     }
+
+
 
 }

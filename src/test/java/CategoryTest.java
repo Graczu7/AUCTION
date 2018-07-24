@@ -1,5 +1,6 @@
 import exceptions.*;
 
+import helpers.Categories;
 import models.Auction;
 import models.Category;
 
@@ -8,11 +9,12 @@ import models.User;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 import static helpers.Categories.initializeCategories;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class CategoryTest {
 
@@ -35,7 +37,7 @@ public class CategoryTest {
         Category category = initializeCategories();
 
         //Then
-        assertTrue(category.isSubcategoryPresent("iPhone"));
+        assertTrue(category.isSubcategoryPresent("iPhones"));
     }
 
 
@@ -129,6 +131,61 @@ public class CategoryTest {
         //Then
         assertTrue(subcategory.getSubcategories().contains(category));
 
+    }
+
+
+    @Test
+    public void testGetSubcategoryByName(){
+        //Given
+        Category electronics = new Category("Electronics");
+        Category komputery = new Category("Komputery");
+        electronics.addSubcategory(komputery);
+
+        //When
+        Category returnedCategory = electronics.getSubcategoryByName("Komputery");
+
+        //Then
+        assertEquals(komputery, returnedCategory);
+
+
+    }
+
+    @Test
+    public void testAsListNotNull(){
+        //Given
+        Category elektronika = new Category("Elektronika");
+
+        //When
+        List<Category> result = elektronika.asList();
+
+        //Then
+        assertNotNull(result);
+    }
+
+    @Test
+    public void testAsListIsEmpty(){
+        //Given
+        Category category = initializeCategories();
+
+        //When
+        List<Category> categoryList = category.asList();
+
+        //Then
+        assertFalse(categoryList.isEmpty());
+    }
+
+    @Test
+    public void testAsListFirstCategory(){
+        //Given
+        Category category = initializeCategories();
+
+        //When
+        Category expected = category.getSubcategoryByName("Electronics");
+
+        List<Category> categoryList = category.asList();
+
+        //Then
+        assertTrue(categoryList.contains(expected));
     }
 
 
