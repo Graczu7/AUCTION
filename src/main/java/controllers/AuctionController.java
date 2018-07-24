@@ -14,9 +14,10 @@ public class AuctionController {
         category.addAuction(auction);
     }
 
-    public static void archiveAuction(Auction auction) throws AuctionAlreadyArchivedInDatabaseException, AuctionCanExistInOnlyOneDatabaseException {
+    public static void archiveAuction(Auction auction, User user) throws AuctionAlreadyArchivedInDatabaseException, AuctionCanExistInOnlyOneDatabaseException {
         if (auction.isAuctionWon()){
             AuctionsDatabase.getInstance().archiveAuction(auction);
+//            user.addAuctionWon(auction);
             auction.disable();
         }
     }
