@@ -1,26 +1,29 @@
 package controllers;
 
+import exceptions.auctionExceptions.*;
+import exceptions.categoryExceptions.CannotAddAuctionToCategoryContainingSubcategoriesException;
 import exceptions.offerExceptions.CannotBidAuctionThatEndedException;
 import exceptions.offerExceptions.CannotBidUsersOwnAuctionException;
 import exceptions.offerExceptions.CannotOutbidUsersOwnBidException;
 import exceptions.PriceValueTooLowException;
-import models.Auction;
-import models.Offer;
+import models.*;
 
 public class AuctionController {
-    private Auction auction;
 
-    public AuctionController(Auction auction) {
-        this.auction = auction;
+    public static void addAuction(Auction auction, User user, Category category) throws AuctionAlreadyInDatabaseException, CannotAddInactiveAuctionToDatabaseException, CannotAddAuctionToCategoryContainingSubcategoriesException {
+        AuctionsDatabase.getInstance().addAuctionToDatabase(auction);
+//        user.addOwnedAuction(auction);
+        category.addAuction(auction);
     }
 
-    public void archiveAuction(){
+    public static void archiveAuction(Auction auction) throws AuctionAlreadyArchivedInDatabaseException, AuctionCanExistInOnlyOneDatabaseException {
         if (auction.isAuctionWon()){
+            AuctionsDatabase.getInstance().archiveAuction(auction);
             auction.disable();
         }
     }
 
-    public void bid(Offer offer) throws CannotBidUsersOwnAuctionException, CannotBidAuctionThatEndedException, PriceValueTooLowException, CannotOutbidUsersOwnBidException {
+    public static void bid(Auction auction, Offer offer) throws CannotBidUsersOwnAuctionException, CannotBidAuctionThatEndedException, PriceValueTooLowException, CannotOutbidUsersOwnBidException {
         auction.setNewOffer(offer);
     }
 }
