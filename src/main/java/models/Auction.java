@@ -4,16 +4,19 @@ import exceptions.*;
 
 import java.math.BigDecimal;
 import java.util.LinkedList;
+import java.util.Objects;
 
 public class Auction {
     private User owner;
+    private Category category;
     private LinkedList<Offer> offersList;
     private String description;
     private String title;
     private BigDecimal startingPrice;
     private boolean isActive = true;
 
-    public Auction(User owner, String description, String title, BigDecimal startingPrice) throws DescriptionTooShortException, TitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
+    public Auction(User owner, Category category, String description, String title, BigDecimal startingPrice) throws DescriptionTooShortException, TitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
+       setCategory(category);
         setOwner(owner);
         setDescription(description);
         setTitle(title);
@@ -49,6 +52,13 @@ public class Auction {
             throw new NullPointerException();
         }
         this.owner = owner;
+    }
+
+    public void setCategory(Category category) throws NullPointerException {
+        if (category == null){
+            throw new NullPointerException();
+        }
+        this.category = category;
     }
 
     public void setDescription(String description) throws DescriptionTooShortException, CannotModifyAuctionThatEndedException {
@@ -93,6 +103,10 @@ public class Auction {
         return owner;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
     public LinkedList<Offer> getOffersList() {
         return offersList;
     }
@@ -115,5 +129,25 @@ public class Auction {
 
     public boolean isActive() {
         return isActive;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Auction auction = (Auction) o;
+        return isActive == auction.isActive &&
+                Objects.equals(owner, auction.owner) &&
+                Objects.equals(category, auction.category) &&
+                Objects.equals(offersList, auction.offersList) &&
+                Objects.equals(description, auction.description) &&
+                Objects.equals(title, auction.title) &&
+                Objects.equals(startingPrice, auction.startingPrice);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(owner, category, offersList, description, title, startingPrice, isActive);
     }
 }

@@ -5,7 +5,9 @@ import java.util.Set;
 
 public class Category {
 
-
+    //TODO getSubcategoryByName
+    //TODO subcategoriesAsList
+    //TODO getCategoryTree
     private String name;
     private Set<Auction> auctions;
     private Set<Category> subcategories;

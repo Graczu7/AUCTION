@@ -1,5 +1,6 @@
 import exceptions.*;
 import models.Auction;
+import models.Category;
 import models.Offer;
 import models.User;
 import org.junit.Assert;
@@ -15,7 +16,8 @@ public class OfferTest {
     public void testOfferNotNull() throws PriceNegativeValueException, DescriptionTooShortException, TitleTooShortException, PasswordTooShortException, CannotModifyAuctionThatEndedException {
         //given
         User user = new User("Jacek", "Placek","burek");
-        Auction salceson = new Auction(user, "Salceson","dasdfas", BigDecimal.valueOf(23.3));
+        Category category = new Category("Category");
+        Auction salceson = new Auction(user, category, "Salceson","dasdfas", BigDecimal.valueOf(23.3));
         Offer offer = new Offer(user, salceson, BigDecimal.valueOf(99));
 
         //then
@@ -26,7 +28,8 @@ public class OfferTest {
     public void testOfferAssert() throws PriceNegativeValueException, DescriptionTooShortException, TitleTooShortException, PasswordTooShortException, CannotModifyAuctionThatEndedException {
         //given
         User second = new User("Henry", "James", "Zwrotnik");
-        Auction salceson = new Auction(second, "Salceson","dasdfas", BigDecimal.valueOf(23.3));
+        Category category = new Category("Category");
+        Auction salceson = new Auction(second, category, "Salceson","dasdfas", BigDecimal.valueOf(23.3));
         Offer offer = new Offer(second, salceson, BigDecimal.valueOf(99));
 
         //when
