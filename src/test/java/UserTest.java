@@ -13,7 +13,7 @@ public class UserTest {
 
     @Test
     public void testByConstructorIsNull() throws PasswordTooShortException {
-        User user = new User("name", "Login", null);
+        User user = new User("name", "Login", "password");
         user.setPassword("password");
         Assert.assertNotNull(user);
     }
