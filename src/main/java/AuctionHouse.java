@@ -1,4 +1,3 @@
-import exceptions.userExceptions.UserNotLoggedInException;
 import helpers.State;
 import models.LoggedUser;
 import views.UserView;
@@ -13,7 +12,7 @@ public class AuctionHouse {
         this.state = State.MAIN_MENU;
     }
 
-    public static void run() {
+    public void run() {
         UserView.printGreetings();
 
         while (true) {
@@ -21,19 +20,27 @@ public class AuctionHouse {
             UserView.printMenu();
             int usersInput = scanner.nextInt();
 
-            mainMenu(usersInput);
+            switch (state) {
+                case MAIN_MENU:
+                    mainMenu(usersInput);
+                    break;
+                case SIGN_IN:
+
+                    break;
+                case SING_UP:
+                    
+                    break;
+            }
 
         }
     }
 
 
-    private static void mainMenu(int usersInput) {
-        try {
-            LoggedUser.getInstance().getUser();
-        } catch (UserNotLoggedInException e) {
+    private State mainMenu(int usersInput) {
+        if (LoggedUser.getInstance().isLoggedIn()) {
             switch (usersInput) {
                 case 1:
-                    loginMenu();
+
                     break;
                 case 2:
 
@@ -43,10 +50,12 @@ public class AuctionHouse {
 
                     break;
             }
+        } else {
+
         }
     }
 
-    private static void loginMenu(){
+    private static void loginMenu() {
 
     }
 

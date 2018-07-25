@@ -39,7 +39,7 @@ public class LoggedUser {
         return user;
     }
 
-    public boolean isUserLoggedIn(){
+    public boolean isLoggedIn(){
         return this.user != null;
     }
 }

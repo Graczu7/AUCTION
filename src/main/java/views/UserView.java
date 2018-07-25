@@ -1,6 +1,5 @@
 package views;
 
-import exceptions.userExceptions.UserNotLoggedInException;
 import models.LoggedUser;
 import models.User;
 
@@ -12,7 +11,7 @@ public class UserView {
 
     public static void printMenu() {
 
-        if (LoggedUser.getInstance().isUserLoggedIn()){
+        if (LoggedUser.getInstance().isLoggedIn()){
             System.out.println("Menu");
             System.out.println("1. Show categories");
             System.out.println("2. Show auctions");
