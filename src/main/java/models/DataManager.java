@@ -1,33 +1,42 @@
 package models;
 
+import exceptions.userExceptions.PasswordTooShortException;
+
 import java.io.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
 
 public class DataManager {
 
-    public void userFileReader(User user) {
+//    public void userFileReader() {
+//
+//        String fileName = "userfile.txt";
+//        String line = null;
+//
+//        try {
+//            FileReader fileReader = new FileReader(fileName);
+//
+//            BufferedReader bufferedReader = new BufferedReader(fileReader);
+//
+//            while ((line = bufferedReader.readLine()) != null) {
+//                System.out.println(line);
+//            }
+//
+//            bufferedReader.close();
+//        } catch (FileNotFoundException ex) {
+//            System.out.println("Unable to open file '" + fileName + "'");
+//        } catch (IOException ex) {
+//            System.out.println("Error reading file '" + fileName + "'");
+//
+//        }
+//    }
 
-        String fileName = "userfile.txt";
-        String line = null;
+    public void userFileWriter(List<User> users){
 
-        try {
-            FileReader fileReader = new FileReader(fileName);
 
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-
-            while ((line = bufferedReader.readLine()) != null) {
-                System.out.println(line);
-            }
-
-            bufferedReader.close();
-        } catch (FileNotFoundException ex) {
-            System.out.println("Unable to open file '" + fileName + "'");
-        } catch (IOException ex) {
-            System.out.println("Error reading file '" + fileName + "'");
-
-        }
-    }
-
-    public void userFileWriter(User user){
 
         String fileName = "userfile.txt";
 
@@ -37,13 +46,14 @@ public class DataManager {
 
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
-            // Note that write() does not automatically
-            // append a newline character.
-            bufferedWriter.write("Hello there,");
-            bufferedWriter.write(" here is some text.");
-            bufferedWriter.newLine();
-            bufferedWriter.write("We are writing");
-            bufferedWriter.write(" the text to the file.");
+            for(User user : users) {
+                bufferedWriter.write(user.getName());
+                bufferedWriter.write(",");
+                bufferedWriter.write(user.getLogin());
+                bufferedWriter.write(",");
+                bufferedWriter.write(user.getPassword());
+                bufferedWriter.write("\n");
+            }
 
             bufferedWriter.close();
         }
@@ -53,4 +63,18 @@ public class DataManager {
         }
     }
 
+    public static void main(String[] args) throws PasswordTooShortException {
+
+        List<User> users = new ArrayList<>();
+
+        users.add(new User("jan", "kowalski", "123456"));
+        users.add(new User("maria", "kowalska", "1aa23456"));
+        users.add(new User("ula", "nowak", "1234vv56"));
+
+
+        DataManager dataManager = new DataManager();
+        dataManager.userFileWriter(users);
+    }
 }
+
+
