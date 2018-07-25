@@ -54,7 +54,7 @@ public class UserTest {
     }
 
     @Test
-    public void testByCreateOwnedAuctions() throws PasswordTooShortException, DescriptionTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException, TitleTooShortException {
+    public void testByCreateOwnedAuctions() throws PasswordTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException, AuctionTitleTooShortException, AuctionDescriptionTooShortException {
         User user = new User("Name", "Login", "password");
         Category category = new Category("Name");
         Auction auction = new Auction(user, category, "description", "title", BigDecimal.valueOf(10));
@@ -64,7 +64,7 @@ public class UserTest {
     }
 
     @Test
-    public void testByCreateWoAuctions() throws PasswordTooShortException, DescriptionTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException, TitleTooShortException {
+    public void testByCreateWoAuctions() throws PasswordTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException, AuctionTitleTooShortException, AuctionDescriptionTooShortException {
         User user = new User("Name", "Login", "password");
         Category category = new Category("Name");
         Auction auction = new Auction(user, category, "description", "title", BigDecimal.valueOf(10));
