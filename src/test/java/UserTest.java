@@ -45,7 +45,7 @@ public class UserTest {
     @Test
     public void testByCreateUsersOffer() throws PriceNegativeValueException, PasswordTooShortException, CannotModifyAuctionThatEndedException, AuctionTitleTooShortException, AuctionDescriptionTooShortException {
         User user = new User("Name", "Login", "password");
-        Category category = new Category("name");
+        Category category = new Category("Name");
         Auction auction = new Auction(user, category, "description", "title", BigDecimal.valueOf(10));
         Offer offer = new Offer(user, auction, BigDecimal.valueOf(11));
         ArrayList<Offer> usersOffer = new ArrayList<Offer>();
@@ -53,4 +53,23 @@ public class UserTest {
         Assert.assertEquals(offer, usersOffer.get(0));
     }
 
+    @Test
+    public void testByCreateOwnedAuctions() throws PasswordTooShortException, DescriptionTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException, TitleTooShortException {
+        User user = new User("Name", "Login", "password");
+        Category category = new Category("Name");
+        Auction auction = new Auction(user, category, "description", "title", BigDecimal.valueOf(10));
+        ArrayList<Auction> ownedAuctions = new ArrayList<Auction>();
+        ownedAuctions.add(auction);
+        Assert.assertEquals(auction, ownedAuctions.get(0));
+    }
+
+    @Test
+    public void testByCreateWoAuctions() throws PasswordTooShortException, DescriptionTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException, TitleTooShortException {
+        User user = new User("Name", "Login", "password");
+        Category category = new Category("Name");
+        Auction auction = new Auction(user, category, "description", "title", BigDecimal.valueOf(10));
+        ArrayList<Auction> wonAuctions = new ArrayList<Auction>();
+        wonAuctions.add(auction);
+        Assert.assertEquals(auction, wonAuctions.get(0));
+    }
 }
