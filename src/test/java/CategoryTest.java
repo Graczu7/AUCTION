@@ -3,6 +3,8 @@ import exceptions.*;
 import exceptions.auctionExceptions.CannotModifyAuctionThatEndedException;
 import exceptions.auctionExceptions.AuctionDescriptionTooShortException;
 import exceptions.auctionExceptions.AuctionTitleTooShortException;
+import exceptions.categoryExceptions.CannotAddAuctionToCategoryContainingSubcategoriesException;
+import exceptions.categoryExceptions.CannotAddSubcategoryToCategoryContaingAuctionException;
 import exceptions.userExceptions.PasswordTooShortException;
 import models.Auction;
 import models.Category;
@@ -20,7 +22,7 @@ import static org.junit.Assert.*;
 public class CategoryTest {
 
     @Test
-    public void testInitializeCategoriesNotNull(){
+    public void testInitializeCategoriesNotNull() throws CannotAddSubcategoryToCategoryContaingAuctionException {
         //Given
 
         //When
@@ -31,7 +33,7 @@ public class CategoryTest {
     }
 
     @Test
-    public void testInitializeCategoriesCreateSubcategory(){
+    public void testInitializeCategoriesCreateSubcategory() throws CannotAddSubcategoryToCategoryContaingAuctionException {
         //Given
 
         //When
@@ -102,7 +104,7 @@ public class CategoryTest {
     }
 
     @Test
-    public void testAddAuction() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceNegativeValueException, PasswordTooShortException, CannotModifyAuctionThatEndedException {
+    public void testAddAuction() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceNegativeValueException, PasswordTooShortException, CannotModifyAuctionThatEndedException, CannotAddAuctionToCategoryContainingSubcategoriesException {
         //Given
         User user = new User("Kowalski", "kowalski", "abc123");
         Auction auction = new Auction(user, new Category("Category"), "desc1", "auctionTit", BigDecimal.valueOf(123));
@@ -116,7 +118,7 @@ public class CategoryTest {
     }
 
     @Test
-    public void testAddSubcategories() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceNegativeValueException, PasswordTooShortException, CannotModifyAuctionThatEndedException {
+    public void testAddSubcategories() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceNegativeValueException, PasswordTooShortException, CannotModifyAuctionThatEndedException, CannotAddAuctionToCategoryContainingSubcategoriesException, CannotAddSubcategoryToCategoryContaingAuctionException {
         //Given
         User user = new User("Nowak", "kowalski", "abc123");
 
@@ -136,7 +138,7 @@ public class CategoryTest {
 
 
     @Test
-    public void testGetSubcategoryByName(){
+    public void testGetSubcategoryByName() throws CannotAddSubcategoryToCategoryContaingAuctionException {
         //Given
         Category electronics = new Category("Electronics");
         Category komputery = new Category("Komputery");
@@ -164,7 +166,7 @@ public class CategoryTest {
     }
 
     @Test
-    public void testAsListIsEmpty(){
+    public void testAsListIsEmpty() throws CannotAddSubcategoryToCategoryContaingAuctionException {
         //Given
         Category category = initializeCategories();
 
@@ -176,7 +178,7 @@ public class CategoryTest {
     }
 
     @Test
-    public void testAsListFirstCategory(){
+    public void testAsListFirstCategory() throws CannotAddSubcategoryToCategoryContaingAuctionException {
         //Given
         Category category = initializeCategories();
 
