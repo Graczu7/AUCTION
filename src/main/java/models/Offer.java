@@ -68,6 +68,7 @@ public class Offer {
     }
 
     public void setPrice(BigDecimal price) throws PriceNegativeValueException {
+        // user can give item away for free
         if (price.compareTo(BigDecimal.valueOf(0)) < 0){
             throw new PriceNegativeValueException();
         }
