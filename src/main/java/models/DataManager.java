@@ -1,5 +1,9 @@
 package models;
 
 public class DataManager {
-    //TODO
+
+    public void userFile(User user){
+        
+    }
+
 }
