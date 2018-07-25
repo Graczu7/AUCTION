@@ -297,7 +297,7 @@ public class AuctionTest {
         User bidder = new User("buyer", "buyer", "password");
         Offer firstOffer = new Offer(bidder, auction, BigDecimal.valueOf(5));
 
-        User secondBidder = new User("buyer", "buyer", "password");
+        User secondBidder = new User("buyer", "secondbuyer", "password");
         Offer secondOffer = new Offer(secondBidder, auction, BigDecimal.valueOf(7));
 
         auction.setNewOffer(firstOffer);
@@ -311,10 +311,10 @@ public class AuctionTest {
         User bidder = new User("buyer", "buyer", "password");
         Offer firstOffer = new Offer(bidder, auction, BigDecimal.valueOf(5));
 
-        User secondBidder = new User("buyer", "buyer", "password");
+        User secondBidder = new User("secondbidder", "secondbidder", "password");
         Offer secondOffer = new Offer(secondBidder, auction, BigDecimal.valueOf(7));
 
-        User thirdBidder = new User("buyer", "buyer", "password");
+        User thirdBidder = new User("thirdbidder", "thirdbidder", "password");
         Offer thirdOffer = new Offer(thirdBidder, auction, BigDecimal.valueOf(10));
 
         auction.setNewOffer(firstOffer);

@@ -1,8 +1,31 @@
 package views;
 
+import models.LoggedUser;
 import models.User;
 
 public class UserView {
+    public static void printGreetings(){
+        System.out.println("Hello User!");
+        System.out.println("What would you like to do?");
+    }
+
+    public static void printMenu() {
+
+        if (LoggedUser.getInstance().isLoggedIn()){
+            System.out.println("Menu");
+            System.out.println("1. Show categories");
+            System.out.println("2. Show auctions");
+            System.out.println("3. Sign Out");
+        } else {
+            System.out.println("Menu");
+            System.out.println("1. Sign in");
+            System.out.println("2. Sign up");
+            System.out.println("3. Exit");
+        }
+    }
+
+
+
     public static void printUserLoginConfirmation(User user) {
         System.out.println("Logged: " + user);
     }

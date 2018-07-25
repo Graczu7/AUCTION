@@ -25,10 +25,21 @@ public class LoggedUser {
         throw new AnotherUserAlreadyLoggedInException();
     }
 
+    public void logout() throws UserNotLoggedInException {
+        if (this.user != null){
+            this.user = null;
+        }
+        throw new UserNotLoggedInException();
+    }
+
     public User getUser() throws UserNotLoggedInException {
         if (this.user == null) {
             throw new UserNotLoggedInException();
         }
         return user;
+    }
+
+    public boolean isLoggedIn(){
+        return this.user != null;
     }
 }

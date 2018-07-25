@@ -32,10 +32,10 @@ public class UserController {
             User user = new User(name, login, password);
             UserDatabase.getInstance().addUserToDataBase(user);
             return true;
-        } catch (PasswordTooShortException e){
+        } catch (PasswordTooShortException e) {
             UserView.printUserPasswordTooShortError();
             return false;
-        } catch (LoginAlreadyExistsInDatabaseException e){
+        } catch (LoginAlreadyExistsInDatabaseException e) {
             UserView.printLoginTakenError(login);
             return false;
         }
