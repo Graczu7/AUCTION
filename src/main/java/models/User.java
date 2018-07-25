@@ -6,6 +6,8 @@ import java.util.Objects;
 
 import java.util.ArrayList;
 
+import java.util.ArrayList;
+
 public class User {
 
     private String name;
