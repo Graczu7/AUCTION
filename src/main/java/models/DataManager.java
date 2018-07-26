@@ -39,7 +39,7 @@ public class DataManager {
     public void userFileWriter(List<User> users){
 
         String fileName = "userfile.txt";
-
+        
         try {
 
             FileWriter fileWriter = new FileWriter(fileName);

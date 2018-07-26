@@ -6,7 +6,7 @@ import exceptions.userExceptions.PasswordTooShortException;
 import exceptions.userExceptions.LoginAlreadyExistsInDatabaseException;
 import models.LoggedUser;
 import models.User;
-import models.UserDatabase;
+import DataBases.UserDatabase;
 import views.UserView;
 
 public class UserController {

@@ -1,7 +1,8 @@
-package models;
+package DataBases;
 
 import exceptions.userExceptions.NoSuchUserInDatabaseException;
 import exceptions.userExceptions.LoginAlreadyExistsInDatabaseException;
+import models.User;
 
 import java.util.*;
 
