@@ -9,24 +9,16 @@ public class Category {
 
 
     private String name;
-    private Set<Auction> auctions;
     private Set<Category> subcategories;
 
     public Category(String name) {
         this.name = name;
-        this.auctions = new HashSet<>();
         this.subcategories = new HashSet<>();
     }
 
-    public void addAuction(Auction auction) throws CannotAddAuctionToCategoryContainingSubcategoriesException {
-        if(this.subcategories.isEmpty()){
-            this.auctions.add(auction);
-        } else {
-            throw new CannotAddAuctionToCategoryContainingSubcategoriesException();
-        }
-    }
 
 
+    //TODO
     public void addSubcategory(Category category) throws CannotAddSubcategoryToCategoryContaingAuctionException {
         if(!this.auctions.isEmpty()){
             throw new CannotAddSubcategoryToCategoryContaingAuctionException();

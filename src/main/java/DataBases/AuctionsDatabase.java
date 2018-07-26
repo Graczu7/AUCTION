@@ -2,19 +2,18 @@ package DataBases;
 
 import exceptions.auctionExceptions.*;
 import models.Auction;
+import models.Category;
+import models.User;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class AuctionsDatabase {
     private static AuctionsDatabase instance;
-    private Map<String, Auction> auctions;
-    //private Map<Integer, Auction> archivedAuctions;
+    private Map<String, List<Auction>> auctionMapByLogins;
+    private Map<Category, List<Auction>> auctionMapByCategory;
 
     private AuctionsDatabase() {
-        this.auctions = new HashMap<>();
+        this.auctionMapByLogins = new HashMap<>();
     }
 
     public static AuctionsDatabase getInstance(){
@@ -24,52 +23,24 @@ public class AuctionsDatabase {
         return instance;
     }
 
-    public void addAuctionToDatabase(Auction auctionToAdd) throws AuctionAlreadyInDatabaseException, CannotAddInactiveAuctionToDatabaseException {
+    public void addAuctionToDatabase(User user, Auction auctionToAdd) throws AuctionAlreadyInDatabaseException, CannotAddInactiveAuctionToDatabaseException {
+        if (this.auctionMapByLogins.get(user.getLogin()).contains(auctionToAdd)){
+            throw new AuctionAlreadyInDatabaseException();
+        }
         if (!auctionToAdd.isActive()){
             throw new CannotAddInactiveAuctionToDatabaseException();
         }
-        if (this.auctions.containsKey(auctionToAdd.getId())){
-            throw new AuctionAlreadyInDatabaseException();
+        if (!this.auctionMapByLogins.containsKey(user.getLogin())){
+            this.auctionMapByLogins.put(user.getLogin(), new LinkedList<>());
         }
-        this.auctions.put(auctionToAdd.getId(), auctionToAdd);
+        this.auctionMapByLogins.get(user.getLogin()).add(auctionToAdd);
+
     }
 
-    public void archiveAuction(Auction auction) throws AuctionCanExistInOnlyOneDatabaseException, AuctionAlreadyArchivedInDatabaseException {
-        if (auctions.containsKey(auction.getId()) && !archivedAuctions.containsKey(auction.getId())){
-            archivedAuctions.put(auction.getId(), auction);
-            auctions.remove(auction.getId());
-        } else if (auctions.containsKey(auction.getId()) && archivedAuctions.containsKey(auction.getId())){
-            throw new AuctionCanExistInOnlyOneDatabaseException();
-        } else if (!auctions.containsKey(auction.getId()) && archivedAuctions.containsKey(auction.getId())){
-            throw new AuctionAlreadyArchivedInDatabaseException();
-        } else {
-            throw new UnknownError();
-        }
+
+    public List<Auction> getAuctionsByLogin(User user){
+        return this.auctionMapByLogins.get(user.getLogin());
     }
 
-    public List<Auction> getActiveAuctionsAsList(){
-        List<Auction> auctions = new ArrayList<>();
-        for (Map.Entry<Integer, Auction> entry : this.auctions.entrySet()) {
-            auctions.add(entry.getValue());
-        }
-        return auctions;
-    }
 
-    public List<Auction> getArchivedAuctionsAsList(){
-        List<Auction> auctions = new ArrayList<>();
-        for (Map.Entry<Integer, Auction> entry : archivedAuctions.entrySet()) {
-            auctions.add(entry.getValue());
-        }
-        return auctions;
-    }
-
-    public Auction getAuctionById(Integer id) throws AuctionNotFoundInDatabaseException {
-        if (auctions.containsKey(id)){
-            return auctions.get(id);
-        } else if (archivedAuctions.containsKey(id)){
-            return archivedAuctions.get(id);
-        } else {
-            throw new AuctionNotFoundInDatabaseException();
-        }
-    }
 }
