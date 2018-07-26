@@ -1,12 +1,25 @@
 package views;
 
-import models.LoggedUser;
 import models.User;
 
 public class UserView {
+
+    public static void printMainMenu(){
+        System.out.println("What would you like to do?");
+        System.out.println("1. Sign in");
+        System.out.println("2. Sign up");
+        System.out.println("0. Exit");
+    }
+
+    public static void printLoggedMenu(){
+        System.out.println("What would you like to do?");
+        System.out.println("1. View categories");
+        System.out.println("2. View auctions");
+        System.out.println("0. Exit");
+    }
+
     public static void printGreetings() {
         System.out.println("Hello User!");
-        System.out.println("What would you like to do?");
     }
 
     public static void printNamePrompt() {

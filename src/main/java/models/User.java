@@ -1,10 +1,9 @@
 package models;
 
+import exceptions.userExceptions.LoginAlreadyExistsException;
 import exceptions.userExceptions.PasswordTooShortException;
 
 import java.util.Objects;
-
-import java.util.ArrayList;
 
 import java.util.ArrayList;
 
@@ -17,9 +16,9 @@ public class User {
     private ArrayList<Auction> ownedAuctions;
     private ArrayList<Auction> wonAuctions;
 
-    public User(String name, String login, String password) throws PasswordTooShortException {
+    public User(String name, String login, String password) throws PasswordTooShortException, LoginAlreadyExistsException {
         this.name = name;
-        this.login = login;
+        setLogin(login);
         setPassword(password);
         this.userOffers = new ArrayList<>();
         this.ownedAuctions = new ArrayList<>();
@@ -60,6 +59,13 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public void setLogin(String login) throws LoginAlreadyExistsException {
+        if (UserDatabase.getInstance().isLoginTaken(login)){
+            throw new LoginAlreadyExistsException();
+        }
+        this.login = login;
     }
 
     public void setPassword (String newPassword) throws PasswordTooShortException {
