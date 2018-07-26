@@ -9,38 +9,39 @@ public class UserView {
         System.out.println("What would you like to do?");
     }
 
-    public static void printMainMenu(){
-        if (LoggedUser.getInstance().isLoggedIn()) {
-            System.out.println("Menu");
-            System.out.println("1. Show categories");
-            System.out.println("2. Show auctions");
-            System.out.println("3. Sign Out");
-            System.out.print("> ");
-        } else {
-            System.out.println("Menu");
-            System.out.println("1. Sign in");
-            System.out.println("2. Sign up");
-            System.out.println("3. Exit");
-            System.out.print("> ");
-        }
+    public static void printMainMenu() {
+        System.out.println("menu");
+        System.out.println("1. Sign in");
+        System.out.println("2. Sign up");
+        System.out.println("3. Exit");
+        System.out.print("> ");
     }
 
-    public static void printNamePrompt(){
+    public static void printLoggedMainMenu() {
+        System.out.println("menu");
+        System.out.println("1. Show categories");
+        System.out.println("2. Show auctions");
+        System.out.println("3. Sign Out");
+        System.out.print("> ");
+
+    }
+
+    public static void printNamePrompt() {
         System.out.println("Please enter you name");
         System.out.print("> ");
     }
 
-    public static void printLoginPrompt(){
+    public static void printLoginPrompt() {
         System.out.println("Please enter your login");
         System.out.print("> ");
     }
 
-    public static void printPasswordPrompt(){
+    public static void printPasswordPrompt() {
         System.out.println("Please enter your password");
         System.out.print("> ");
     }
 
-    public static void printMenuChoiceError(String errorMessage){
+    public static void printMenuChoiceError(String errorMessage) {
         System.out.print(errorMessage);
         System.out.println(" is not an option!");
         System.out.println("Try again.");
@@ -52,6 +53,14 @@ public class UserView {
 
     public static void printUserRegisterConfirmation() {
         System.out.println("Registration complete!");
+    }
+
+    public static void printUserLogoutConfirmation() {
+        System.out.println("You have been logged out.");
+    }
+
+    public static void printUserNotLoggedInError() {
+        System.out.println("User is not logged in.");
     }
 
     public static void printUserDoesNotExistError(String login) {
