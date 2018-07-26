@@ -20,7 +20,7 @@ public class Category {
 
     //TODO
     public void addSubcategory(Category category) throws CannotAddSubcategoryToCategoryContaingAuctionException {
-        if(!this.auctions.isEmpty()){
+        if(!this.getau.isEmpty()){
             throw new CannotAddSubcategoryToCategoryContaingAuctionException();
         } else{
             this.subcategories.add(category);
