@@ -1,41 +1,28 @@
 package models.menu;
 
-import models.menu.states.NotLoggedMenu;
-import models.menu.states.MenuState;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Menu {
-    private static Menu instance;
-    private MenuState currentMenuState;
+    private String name;
+    private int level;
+    private List<Menu> options;
 
-    private Menu() {
-        this.currentMenuState = new NotLoggedMenu();
+    public Menu(String name, int level) {
+        this.name = name;
+        this.level = level;
+        this.options = new LinkedList<>();
     }
 
-    public static Menu getInstance(){
-        if (instance == null){
-            instance = new Menu();
-        }
-        return instance;
+    public int getLevel() {
+        return level;
     }
 
-    public void menu(){
-
+    public List<Menu> getOptions() {
+        return options;
     }
 
-    public void mainMenu(){
-        this.currentMenuState.mainMenu();
+    public Menu getOption(int usersInput) {
+        return options.get(usersInput + 1);
     }
-
-    public void optionOne() {
-        this.currentMenuState.optionOne();
-    }
-
-    public void optionTwo() {
-        this.currentMenuState.optionTwo();
-    }
-
-    public void optionThree() {
-        this.currentMenuState.optionThree();
-    }
-
 }

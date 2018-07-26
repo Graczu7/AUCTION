@@ -1,6 +1,6 @@
 import controllers.UserInputController;
 import exceptions.InvalidInputOptionException;
-import models.menu.Menu;
+import models.menu.states.menuLevels.Menu;
 import views.UserView;
 
 public class AuctionHouse {
@@ -15,7 +15,7 @@ public class AuctionHouse {
         UserView.printGreetings();
 
         while (true) {
-            menu.mainMenu();
+            menu.menu();
             int userInput = UserInputController.getMenuOptionFromUser();
 
             try {

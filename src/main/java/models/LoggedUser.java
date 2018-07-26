@@ -2,10 +2,12 @@ package models;
 
 import exceptions.userExceptions.AnotherUserAlreadyLoggedInException;
 import exceptions.userExceptions.UserNotLoggedInException;
+import models.menu.Menu;
 
 public class LoggedUser {
     private static LoggedUser instance;
     private User user;
+    private Menu currentMenu;
 
     private LoggedUser() {
     }
@@ -32,11 +34,19 @@ public class LoggedUser {
         throw new UserNotLoggedInException();
     }
 
+    public void setCurrentMenu(Menu currentMenu) {
+        this.currentMenu = currentMenu;
+    }
+
     public User getUser() throws UserNotLoggedInException {
         if (this.user == null) {
             throw new UserNotLoggedInException();
         }
         return user;
+    }
+
+    public Menu getCurrentMenu() {
+        return currentMenu;
     }
 
     public boolean isLoggedIn(){
