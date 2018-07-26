@@ -10,7 +10,7 @@ public class UserView {
     }
 
     public static void printMainMenu() {
-        System.out.println("menu");
+        System.out.println("Main Menu");
         System.out.println("1. Sign in");
         System.out.println("2. Sign up");
         System.out.println("3. Exit");
@@ -18,12 +18,11 @@ public class UserView {
     }
 
     public static void printLoggedMainMenu() {
-        System.out.println("menu");
+        System.out.println("Main Menu");
         System.out.println("1. Show categories");
         System.out.println("2. Show auctions");
         System.out.println("3. Sign Out");
         System.out.print("> ");
-
     }
 
     public static void printNamePrompt() {

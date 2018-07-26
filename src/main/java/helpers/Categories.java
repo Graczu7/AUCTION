@@ -14,7 +14,7 @@ public class Categories {
         Category electronics = new Category("Electronics");
         Category computers = new Category("Computers");
         Category laptops = new Category("Laptops");
-        Category desctops = new Category("Desctops");
+        Category desctops = new Category("Desktops");
         Category phones = new Category("Phones");
         Category iphones = new Category("iPhones");
         Category androids = new Category("Androids");

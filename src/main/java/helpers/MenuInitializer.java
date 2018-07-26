@@ -1,25 +1,24 @@
 package helpers;
 
-import models.menu.Menu;
+import models.Menu;
 
 public class MenuInitializer {
-    public static Menu initializeLoggedOutMenu() {
-        Menu mainMenu = new Menu("MainMenu", 0);
+    public static Menu initializeMenu() {
+        Menu mainMenu = new Menu("MainMenu");
+        Menu notLoggedMainMenu = new Menu("NotLoggedMainMenu");
+        Menu loggedMainMenu = new Menu("LoggedMainMenu");
 
-        mainMenu.getOptions().add(new Menu("Sign In", 1));
-        mainMenu.getOptions().add(new Menu("Sign up", 1));
-        mainMenu.getOptions().add(new Menu("Exit", 1));
+        mainMenu.put(notLoggedMainMenu);
+        mainMenu.put(loggedMainMenu);
 
-        return mainMenu;
-    }
+        notLoggedMainMenu.put(new Menu("Sign In"));
+        notLoggedMainMenu.put(new Menu("Sign up"));
+        notLoggedMainMenu.put(new Menu("Exit"));
 
-    public static Menu initializeLoggedMenu() {
-        Menu mainMenu = new Menu("MainMenu", 0);
+        loggedMainMenu.put(new Menu("View Categories"));
+        loggedMainMenu.put(new Menu("View Auction"));
+        loggedMainMenu.put(new Menu("Sign Out"));
 
-        mainMenu.getOptions().add(new Menu("View Categories", 1));
-        mainMenu.getOptions().add(new Menu("View Auction", 1));
-        mainMenu.getOptions().add(new Menu("Sign Out", 1));
-
-        return mainMenu;
+        return notLoggedMainMenu;
     }
 }

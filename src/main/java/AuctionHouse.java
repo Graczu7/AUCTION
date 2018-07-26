@@ -1,21 +1,29 @@
 import controllers.UserInputController;
 import exceptions.InvalidInputOptionException;
-import models.menu.states.menuLevels.Menu;
+import exceptions.categoryExceptions.CannotAddSubcategoryToCategoryContaingAuctionException;
+import helpers.Categories;
+import helpers.MenuInitializer;
+import models.Category;
+import models.Menu;
 import views.UserView;
 
 public class AuctionHouse {
 
-    private Menu menu;
+    private Menu mainMenu;
+    private Menu currentMenu;
+    private Category mainCategory;
+    private Category currentCategory;
 
-    public AuctionHouse() {
-        this.menu = Menu.getInstance();
+    public AuctionHouse() throws CannotAddSubcategoryToCategoryContaingAuctionException {
+        this.mainMenu = MenuInitializer.initializeMenu();
+        this.mainCategory = Categories.initializeCategories();
     }
 
     public void run() {
         UserView.printGreetings();
-
+        currentMenu = mainMenu.getOptions().
         while (true) {
-            menu.menu();
+            mainMenu.menu();
             int userInput = UserInputController.getMenuOptionFromUser();
 
             try {
@@ -33,13 +41,13 @@ public class AuctionHouse {
         }
         switch (optionNumber) {
             case 1:
-                menu.optionOne();
+                mainMenu.optionOne();
                 return;
             case 2:
-                menu.optionTwo();
+                mainMenu.optionTwo();
                 return;
             case 3:
-                menu.optionThree();
+                mainMenu.optionThree();
                 return;
         }
     }

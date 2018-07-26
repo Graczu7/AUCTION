@@ -2,7 +2,6 @@ package models;
 
 import exceptions.userExceptions.AnotherUserAlreadyLoggedInException;
 import exceptions.userExceptions.UserNotLoggedInException;
-import models.menu.Menu;
 
 public class LoggedUser {
     private static LoggedUser instance;
