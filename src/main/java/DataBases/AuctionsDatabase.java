@@ -14,6 +14,7 @@ public class AuctionsDatabase {
 
     private AuctionsDatabase() {
         this.auctionMapByLogins = new HashMap<>();
+        this.auctionMapByCategory = new HashMap<>();
     }
 
     public static AuctionsDatabase getInstance(){
@@ -44,7 +45,7 @@ public class AuctionsDatabase {
     }
 
     public List<Auction> getAuctionsByCategory(Category category){
-        return this.auctionMapByLogins.get(category);
+        return this.auctionMapByCategory.get(category);
      }
 
 
