@@ -38,9 +38,14 @@ public class AuctionsDatabase {
     }
 
 
+
     public List<Auction> getAuctionsByLogin(User user){
         return this.auctionMapByLogins.get(user.getLogin());
     }
+
+    public List<Auction> getAuctionsByCategory(Category category){
+        return this.auctionMapByLogins.get(category);
+     }
 
 
 }

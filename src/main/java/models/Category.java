@@ -1,5 +1,6 @@
 package models;
 
+import DataBases.AuctionsDatabase;
 import exceptions.categoryExceptions.CannotAddAuctionToCategoryContainingSubcategoriesException;
 import exceptions.categoryExceptions.CannotAddSubcategoryToCategoryContaingAuctionException;
 
@@ -17,10 +18,8 @@ public class Category {
     }
 
 
-
-    //TODO
     public void addSubcategory(Category category) throws CannotAddSubcategoryToCategoryContaingAuctionException {
-        if(!this.auctions.isEmpty()){
+        if(!AuctionsDatabase.getInstance().getAuctionsByCategory(category).isEmpty()){
             throw new CannotAddSubcategoryToCategoryContaingAuctionException();
         } else{
             this.subcategories.add(category);
@@ -81,21 +80,9 @@ public class Category {
         return name;
     }
 
-    public Set<Auction> getAuctions() {
-        return auctions;
-    }
 
     public Set<Category> getSubcategories() {
         return subcategories;
-    }
-
-    @Override
-    public String toString() {
-        return "Category{" +
-                "name='" + name + '\'' +
-                ", auctions=" + auctions +
-                ", subcategories=" + subcategories +
-                '}';
     }
 
     @Override
@@ -104,15 +91,20 @@ public class Category {
         if (o == null || getClass() != o.getClass()) return false;
         Category category = (Category) o;
         return Objects.equals(name, category.name) &&
-                Objects.equals(auctions, category.auctions) &&
                 Objects.equals(subcategories, category.subcategories);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(name, auctions, subcategories);
+        return Objects.hash(name, subcategories);
     }
 
-
+    @Override
+    public String toString() {
+        return "Category{" +
+                "name='" + name + '\'' +
+                ", subcategories=" + subcategories +
+                '}';
+    }
 }
