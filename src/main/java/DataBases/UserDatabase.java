@@ -1,5 +1,6 @@
 package DataBases;
 
+import exceptions.userExceptions.LoginAlreadyExistsException;
 import exceptions.userExceptions.NoSuchUserInDatabaseException;
 import exceptions.userExceptions.LoginAlreadyExistsInDatabaseException;
 import models.User;
@@ -45,9 +46,9 @@ public class UserDatabase {
         }
     }
 
-    public void addUserToDataBase(User user) throws LoginAlreadyExistsInDatabaseException {
+    public void addUserToDataBase(User user) throws LoginAlreadyExistsException {
         if(this.users.containsKey(user.getLogin())){
-            throw new LoginAlreadyExistsInDatabaseException();
+            throw new LoginAlreadyExistsException();
         }
         this.users.put(user.getLogin(), user);
     }
