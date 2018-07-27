@@ -44,7 +44,7 @@ public class AuctionsDatabase {
         return this.auctionMapByLogins.get(user.getLogin());
     }
 
-    public List<Auction> getAuctionsByCategory(Category category){
+    public List<Auction> getAuctionsByCategoryName(Category category){
         return this.auctionMapByCategory.get(category);
      }
 

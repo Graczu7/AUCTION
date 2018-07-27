@@ -1,17 +1,23 @@
 package views;
 
+import models.Auction;
+import models.Category;
 import models.User;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 public class UserView {
 
-    public static void printMainMenu(){
+    public static void printMainMenu() {
         System.out.println("What would you like to do?");
         System.out.println("1. Sign in");
         System.out.println("2. Sign up");
         System.out.println("0. Exit");
     }
 
-    public static void printLoggedMenu(){
+    public static void printLoggedMenu() {
         System.out.println("What would you like to do?");
         System.out.println("1. View categories");
         System.out.println("2. View auctions");
@@ -38,10 +44,31 @@ public class UserView {
     }
 
     public static void printMenuChoiceError(String errorMessage) {
-        System.out.print(errorMessage);
-        System.out.println(" is not an option!");
+        System.out.println("\'" + errorMessage + "\' is not an option!");
         System.out.println("Try again.");
     }
+
+    public static void printCategoriesTriee(Category category) {
+        List<Category> categories = category.asList();
+        for (Category cat : categories) {
+            System.out.println(cat.getName());
+        }
+    }
+
+    public static void printCategoryTree(Category category, String s) {
+        if (category.getName() != null) {
+            System.out.println(s + category.getName());
+        }
+        StringBuilder sb = new StringBuilder(s).append("-");
+        for (Category subcategory : category.getSubcategories()) {
+            printCategoryTree(subcategory, sb.toString());
+        }
+    }
+
+    public static void printAuctionChoice() {
+        System.out.println("Auctions for which category you would like to print.");
+    }
+
 
     public static void printUserLoginConfirmation(User user) {
         System.out.println("Welcome " + user);
@@ -74,5 +101,12 @@ public class UserView {
     public static void printDifferentUserLoggedIn(User user) {
         System.out.println("You are currently logged as: " + user.getLogin());
         System.out.println("Please log out before you login to different account.");
+    }
+
+
+    public static void printAuctionsList(List<Auction> auctionList) {
+        for (Auction auc : auctionList) {
+            System.out.println(auc);
+        }
     }
 }

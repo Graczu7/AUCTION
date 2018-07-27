@@ -19,12 +19,11 @@ public class Category {
 
     public void addSubcategory(Category category) throws CannotAddSubcategoryToCategoryContaingAuctionException {
 
-        if(!AuctionsDatabase.getInstance().getAuctionsByCategory(category).isEmpty()){
-
-            throw new CannotAddSubcategoryToCategoryContaingAuctionException();
-        } else{
+//        if(!AuctionsDatabase.getInstance().getAuctionsByCategoryName(category).isEmpty()){
+//            throw new CannotAddSubcategoryToCategoryContaingAuctionException();
+//        } else{
             this.subcategories.add(category);
-        }
+//        }
     }
 
 

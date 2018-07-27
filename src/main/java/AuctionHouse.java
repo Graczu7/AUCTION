@@ -1,12 +1,14 @@
+import DataBases.AuctionsDatabase;
 import controllers.UserController;
 import exceptions.categoryExceptions.CannotAddSubcategoryToCategoryContaingAuctionException;
-import exceptions.userExceptions.NoSuchUserInDatabaseException;
 import helpers.Categories;
 import helpers.State;
 import helpers.StateHolder;
+import models.Auction;
 import models.Category;
 import views.UserView;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class AuctionHouse {
@@ -40,7 +42,7 @@ public class AuctionHouse {
                             stateHolder.setState(State.EXIT);
                             break;
                         default:
-                            stateHolder.setState(State.INIT);
+                            UserView.printMenuChoiceError(userInput);
                             break;
                     }
                     break;
@@ -89,9 +91,26 @@ public class AuctionHouse {
                             stateHolder.setState(State.LOGGED_IN);
                             break;
                     }
+
+                }
+                case VIEW_CATEGORIES:{
+                    UserView.printCategoryTree(mainCategory, "+");
+                    stateHolder.setState(State.LOGGED_IN);
+                    break;
+                }
+                case  VIEW_AUCTION:{
+                    UserView.printAuctionChoice();
+                    userInput = scanner.nextLine();
+                    Category category = mainCategory.getSubcategoryByName(userInput);
+                    List<Auction> auctionList = AuctionsDatabase
+                            .getInstance()
+                            .getAuctionsByCategoryName(category);
+                    UserView.printAuctionsList(auctionList);
+                    stateHolder.setState(State.LOGGED_IN);
                 }
             }
 
         }
     }
+
 }

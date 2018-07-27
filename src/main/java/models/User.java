@@ -1,5 +1,6 @@
 package models;
 
+import DataBases.UserDatabase;
 import exceptions.userExceptions.LoginAlreadyExistsException;
 import exceptions.userExceptions.PasswordTooShortException;
 

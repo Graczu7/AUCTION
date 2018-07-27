@@ -169,20 +169,18 @@ public class Auction {
     @Override
     public String toString() {
         if (this.getOffersList().isEmpty()) {
-            return "Auction{" +
+            return "Auction " +
                     "title='" + title + '\'' +
                     ", category=" + category +
                     ", starting price=" + startingPrice +
-                    ", owner=" + owner.getLogin() +
-                    '}';
+                    ", owner=" + owner.getLogin();
         } else {
-            return "Auction{" +
+            return "Auction " +
                     "title='" + title + '\'' +
                     ", category=" + category +
                     ", price=" + getLastOffer().getPrice() +
                     ", owner=" + owner.getLogin() +
-                    ", highest bidder=" + getLastOffer().getUser().getLogin() +
-                    '}';
+                    ", highest bidder=" + getLastOffer().getUser().getLogin();
         }
     }
 }
