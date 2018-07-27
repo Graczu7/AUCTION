@@ -1,7 +1,6 @@
 package models;
 
 import DataBases.AuctionsDatabase;
-import exceptions.categoryExceptions.CannotAddAuctionToCategoryContainingSubcategoriesException;
 import exceptions.categoryExceptions.CannotAddSubcategoryToCategoryContaingAuctionException;
 
 import java.util.*;

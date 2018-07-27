@@ -23,7 +23,6 @@ public class DataManager {
             while ((line = bufferedReader.readLine()) != null) {
 
 
-
             }
 
 
