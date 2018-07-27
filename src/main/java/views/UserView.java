@@ -5,9 +5,7 @@ import models.Auction;
 import models.Category;
 import models.User;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class UserView {
 

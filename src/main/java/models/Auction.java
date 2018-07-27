@@ -1,6 +1,8 @@
 package models;
 
+import controllers.AuctionController;
 import exceptions.*;
+import exceptions.auctionExceptions.AuctionAlreadyInDatabaseException;
 import exceptions.offerExceptions.CannotBidAuctionThatEndedException;
 import exceptions.offerExceptions.CannotBidUsersOwnAuctionException;
 import exceptions.offerExceptions.CannotOutbidUsersOwnBidException;
@@ -34,7 +36,7 @@ public class Auction {
         count++;
     }
 
-    public void setNewOffer(Offer newOffer) throws PriceValueTooLowException, CannotOutbidUsersOwnBidException, CannotBidUsersOwnAuctionException, CannotBidAuctionThatEndedException {
+    public void setNewOffer(Offer newOffer) throws PriceValueTooLowException, CannotOutbidUsersOwnBidException, CannotBidUsersOwnAuctionException, CannotBidAuctionThatEndedException, AuctionAlreadyInDatabaseException {
         if (!this.isActive) {
             throw new CannotBidAuctionThatEndedException();
         }
@@ -51,6 +53,11 @@ public class Auction {
             throw new PriceValueTooLowException();
         } else {
             this.offersList.push(newOffer);
+            AuctionController.addNewOffer(this, newOffer);
+        }
+        if (isAuctionWon()){
+            AuctionController.addAuctionWon(this, getLastOffer().getUser().getLogin());
+            disable();
         }
     }
 
@@ -115,6 +122,10 @@ public class Auction {
 
     public User getOwner() {
         return owner;
+    }
+
+    public static Integer getCount() {
+        return count;
     }
 
     public Category getCategory() {
