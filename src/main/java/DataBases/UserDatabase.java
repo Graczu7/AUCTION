@@ -1,8 +1,8 @@
 package DataBases;
 
+import exceptions.userExceptions.LoginAlreadyExistsException;
 import exceptions.userExceptions.NoSuchUserInDatabaseException;
 import models.User;
-import exceptions.userExceptions.LoginAlreadyExistsException;
 
 import java.util.*;
 
@@ -35,10 +35,10 @@ public class UserDatabase {
         return usersAsList;
     }
 
-
     public boolean isLoginTaken(String login){
-        return users.containsKey(login);
+        return !users.containsKey(login);
     }
+
 
     public User getUser(String login, String password) throws NoSuchUserInDatabaseException {
         if (this.users.containsKey(login) &&
@@ -58,4 +58,3 @@ public class UserDatabase {
 
 
 }
-

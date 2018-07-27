@@ -11,8 +11,8 @@ import java.util.List;
 
 public class AuctionController {
 
-    public static void addAuction(Auction auction, String userLogin, Category category) throws AuctionAlreadyInDatabaseException, CannotAddInactiveAuctionToDatabaseException {
-        AuctionsDatabase.getInstance().addAuctionToDatabase(userLogin, auction);
+    public static void addAuction(Auction auction, User user, Category category) throws AuctionAlreadyInDatabaseException, CannotAddInactiveAuctionToDatabaseException, CannotAddAuctionToCategoryContainingSubcategoriesException {
+        AuctionsDatabase.getInstance().addAuctionToDatabase(user, category, auction);
     }
 
 
@@ -21,7 +21,11 @@ public class AuctionController {
     }
 
     public static void addNewOffer(Auction auction, Offer offer) {
-        
+
+    }
+
+    public static void bid(Auction auction, Offer offer) throws CannotBidUsersOwnAuctionException, CannotBidAuctionThatEndedException, PriceValueTooLowException, CannotOutbidUsersOwnBidException {
+        auction.setNewOffer(offer);
     }
 
     public static List<Auction> getAuctionsByLogin(String login) throws AuctionsNotFoundException {

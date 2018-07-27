@@ -11,31 +11,32 @@ import java.util.Set;
 
 public class DataManager {
 
-    public void userFileReader() {
-
-        String fileName = "user.txt";
-        String line = null;
-
-        try {
-            FileReader fileReader = new FileReader(fileName);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-
-            while ((line = bufferedReader.readLine()) != null) {
-
-
-            }
-
-
-
-            bufferedReader.close();
-        } catch (FileNotFoundException ex) {
-            System.out.println("Unable to open file '" + fileName + "'");
-        } catch (IOException ex) {
-            System.out.println("Error reading file '" + fileName + "'");
-        }
-    }
+//    public void userFileReader() {
+//
+//        String fileName = "userfile.txt";
+//        String line = null;
+//
+//        try {
+//            FileReader fileReader = new FileReader(fileName);
+//
+//            BufferedReader bufferedReader = new BufferedReader(fileReader);
+//
+//            while ((line = bufferedReader.readLine()) != null) {
+//                System.out.println(line);
+//            }
+//
+//            bufferedReader.close();
+//        } catch (FileNotFoundException ex) {
+//            System.out.println("Unable to open file '" + fileName + "'");
+//        } catch (IOException ex) {
+//            System.out.println("Error reading file '" + fileName + "'");
+//
+//        }
+//    }
 
     public void userFileWriter(List<User> users){
+
+
 
         String fileName = "userfile.txt";
         
@@ -62,16 +63,18 @@ public class DataManager {
         }
     }
 
-    public static void main(String[] args) throws PasswordTooShortException {
-
-
-//           List<User> users = new ArrayList<>();
-///        users.add(new User("jan", "kowalski", "123456"));
+//    public static void main(String[] args) throws PasswordTooShortException {
+//
+//        List<User> users = new ArrayList<>();
+//
+//        users.add(new User("jan", "kowalski", "123456"));
 //        users.add(new User("maria", "kowalska", "1aa23456"));
 //        users.add(new User("ula", "nowak", "1234vv56"));
 //
 //
 //        DataManager dataManager = new DataManager();
 //        dataManager.userFileWriter(users);
-    }
+//    }
 }
+
+
