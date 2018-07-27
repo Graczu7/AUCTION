@@ -10,15 +10,11 @@ import models.*;
 public class AuctionController {
 
     public static void addAuction(Auction auction, User user, Category category) throws AuctionAlreadyInDatabaseException, CannotAddInactiveAuctionToDatabaseException, CannotAddAuctionToCategoryContainingSubcategoriesException {
-        AuctionsDatabase.getInstance().addAuctionToDatabase(auction);
-        user.addOwnedAuction(auction);
-        category.addAuction(auction);
+        AuctionsDatabase.getInstance().addAuctionToDatabase(user, category, auction);
     }
 
     public static void archiveAuction(Auction auction, User user) throws AuctionAlreadyArchivedInDatabaseException, AuctionCanExistInOnlyOneDatabaseException {
         if (auction.isAuctionWon()){
-            AuctionsDatabase.getInstance().archiveAuction(auction);
-            user.addWonAuction(auction);
             auction.disable();
         }
     }
