@@ -35,8 +35,12 @@ public class UserDatabase {
         return usersAsList;
     }
 
+    public boolean isLoginTaken(String login){
+        return !users.containsKey(login);
+    }
 
-    public User findUser(String login, String password) throws NoSuchUserInDatabaseException {
+
+    public User getUser(String login, String password) throws NoSuchUserInDatabaseException {
         if (this.users.containsKey(login) &&
                 this.users.get(login).getPassword().equals(password)) {
             return this.users.get(login);
