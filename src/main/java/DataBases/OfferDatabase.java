@@ -1,10 +1,11 @@
 package DataBases;
 
+import exceptions.offerExceptions.OfferAllreadyExistsException;
 import models.Auction;
-import models.Category;
 import models.Offer;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,12 +18,26 @@ public class OfferDatabase {
         this.offersMapByCategory = new HashMap<>();
     }
 
-    public static OfferDatabase getInstance(){
-        if (instance == null){
+    public static OfferDatabase getInstance() {
+        if (instance == null) {
             instance = new OfferDatabase();
         }
         return instance;
     }
 
+
+    public void addOffersMapByCategory(Auction auction, Offer offer) throws OfferAllreadyExistsException {
+        if (this.offersMapByCategory.get(auction).contains(offer)) {
+            throw new OfferAllreadyExistsException();
+        }
+        if (!this.offersMapByCategory.get(auction).contains(offer)) {
+            this.offersMapByCategory.put(auction, new LinkedList<>());
+        }
+        this.offersMapByCategory.get(auction).add(offer);
+    }
+
+    public List<Offer> getOffersMapByCategory(Auction auction) {
+        return this.offersMapByCategory.get(auction);
+    }
 
 }
