@@ -63,18 +63,18 @@ public class DataManager {
         }
     }
 
-    public static void main(String[] args) throws PasswordTooShortException {
-
-        List<User> users = new ArrayList<>();
-
-        users.add(new User("jan", "kowalski", "123456"));
-        users.add(new User("maria", "kowalska", "1aa23456"));
-        users.add(new User("ula", "nowak", "1234vv56"));
-
-
-        DataManager dataManager = new DataManager();
-        dataManager.userFileWriter(users);
-    }
+//    public static void main(String[] args) throws PasswordTooShortException {
+//
+//        List<User> users = new ArrayList<>();
+//
+//        users.add(new User("jan", "kowalski", "123456"));
+//        users.add(new User("maria", "kowalska", "1aa23456"));
+//        users.add(new User("ula", "nowak", "1234vv56"));
+//
+//
+//        DataManager dataManager = new DataManager();
+//        dataManager.userFileWriter(users);
+//    }
 }
 
 
