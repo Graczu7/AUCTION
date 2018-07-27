@@ -17,36 +17,47 @@ public class AuctionsDatabase {
         this.auctionMapByCategory = new HashMap<>();
     }
 
-    public static AuctionsDatabase getInstance(){
-        if (instance == null){
+    public static AuctionsDatabase getInstance() {
+        if (instance == null) {
             instance = new AuctionsDatabase();
         }
         return instance;
     }
 
-    public void addAuctionToDatabase(User user, Auction auctionToAdd) throws AuctionAlreadyInDatabaseException, CannotAddInactiveAuctionToDatabaseException {
-        if (this.auctionMapByLogins.get(user.getLogin()).contains(auctionToAdd)){
+    public void addAuctionToDatabase(User user, Category category, Auction auctionToAdd) throws AuctionAlreadyInDatabaseException, CannotAddInactiveAuctionToDatabaseException {
+        if (this.auctionMapByLogins.get(user.getLogin()).contains(auctionToAdd)) {
             throw new AuctionAlreadyInDatabaseException();
         }
-        if (!auctionToAdd.isActive()){
+        if (!auctionToAdd.isActive()) {
             throw new CannotAddInactiveAuctionToDatabaseException();
         }
-        if (!this.auctionMapByLogins.containsKey(user.getLogin())){
+        if (!this.auctionMapByLogins.containsKey(user.getLogin())) {
             this.auctionMapByLogins.put(user.getLogin(), new LinkedList<>());
         }
         this.auctionMapByLogins.get(user.getLogin()).add(auctionToAdd);
 
+
+        if (this.auctionMapByCategory.get(category).contains(auctionToAdd)) {
+            throw new AuctionAlreadyInDatabaseException();
+        }
+        if (!auctionToAdd.isActive()) {
+            throw new CannotAddInactiveAuctionToDatabaseException();
+        }
+        if (!this.auctionMapByCategory.containsKey(category)) {
+            this.auctionMapByCategory.put(category, new LinkedList<>());
+        }
+        this.auctionMapByCategory.get(category).add(auctionToAdd);
+
     }
 
 
-
-    public List<Auction> getAuctionsByLogin(User user){
+    public List<Auction> getAuctionsByLogin(User user) {
         return this.auctionMapByLogins.get(user.getLogin());
     }
 
-    public List<Auction> getAuctionsByCategory(Category category){
+    public List<Auction> getAuctionsByCategory(Category category) {
         return this.auctionMapByCategory.get(category);
-     }
+    }
 
 
 }
