@@ -24,4 +24,7 @@ public class OfferDatabase {
         }
         return instance;
     }
+
+
+
 }

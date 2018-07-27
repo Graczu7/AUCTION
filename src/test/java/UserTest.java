@@ -58,7 +58,7 @@ public class UserTest {
         User user = new User("Name", "Login", "password");
         Category category = new Category("Name");
         Auction auction = new Auction(user, category, "description", "title", BigDecimal.valueOf(10));
-        ArrayList<Auction> ownedAuctions = new ArrayList<Auction>();
+        ArrayList<Auction> ownedAuctions = new ArrayList<>();
         ownedAuctions.add(auction);
         Assert.assertEquals(auction, ownedAuctions.get(0));
     }
@@ -68,7 +68,7 @@ public class UserTest {
         User user = new User("Name", "Login", "password");
         Category category = new Category("Name");
         Auction auction = new Auction(user, category, "description", "title", BigDecimal.valueOf(10));
-        ArrayList<Auction> wonAuctions = new ArrayList<Auction>();
+        ArrayList<Auction> wonAuctions = new ArrayList<>();
         wonAuctions.add(auction);
         Assert.assertEquals(auction, wonAuctions.get(0));
     }
