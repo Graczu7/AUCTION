@@ -1,5 +1,6 @@
 package controllers;
 
+import DataBases.AuctionsDatabase;
 import exceptions.*;
 import exceptions.offerExceptions.*;
 import exceptions.categoryExceptions.*;

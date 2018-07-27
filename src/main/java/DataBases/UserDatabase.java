@@ -1,11 +1,12 @@
-package models;
+package DataBases;
 
 import exceptions.userExceptions.NoSuchUserInDatabaseException;
-import exceptions.userExceptions.LoginAlreadyExistsException;
+import exceptions.userExceptions.LoginAlreadyExistsInDatabaseException;
+import models.User;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
+//TODO
 public class UserDatabase {
 
     private static UserDatabase instance;
@@ -22,11 +23,20 @@ public class UserDatabase {
         return instance;
     }
 
-    public boolean isLoginTaken(String login){
-        return users.containsKey(login);
+    public List<User> getUsersList(){
+        List<User> usersAsList = new ArrayList<>();
+        for (User user : this.users.values()) {
+            usersAsList.add(user);
+        }
+        //alternative solution
+//        for (Map.Entry<String, User> entry : this.users.entrySet()) {
+//            usersAsList.add(entry.getValue());
+//        }
+        return usersAsList;
     }
 
-    public User getUser(String login, String password) throws NoSuchUserInDatabaseException {
+
+    public User findUser(String login, String password) throws NoSuchUserInDatabaseException {
         if (this.users.containsKey(login) &&
                 this.users.get(login).getPassword().equals(password)) {
             return this.users.get(login);
@@ -35,13 +45,12 @@ public class UserDatabase {
         }
     }
 
-    public void addUserToDataBase(User user) throws LoginAlreadyExistsException {
+    public void addUserToDataBase(User user) throws LoginAlreadyExistsInDatabaseException {
         if(this.users.containsKey(user.getLogin())){
-            throw new LoginAlreadyExistsException();
+            throw new LoginAlreadyExistsInDatabaseException();
         }
         this.users.put(user.getLogin(), user);
     }
 
 
 }
-
