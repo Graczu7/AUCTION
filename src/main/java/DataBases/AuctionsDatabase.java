@@ -17,21 +17,21 @@ public class AuctionsDatabase {
         this.auctionMapByCategory = new HashMap<>();
     }
 
-    public static AuctionsDatabase getInstance(){
-        if (instance == null){
+    public static AuctionsDatabase getInstance() {
+        if (instance == null) {
             instance = new AuctionsDatabase();
         }
         return instance;
     }
 
     public void addAuctionToDatabase(User user, Auction auctionToAdd) throws AuctionAlreadyInDatabaseException, CannotAddInactiveAuctionToDatabaseException {
-        if (this.auctionMapByLogins.get(user.getLogin()).contains(auctionToAdd)){
+        if (this.auctionMapByLogins.get(user.getLogin()).contains(auctionToAdd)) {
             throw new AuctionAlreadyInDatabaseException();
         }
-        if (!auctionToAdd.isActive()){
+        if (!auctionToAdd.isActive()) {
             throw new CannotAddInactiveAuctionToDatabaseException();
         }
-        if (!this.auctionMapByLogins.containsKey(user.getLogin())){
+        if (!this.auctionMapByLogins.containsKey(user.getLogin())) {
             this.auctionMapByLogins.put(user.getLogin(), new LinkedList<>());
         }
         this.auctionMapByLogins.get(user.getLogin()).add(auctionToAdd);
@@ -39,14 +39,13 @@ public class AuctionsDatabase {
     }
 
 
-
-    public List<Auction> getAuctionsByLogin(User user){
-        return this.auctionMapByLogins.get(user.getLogin());
+    public List<Auction> getAuctionsByLogin(String login) {
+        return this.auctionMapByLogins.get(login);
     }
 
-    public List<Auction> getAuctionsByCategoryName(Category category){
+    public List<Auction> getAuctionsByCategoryName(Category category) {
         return this.auctionMapByCategory.get(category);
-     }
+    }
 
 
 }

@@ -1,5 +1,6 @@
 package views;
 
+import DataBases.AuctionsDatabase;
 import models.Auction;
 import models.Category;
 import models.User;
@@ -15,6 +16,7 @@ public class UserView {
         System.out.println("1. Sign in");
         System.out.println("2. Sign up");
         System.out.println("0. Exit");
+        System.out.print("> ");
     }
 
     public static void printLoggedMenu() {
@@ -22,6 +24,15 @@ public class UserView {
         System.out.println("1. View categories");
         System.out.println("2. View auctions");
         System.out.println("0. Exit");
+        System.out.print("> ");
+    }
+
+    public static void printAuctionsMenu(){
+        System.out.println("1. Auctions by category");
+        System.out.println("2. Auctions own");
+        System.out.println("3. Auctions won");
+        System.out.print("> ");
+
     }
 
     public static void printGreetings() {
@@ -48,13 +59,6 @@ public class UserView {
         System.out.println("Try again.");
     }
 
-    public static void printCategoriesTriee(Category category) {
-        List<Category> categories = category.asList();
-        for (Category cat : categories) {
-            System.out.println(cat.getName());
-        }
-    }
-
     public static void printCategoryTree(Category category, String s) {
         if (category.getName() != null) {
             System.out.println(s + category.getName());
@@ -66,7 +70,7 @@ public class UserView {
     }
 
     public static void printAuctionChoice() {
-        System.out.println("Auctions for which category you would like to print.");
+        System.out.println("Auctions for which category you would like to print?");
     }
 
 
@@ -103,6 +107,12 @@ public class UserView {
         System.out.println("Please log out before you login to different account.");
     }
 
+    public static void printNoAuctionsFoundError(){
+        System.out.println("No auctions found");
+    }
+    public static void printCategoryNotFoundError(String categoryName){
+        System.out.println(categoryName + " doesn't exist");
+    }
 
     public static void printAuctionsList(List<Auction> auctionList) {
         for (Auction auc : auctionList) {
