@@ -27,8 +27,6 @@ public class AuctionHouse {
         UserView.printGreetings();
 
         while (stateHolder.getState() != State.EXIT) {
-            Scanner scanner = new Scanner(System.in);
-
             switch (stateHolder.getState()) {
                 case INIT: {
                     UserView.printMainMenu();
@@ -50,30 +48,11 @@ public class AuctionHouse {
                     break;
                 }
                 case LOGGING: {
-                    UserView.printLoginPrompt();
-                    String userLogin = UserInputController.getInputFromUser();
-                    UserView.printPasswordPrompt();
-                    String userPassword = UserInputController.getInputFromUser();
-
-                    if (UserController.login(userLogin, userPassword)) {
-                        stateHolder.setState(State.LOGGED_IN);
-                    } else {
-                        stateHolder.setState(State.INIT);
-                    }
+                    logging();
                     break;
                 }
                 case REGISTRATING: {
-                    UserView.printNamePrompt();
-                    String userName = UserInputController.getInputFromUser();
-                    UserView.printLoginPrompt();
-                    String userLogin = UserInputController.getInputFromUser();
-                    UserView.printPasswordPrompt();
-                    String userPassword = UserInputController.getInputFromUser();
-                    if (UserController.register(userName, userLogin, userPassword)) {
-                        stateHolder.setState(State.LOGGED_IN);
-                    } else {
-                        stateHolder.setState(State.INIT);
-                    }
+                    registration();
                     break;
                 }
                 case LOGGED_IN: {
@@ -124,6 +103,33 @@ public class AuctionHouse {
 
             }
 
+        }
+    }
+
+    private void logging(){
+        UserView.printLoginPrompt();
+        String userLogin = UserInputController.getInputFromUser();
+        UserView.printPasswordPrompt();
+        String userPassword = UserInputController.getInputFromUser();
+
+        if (UserController.login(userLogin, userPassword)) {
+            stateHolder.setState(State.LOGGED_IN);
+        } else {
+            stateHolder.setState(State.INIT);
+        }
+    }
+
+    private void registration() {
+        UserView.printNamePrompt();
+        String userName = UserInputController.getInputFromUser();
+        UserView.printLoginPrompt();
+        String userLogin = UserInputController.getInputFromUser();
+        UserView.printPasswordPrompt();
+        String userPassword = UserInputController.getInputFromUser();
+        if (UserController.register(userName, userLogin, userPassword)) {
+            stateHolder.setState(State.LOGGED_IN);
+        } else {
+            stateHolder.setState(State.INIT);
         }
     }
 

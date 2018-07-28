@@ -1,6 +1,6 @@
 package DataBases;
 
-import exceptions.offerExceptions.OfferAllreadyExistsException;
+import exceptions.offerExceptions.OfferAlreadyExistsException;
 import models.Auction;
 import models.Offer;
 
@@ -24,9 +24,9 @@ public class OfferDatabase {
         return instance;
     }
 
-    public void addOffersMapByCategory(Auction auction, Offer offer) throws OfferAllreadyExistsException {
+    public void addOffersMapByCategory(Auction auction, Offer offer) throws OfferAlreadyExistsException {
         if (this.offersMapByCategory.get(auction).contains(offer)) {
-            throw new OfferAllreadyExistsException();
+            throw new OfferAlreadyExistsException();
         }
         if (!this.offersMapByCategory.get(auction).contains(offer)) {
             this.offersMapByCategory.put(auction, new LinkedList<>());
