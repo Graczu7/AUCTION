@@ -52,6 +52,26 @@ public class UserView {
         System.out.print("> ");
     }
 
+    public static void printCategoryPrompt() {
+        System.out.println("Please enter Category name");
+        System.out.println("> ");
+    }
+
+    public static void printAuctionTitlePrompt() {
+        System.out.println("Please enter Auction name");
+        System.out.println("> ");
+    }
+
+    public static void printAuctionDescriptionPrompt() {
+        System.out.println("Please enter Auction description");
+        System.out.println("> ");
+    }
+
+    public static void printAuctionPricePrompt() {
+        System.out.println("Please enter starting price");
+        System.out.println("> ");
+    }
+
     public static void printMenuChoiceError(String userInpit) {
         System.out.println("\'" + userInpit + "\' is not an option!");
         System.out.println("Try again.");
@@ -68,7 +88,7 @@ public class UserView {
     }
 
     public static void printAuctionChoice() {
-        System.out.println("Auctions for which category you would like to print?");
+        System.out.println("Auctions for which category would you like to print?");
     }
 
 

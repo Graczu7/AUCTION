@@ -11,6 +11,7 @@ import models.Auction;
 import models.Category;
 import views.UserView;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class AuctionHouse {
@@ -29,7 +30,7 @@ public class AuctionHouse {
             switch (stateHolder.getState()) {
                 case INIT: {
                     UserView.printMainMenu();
-                    String userInput = UserInputController.getInputFromUser();
+                    String userInput = UserInputController.getTextFromUser();
                     switch (userInput) {
                         case "1":
                             stateHolder.setState(State.LOGGING);
@@ -56,7 +57,7 @@ public class AuctionHouse {
                 }
                 case LOGGED_IN: {
                     UserView.printLoggedMenu();
-                    String userInput = UserInputController.getInputFromUser();
+                    String userInput = UserInputController.getTextFromUser();
                     switch (userInput) {
                         case "1":
                             stateHolder.setState(State.VIEW_CATEGORIES);
@@ -80,17 +81,23 @@ public class AuctionHouse {
                 }
                 case VIEW_AUCTIONS_MENU: {
                     UserView.printAuctionsMenu();
-                    String userInput = UserInputController.getInputFromUser();
+                    String userInput = UserInputController.getTextFromUser();
                     switch (userInput) {
                         case "1":
+                            addNewAuction();
+                            break;
+                        case "2":
+
+                            break;
+                        case "3":
                             viewAuctionsByCategory();
                             stateHolder.setState(State.LOGGED_IN);
                             break;
-                        case "2":
+                        case "4":
                             viewLoggedUserAuctions();
                             stateHolder.setState(State.LOGGED_IN);
                             break;
-                        case "3":
+                        case "5":
                             viewUserWonAuctions();
                             stateHolder.setState(State.LOGGED_IN);
                             break;
@@ -106,11 +113,11 @@ public class AuctionHouse {
         }
     }
 
-    private void logging(){
+    private void logging() {
         UserView.printLoginPrompt();
-        String userLogin = UserInputController.getInputFromUser();
+        String userLogin = UserInputController.getTextFromUser();
         UserView.printPasswordPrompt();
-        String userPassword = UserInputController.getInputFromUser();
+        String userPassword = UserInputController.getTextFromUser();
 
         if (UserController.login(userLogin, userPassword)) {
             stateHolder.setState(State.LOGGED_IN);
@@ -121,11 +128,11 @@ public class AuctionHouse {
 
     private void registration() {
         UserView.printNamePrompt();
-        String userName = UserInputController.getInputFromUser();
+        String userName = UserInputController.getTextFromUser();
         UserView.printLoginPrompt();
-        String userLogin = UserInputController.getInputFromUser();
+        String userLogin = UserInputController.getTextFromUser();
         UserView.printPasswordPrompt();
-        String userPassword = UserInputController.getInputFromUser();
+        String userPassword = UserInputController.getTextFromUser();
         if (UserController.register(userName, userLogin, userPassword)) {
             stateHolder.setState(State.LOGGED_IN);
         } else {
@@ -133,9 +140,20 @@ public class AuctionHouse {
         }
     }
 
+    private void addNewAuction() {
+        UserView.printCategoryPrompt();
+        String auctionCategory = UserInputController.getTextFromUser();
+        UserView.printAuctionTitlePrompt();
+        String auctionTitle = UserInputController.getTextFromUser();
+        UserView.printAuctionDescriptionPrompt();
+        String auctionDescription = UserInputController.getTextFromUser();
+        UserView.printAuctionPricePrompt();
+        BigDecimal auctionPrice = UserInputController.getPriceFromUser();
+    }
+
     private void viewAuctionsByCategory() {
         UserView.printAuctionChoice();
-        String categoryName = UserInputController.getInputFromUser();
+        String categoryName = UserInputController.getTextFromUser();
         Category category = mainCategory.getSubcategoryByName(categoryName);
         List<Auction> auctionList = AuctionsDatabase
                 .getInstance()
@@ -167,7 +185,7 @@ public class AuctionHouse {
             UserView.printAuctionsList(auctionList);
         } catch (AuctionsNotFoundException e) {
             UserView.printNoAuctionsFoundError();
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             UserView.printNoAuctionsFoundError();
         }
     }
