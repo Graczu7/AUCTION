@@ -36,7 +36,7 @@ public class UserDatabase {
     }
 
     public boolean isLoginTaken(String login) {
-        return !users.containsKey(login);
+        return users.containsKey(login);
     }
 
     public User getUser(String login, String password) throws NoSuchUserInDatabaseException {

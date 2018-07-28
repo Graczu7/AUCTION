@@ -26,6 +26,14 @@ public class AuctionController {
 
     }
 
+    public static List<Auction> getAuctionsWon(String winnerLogin) throws AuctionsNotFoundException {
+        List<Auction> auctions = AuctionsDatabase.getInstance().getWonAuctions(winnerLogin);
+        if (auctions.isEmpty()) {
+            throw new AuctionsNotFoundException();
+        }
+        return auctions;
+    }
+
     public static List<Auction> getAuctionsByLogin(String login) throws AuctionsNotFoundException {
         List<Auction> auctions = AuctionsDatabase.getInstance().getAuctionsByLogin(login);
         if (auctions.isEmpty()) {

@@ -12,7 +12,6 @@ import models.Category;
 import views.UserView;
 
 import java.util.List;
-import java.util.Scanner;
 
 public class AuctionHouse {
 
@@ -36,7 +35,7 @@ public class AuctionHouse {
                             stateHolder.setState(State.LOGGING);
                             break;
                         case "2":
-                            stateHolder.setState(State.REGISTRATING);
+                            stateHolder.setState(State.REGISTERING);
                             break;
                         case "0":
                             stateHolder.setState(State.EXIT);
@@ -51,7 +50,7 @@ public class AuctionHouse {
                     logging();
                     break;
                 }
-                case REGISTRATING: {
+                case REGISTERING: {
                     registration();
                     break;
                 }
@@ -89,17 +88,18 @@ public class AuctionHouse {
                             break;
                         case "2":
                             viewLoggedUserAuctions();
+                            stateHolder.setState(State.LOGGED_IN);
                             break;
                         case "3":
-
+                            viewUserWonAuctions();
+                            stateHolder.setState(State.LOGGED_IN);
                             break;
                         default:
-
+                            UserView.printMenuChoiceError(userInput);
                             break;
                     }
                     break;
                 }
-
 
             }
 
@@ -157,6 +157,17 @@ public class AuctionHouse {
         } catch (AuctionsNotFoundException e) {
             UserView.printNoAuctionsFoundError();
         } catch (NullPointerException e) {
+            UserView.printNoAuctionsFoundError();
+        }
+    }
+
+    private void viewUserWonAuctions() {
+        try {
+            List<Auction> auctionList = AuctionController.getAuctionsWon(stateHolder.getLoggedUser().getLogin());
+            UserView.printAuctionsList(auctionList);
+        } catch (AuctionsNotFoundException e) {
+            UserView.printNoAuctionsFoundError();
+        } catch (NullPointerException e){
             UserView.printNoAuctionsFoundError();
         }
     }

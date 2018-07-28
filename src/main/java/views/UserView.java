@@ -52,8 +52,8 @@ public class UserView {
         System.out.print("> ");
     }
 
-    public static void printMenuChoiceError(String errorMessage) {
-        System.out.println("\'" + errorMessage + "\' is not an option!");
+    public static void printMenuChoiceError(String userInpit) {
+        System.out.println("\'" + userInpit + "\' is not an option!");
         System.out.println("Try again.");
     }
 
