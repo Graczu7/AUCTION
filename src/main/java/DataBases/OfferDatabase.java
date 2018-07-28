@@ -1,5 +1,6 @@
 package DataBases;
 
+import exceptions.offerExceptions.OfferAllreadyExistsException;
 import models.Auction;
 import models.Offer;
 
@@ -12,18 +13,16 @@ public class OfferDatabase {
     private static OfferDatabase instance;
     private Map<Auction, List<Offer>> offersMapByCategory;
 
-
     private OfferDatabase() {
         this.offersMapByCategory = new HashMap<>();
     }
 
-    public static OfferDatabase getInstance(){
-        if (instance == null){
+    public static OfferDatabase getInstance() {
+        if (instance == null) {
             instance = new OfferDatabase();
         }
         return instance;
     }
-
 
     public void addOffersMapByCategory(Auction auction, Offer offer) throws OfferAllreadyExistsException {
         if (this.offersMapByCategory.get(auction).contains(offer)) {

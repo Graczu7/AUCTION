@@ -55,7 +55,7 @@ public class Auction {
             this.offersList.push(newOffer);
             AuctionController.addNewOffer(this, newOffer);
         }
-        if (isAuctionWon()){
+        if (isAuctionWon()) {
             AuctionController.addAuctionWon(this, getLastOffer().getUser().getLogin());
             disable();
         }

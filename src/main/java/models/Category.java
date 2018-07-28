@@ -1,8 +1,5 @@
 package models;
 
-import DataBases.AuctionsDatabase;
-import exceptions.categoryExceptions.CannotAddSubcategoryToCategoryContaingAuctionException;
-
 import java.util.*;
 
 public class Category {
@@ -17,12 +14,12 @@ public class Category {
     }
 
 
-    public void addSubcategory(Category category) throws CannotAddSubcategoryToCategoryContaingAuctionException {
+    public void addSubcategory(Category category) {
 
 //        if(!AuctionsDatabase.getInstance().getAuctionsByCategoryName(category).isEmpty()){
 //            throw new CannotAddSubcategoryToCategoryContaingAuctionException();
 //        } else{
-            this.subcategories.add(category);
+        this.subcategories.add(category);
 //        }
     }
 
@@ -39,27 +36,23 @@ public class Category {
             }
         }
         return null;
-
     }
 
 
-    public List<Category> asList(){
-
+    public List<Category> asList() {
         List<Category> categories = new LinkedList<>();
         this.subcategoriesAsList(categories);
         return categories;
     }
 
 
-    private List<Category> subcategoriesAsList(List<Category> categories) {
+    private void subcategoriesAsList(List<Category> categories) {
         if (this.name != null) {
             categories.add(this);
         }
-
         for (Category subcategory : this.subcategories) {
             subcategory.subcategoriesAsList(categories);
         }
-        return categories;
     }
 
 

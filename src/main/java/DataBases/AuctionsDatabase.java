@@ -9,13 +9,14 @@ import java.util.*;
 
 public class AuctionsDatabase {
     private static AuctionsDatabase instance;
-    private Map<String, List<Auction>> auctionMapByLogins;
+    private Map<String, List<Auction>> auctionMapByLogin;
     private Map<Category, List<Auction>> auctionMapByCategory;
     private Map<String, List<Auction>> auctionsWonByUser;
 
     private AuctionsDatabase() {
-        this.auctionMapByLogins = new HashMap<>();
+        this.auctionMapByLogin = new HashMap<>();
         this.auctionMapByCategory = new HashMap<>();
+        this.auctionsWonByUser = new HashMap<>();
     }
 
     public static AuctionsDatabase getInstance() {
@@ -26,16 +27,16 @@ public class AuctionsDatabase {
     }
 
     public void addAuctionToDatabase(User user, Category category, Auction auctionToAdd) throws AuctionAlreadyInDatabaseException, CannotAddInactiveAuctionToDatabaseException {
-        if (this.auctionMapByLogins.get(user.getLogin()).contains(auctionToAdd)) {
+        if (this.auctionMapByLogin.get(user.getLogin()).contains(auctionToAdd)) {
             throw new AuctionAlreadyInDatabaseException();
         }
         if (!auctionToAdd.isActive()) {
             throw new CannotAddInactiveAuctionToDatabaseException();
         }
-        if (!this.auctionMapByLogins.containsKey(user.getLogin())) {
-            this.auctionMapByLogins.put(user.getLogin(), new LinkedList<>());
+        if (!this.auctionMapByLogin.containsKey(user.getLogin())) {
+            this.auctionMapByLogin.put(user.getLogin(), new LinkedList<>());
         }
-        this.auctionMapByLogins.get(user.getLogin()).add(auctionToAdd);
+        this.auctionMapByLogin.get(user.getLogin()).add(auctionToAdd);
 
 
         if (this.auctionMapByCategory.get(category).contains(auctionToAdd)) {
@@ -60,8 +61,8 @@ public class AuctionsDatabase {
         this.auctionsWonByUser.get(winner).add(auction);
     }
 
-    public List<Auction> getAuctionsByLogin(User user) {
-        return this.auctionMapByLogins.get(user.getLogin());
+    public List<Auction> getAuctionsByLogin(String usersLogin) {
+        return this.auctionMapByLogin.get(usersLogin);
     }
 
     public List<Auction> getWonAuctions(String login) {

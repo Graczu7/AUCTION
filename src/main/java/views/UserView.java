@@ -25,7 +25,7 @@ public class UserView {
         System.out.print("> ");
     }
 
-    public static void printAuctionsMenu(){
+    public static void printAuctionsMenu() {
         System.out.println("1. Auctions by category");
         System.out.println("2. Auctions own");
         System.out.println("3. Auctions won");
@@ -105,10 +105,11 @@ public class UserView {
         System.out.println("Please log out before you login to different account.");
     }
 
-    public static void printNoAuctionsFoundError(){
+    public static void printNoAuctionsFoundError() {
         System.out.println("No auctions found");
     }
-    public static void printCategoryNotFoundError(String categoryName){
+
+    public static void printCategoryNotFoundError(String categoryName) {
         System.out.println(categoryName + " doesn't exist");
     }
 

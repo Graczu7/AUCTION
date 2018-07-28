@@ -5,11 +5,10 @@ import models.User;
 import DataBases.UserDatabase;
 import views.UserView;
 
-
 public class UserController {
 
     public static boolean login(String login, String password) {
-        User user = null;
+        User user;
         try {
             user = UserDatabase.getInstance().getUser(login, password);
             UserView.printUserLoginConfirmation(user);

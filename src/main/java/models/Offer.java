@@ -18,6 +18,34 @@ public class Offer {
     }
 
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setPrice(BigDecimal price) throws PriceNegativeValueException {
+        // user can give item away for free
+        if (price.compareTo(BigDecimal.valueOf(0)) < 0) {
+            throw new PriceNegativeValueException();
+        }
+        this.price = price;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Auction getObjectToSell() {
+        return objectToSell;
+    }
+
+    public void setObjectToSell(Auction objectToSell) {
+        this.objectToSell = objectToSell;
+    }
+
+
+    public BigDecimal getPrice() {
+        return price;
+    }
 
     @Override
     public String toString() {
@@ -42,36 +70,5 @@ public class Offer {
     public int hashCode() {
 
         return Objects.hash(user, objectToSell, price);
-    }
-
-
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Auction getObjectToSell() {
-        return objectToSell;
-    }
-
-    public void setObjectToSell(Auction objectToSell) {
-        this.objectToSell = objectToSell;
-    }
-
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) throws PriceNegativeValueException {
-        // user can give item away for free
-        if (price.compareTo(BigDecimal.valueOf(0)) < 0){
-            throw new PriceNegativeValueException();
-        }
-        this.price = price;
     }
 }

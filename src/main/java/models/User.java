@@ -4,10 +4,7 @@ import DataBases.UserDatabase;
 import exceptions.userExceptions.LoginAlreadyExistsException;
 import exceptions.userExceptions.PasswordTooShortException;
 
-import java.util.List;
 import java.util.Objects;
-
-import java.util.ArrayList;
 
 public class User {
 
@@ -21,6 +18,21 @@ public class User {
         setPassword(password);
     }
 
+    public void setLogin(String login) throws LoginAlreadyExistsException {
+        if (UserDatabase.getInstance().isLoginTaken(login)) {
+            throw new LoginAlreadyExistsException();
+        }
+        this.login = login;
+    }
+
+    public void setPassword(String newPassword) throws PasswordTooShortException {
+
+        if (newPassword.length() < 5) {
+            throw new PasswordTooShortException();
+        }
+        this.password = newPassword;
+    }
+
     public String getName() {
         return name;
     }
@@ -31,21 +43,6 @@ public class User {
 
     public String getPassword() {
         return password;
-    }
-
-    public void setLogin(String login) throws LoginAlreadyExistsException {
-        if (UserDatabase.getInstance().isLoginTaken(login)){
-            throw new LoginAlreadyExistsException();
-        }
-        this.login = login;
-    }
-
-    public void setPassword (String newPassword) throws PasswordTooShortException {
-
-        if(newPassword.length() < 5){
-            throw new PasswordTooShortException();
-        }
-        this.password = newPassword;
     }
 
     @Override

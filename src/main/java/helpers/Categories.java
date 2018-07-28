@@ -5,8 +5,6 @@ import models.Category;
 
 
 public class Categories {
-
-
     public static Category initializeCategories() throws CannotAddSubcategoryToCategoryContaingAuctionException {
 
         Category parentcategory = new Category(null);
@@ -41,10 +39,6 @@ public class Categories {
 
         automotive.addSubcategory(motorcycles);
 
-
         return parentcategory;
     }
-
-
-
 }

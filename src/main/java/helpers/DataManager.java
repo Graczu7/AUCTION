@@ -1,13 +1,9 @@
-package models;
+package helpers;
 
-import exceptions.userExceptions.PasswordTooShortException;
+import models.User;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
-
 
 public class DataManager {
 
@@ -34,19 +30,13 @@ public class DataManager {
 //        }
 //    }
 
-    public void userFileWriter(List<User> users){
-
-
-
+    public void userFileWriter(List<User> users) {
         String fileName = "userfile.txt";
-        
         try {
-
             FileWriter fileWriter = new FileWriter(fileName);
-
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
-            for(User user : users) {
+            for (User user : users) {
                 bufferedWriter.write(user.getName());
                 bufferedWriter.write(",");
                 bufferedWriter.write(user.getLogin());
@@ -54,12 +44,9 @@ public class DataManager {
                 bufferedWriter.write(user.getPassword());
                 bufferedWriter.write("\n");
             }
-
             bufferedWriter.close();
-        }
-        catch(IOException ex) {
+        } catch (IOException ex) {
             System.out.println("Error writing to file '" + fileName + "'");
-
         }
     }
 
