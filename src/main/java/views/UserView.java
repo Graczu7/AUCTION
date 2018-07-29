@@ -5,11 +5,13 @@ import models.Auction;
 import models.Category;
 import models.User;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class UserView {
 
     public static void printMainMenu() {
+        System.out.println();
         System.out.println("What would you like to do?");
         System.out.println("1. Sign in");
         System.out.println("2. Sign up");
@@ -18,14 +20,18 @@ public class UserView {
     }
 
     public static void printLoggedMenu() {
+        System.out.println();
         System.out.println("What would you like to do?");
-        System.out.println("1. View categories");
-        System.out.println("2. View auctions");
+        System.out.println("1. Create new auction");
+        System.out.println("2. Put bid on an auction");
+        System.out.println("3. View categories");
+        System.out.println("4. View auctions");
         System.out.println("0. Exit");
         System.out.print("> ");
     }
 
     public static void printAuctionsMenu() {
+        System.out.println();
         System.out.println("1. Auctions by category");
         System.out.println("2. Auctions own");
         System.out.println("3. Auctions won");
@@ -120,6 +126,10 @@ public class UserView {
         System.out.println(login + " login is already in use!");
     }
 
+    public static void printAuctionCreationSuccessful() {
+        System.out.println("Auction creation successful.");
+    }
+
     public static void printDifferentUserLoggedIn(User user) {
         System.out.println("You are currently logged as: " + user.getLogin());
         System.out.println("Please log out before you login to different account.");
@@ -137,6 +147,14 @@ public class UserView {
         System.out.println("Price must be higher than " + Auction.MIN_PRICE);
     }
 
+    public static void printBidPriceTooLowError(BigDecimal minPrice) {
+        System.out.println("Bid price must be higher than " + minPrice);
+    }
+
+    public static void printUsersHighestBidError(){
+        System.out.println("Cannot outbid your own bid.");
+    }
+
     public static void printNoAuctionsFoundError() {
         System.out.println("No auctions found.");
     }
@@ -149,6 +167,10 @@ public class UserView {
         for (Auction auc : auctionList) {
             System.out.println(auc);
         }
+    }
+
+    public static void printFatalError() {
+        System.out.println("Something went terribly wrong! Please let us know about it!");
     }
 
     public static void printUserNotFindError() {

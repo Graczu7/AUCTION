@@ -17,7 +17,7 @@ import java.util.Objects;
 public class Auction {
     public static final int TITLE_LENGHT = 5;
     public static final int DESCRIPTION_LENGHT = 5;
-    public static final int OFFERS_TO_WIN = 5;
+    public static final int OFFERS_TO_WIN = 3;
     public static final int MIN_PRICE = 0;
     private static Integer count = 0;
     private Integer id;
@@ -50,12 +50,8 @@ public class Auction {
             throw new PriceValueTooLowException();
         } else {
             this.offersList.push(newOffer);
-            AuctionController.addNewOffer(this, newOffer);
         }
-        if (isAuctionWon()) {
-            AuctionController.addAuctionWon(this, getLastOffer().getUser().getLogin());
-            disable();
-        }
+
     }
 
     public void setDescription(String description) throws AuctionDescriptionTooShortException, CannotModifyAuctionThatEndedException {

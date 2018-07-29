@@ -87,20 +87,27 @@ public class AuctionHouse {
                     switch (userInput) {
                         case "1":
                             addNewAuction();
+                            stateHolder.setState(State.LOGGED_IN);
                             break;
                         case "2":
 
                             break;
                         case "3":
-                            viewAuctionsByCategory();
+                            UserView.printAuctionChoice();
+                            String categoryName = UserInputController.getTextFromUser();
+
+                            AuctionController.getAuctionsByCategoryName(categoryName);
+
                             stateHolder.setState(State.LOGGED_IN);
                             break;
                         case "4":
-                            viewLoggedUserAuctions();
+                            AuctionController.getAuctionsByLogin(stateHolder.getLoggedUser().getLogin());
+
                             stateHolder.setState(State.LOGGED_IN);
                             break;
                         case "5":
-                            viewUserWonAuctions();
+                            AuctionController.getWonAuctions(stateHolder.getLoggedUser().getLogin());
+
                             stateHolder.setState(State.LOGGED_IN);
                             break;
                         default:
@@ -145,72 +152,22 @@ public class AuctionHouse {
     private void addNewAuction() {
         UserView.printAuctionTitlePrompt();
         String auctionTitle = UserInputController.getTextFromUser();
+
         UserView.printAuctionDescriptionPrompt();
         String auctionDescription = UserInputController.getTextFromUser();
+
         UserView.printCategoryPrompt();
         String auctionCategory = UserInputController.getTextFromUser();
+
         UserView.printAuctionPricePrompt();
         BigDecimal auctionPrice = UserInputController.getPriceFromUser();
-        try {
-            AuctionController.createNewAuction(
-                    auctionTitle,
-                    auctionDescription,
-                    stateHolder.getLoggedUser(),
-                    mainCategory.getSubcategoryByName(auctionCategory),
-                    auctionPrice);
-        } catch (AuctionTitleTooShortException e) {
-            UserView.printAuctionTitleTooShortError();
-        } catch (AuctionDescriptionTooShortException e) {
-            UserView.printAuctionDescriptionTooShortError();
-        } catch (PriceValueTooLowException e) {
-            UserView.printAuctionPriceTooLowError();
-        } catch (AuctionException e) {
-            System.out.println("Something went terribly wrong! Please let us know about it!");
-            e.printStackTrace();
-        }
-    }
 
-    private void viewAuctionsByCategory() {
-        UserView.printAuctionChoice();
-        String categoryName = UserInputController.getTextFromUser();
-        Category category = mainCategory.getSubcategoryByName(categoryName);
-        try {
-            List<Auction> auctionList = AuctionController
-                    .getAuctionsByCategoryName(category.getName());
-            UserView.printAuctionsList(auctionList);
-        } catch (AuctionsNotFoundException e) {
-            UserView.printNoAuctionsFoundError();
-        } catch (CategoryNotFoundException e) {
-            UserView.printCategoryNotFoundError(categoryName);
-        } finally {
-            stateHolder.setState(State.LOGGED_IN);
-        }
-    }
+        AuctionController.createNewAuction(
+                auctionTitle,
+                auctionDescription,
+                stateHolder.getLoggedUser(),
+                mainCategory.getSubcategoryByName(auctionCategory),
+                auctionPrice);
 
-    private void viewLoggedUserAuctions() {
-        try {
-            List<Auction> auctionList = AuctionController.getAuctionsByLogin(stateHolder.getLoggedUser().getLogin());
-            UserView.printAuctionsList(auctionList);
-        } catch (AuctionsNotFoundException e) {
-            UserView.printNoAuctionsFoundError();
-        } catch (UserNotInDatabaseException e) {
-            UserView.printUserNotFindError();
-        } finally {
-            stateHolder.setState(State.LOGGED_IN);
-        }
     }
-
-    private void viewUserWonAuctions() {
-        try {
-            List<Auction> auctionList = AuctionController.getWonAuctions(stateHolder.getLoggedUser().getLogin());
-            UserView.printAuctionsList(auctionList);
-        } catch (AuctionsNotFoundException e) {
-            UserView.printNoAuctionsFoundError();
-        } catch (UserNotInDatabaseException e) {
-            UserView.printUserNotFindError();
-        } finally {
-            stateHolder.setState(State.LOGGED_IN);
-        }
-    }
-
 }

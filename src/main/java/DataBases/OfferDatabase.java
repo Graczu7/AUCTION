@@ -11,10 +11,10 @@ import java.util.Map;
 
 public class OfferDatabase {
     private static OfferDatabase instance;
-    private Map<Auction, List<Offer>> offersMapByCategory;
+    private Map<Auction, List<Offer>> offersMapByAuctions;
 
     private OfferDatabase() {
-        this.offersMapByCategory = new HashMap<>();
+        this.offersMapByAuctions = new HashMap<>();
     }
 
     public static OfferDatabase getInstance() {
@@ -24,18 +24,18 @@ public class OfferDatabase {
         return instance;
     }
 
-    public void addOffersMapByCategory(Auction auction, Offer offer) throws OfferAlreadyExistsException {
-        if (this.offersMapByCategory.get(auction).contains(offer)) {
+    public void addOffersMapByAuctions(Auction auction, Offer offer) throws OfferAlreadyExistsException {
+        if (this.offersMapByAuctions.get(auction).contains(offer)) {
             throw new OfferAlreadyExistsException();
         }
-        if (!this.offersMapByCategory.get(auction).contains(offer)) {
-            this.offersMapByCategory.put(auction, new LinkedList<>());
+        if (!this.offersMapByAuctions.get(auction).contains(offer)) {
+            this.offersMapByAuctions.put(auction, new LinkedList<>());
         }
-        this.offersMapByCategory.get(auction).add(offer);
+        this.offersMapByAuctions.get(auction).add(offer);
     }
 
     public List<Offer> getOffersMapByCategory(Auction auction) {
-        return this.offersMapByCategory.get(auction);
+        return this.offersMapByAuctions.get(auction);
     }
 
 }
