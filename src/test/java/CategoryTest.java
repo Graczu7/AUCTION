@@ -104,7 +104,7 @@
 //    }
 //
 //    @Test
-//    public void testAddAuction() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceNegativeValueException, PasswordTooShortException, CannotModifyAuctionThatEndedException, CannotAddAuctionToCategoryContainingSubcategoriesException {
+//    public void testAddAuction() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceValueTooLowException, PasswordTooShortException, CannotModifyAuctionThatEndedException, CannotAddAuctionToCategoryContainingSubcategoriesException {
 //        //Given
 //        User user = new User("Kowalski", "kowalski", "abc123");
 //        Auction auction = new Auction(user, new Category("Category"), "desc1", "auctionTit", BigDecimal.valueOf(123));
@@ -118,7 +118,7 @@
 //    }
 //
 //    @Test
-//    public void testAddSubcategories() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceNegativeValueException, PasswordTooShortException, CannotModifyAuctionThatEndedException, CannotAddAuctionToCategoryContainingSubcategoriesException, CannotAddSubcategoryToCategoryContaingAuctionException {
+//    public void testAddSubcategories() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceValueTooLowException, PasswordTooShortException, CannotModifyAuctionThatEndedException, CannotAddAuctionToCategoryContainingSubcategoriesException, CannotAddSubcategoryToCategoryContaingAuctionException {
 //        //Given
 //        User user = new User("Nowak", "kowalski", "abc123");
 //

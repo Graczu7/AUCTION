@@ -34,7 +34,7 @@
 //    }
 //
 //    @Before
-//    public void setUp() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
+//    public void setUp() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceValueTooLowException, CannotModifyAuctionThatEndedException {
 //        auction = new Auction(seller, category, "Description", "Title", BigDecimal.valueOf(3.5));
 //    }
 //
@@ -56,7 +56,7 @@
 //    }
 //
 //    @Test(expected = NullPointerException.class)
-//    public void testAuctionConstructorForNullUser() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
+//    public void testAuctionConstructorForNullUser() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceValueTooLowException, CannotModifyAuctionThatEndedException {
 //        auction = new Auction(null, category, "Description", "Title", BigDecimal.valueOf(3.5));
 //    }
 //
@@ -66,7 +66,7 @@
 //    }
 //
 //    @Test(expected = NullPointerException.class)
-//    public void testAuctionConstructorForNullCategory() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
+//    public void testAuctionConstructorForNullCategory() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceValueTooLowException, CannotModifyAuctionThatEndedException {
 //        auction = new Auction(seller, null, "Description", "Title", BigDecimal.valueOf(3.5));
 //    }
 //
@@ -76,12 +76,12 @@
 //    }
 //
 //    @Test(expected = NullPointerException.class)
-//    public void testAuctionConstructorForNullDescription() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
+//    public void testAuctionConstructorForNullDescription() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceValueTooLowException, CannotModifyAuctionThatEndedException {
 //        auction = new Auction(seller, category, null, "Title", BigDecimal.valueOf(3.5));
 //    }
 //
 //    @Test(expected = AuctionDescriptionTooShortException.class)
-//    public void testAuctionConstructorForEmptyDescription() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
+//    public void testAuctionConstructorForEmptyDescription() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceValueTooLowException, CannotModifyAuctionThatEndedException {
 //        auction = new Auction(seller, category, "", "Title", BigDecimal.valueOf(3.5));
 //    }
 //
@@ -91,12 +91,12 @@
 //    }
 //
 //    @Test(expected = NullPointerException.class)
-//    public void testAuctionConstructorForNullTitle() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
+//    public void testAuctionConstructorForNullTitle() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceValueTooLowException, CannotModifyAuctionThatEndedException {
 //        auction = new Auction(seller, category, "Description", null, BigDecimal.valueOf(3.5));
 //    }
 //
 //    @Test(expected = AuctionTitleTooShortException.class)
-//    public void testAuctionConstructorForTitleTooShort() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
+//    public void testAuctionConstructorForTitleTooShort() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceValueTooLowException, CannotModifyAuctionThatEndedException {
 //        auction = new Auction(seller, category, "Description", "1234", BigDecimal.valueOf(3.5));
 //    }
 //
@@ -106,12 +106,12 @@
 //    }
 //
 //    @Test(expected = NullPointerException.class)
-//    public void testAuctionConstructorForPriceNull() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
+//    public void testAuctionConstructorForPriceNull() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceValueTooLowException, CannotModifyAuctionThatEndedException {
 //        auction = new Auction(seller, category, "Description", "title", null);
 //    }
 //
-//    @Test(expected = PriceNegativeValueException.class)
-//    public void testAuctionConstructorForPriceNegativeValue() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
+//    @Test(expected = PriceValueTooLowException.class)
+//    public void testAuctionConstructorForPriceNegativeValue() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceValueTooLowException, CannotModifyAuctionThatEndedException {
 //        auction = new Auction(seller, category, "Description", "title", BigDecimal.valueOf(-5));
 //    }
 //
@@ -124,7 +124,7 @@
 //    }
 //
 //    @Test
-//    public void testSetNewOfferForOfferHigherThanPrice() throws PriceValueTooLowException, PriceNegativeValueException, CannotOutbidUsersOwnBidException, PasswordTooShortException, CannotBidUsersOwnAuctionException, CannotBidAuctionThatEndedException {
+//    public void testSetNewOfferForOfferHigherThanPrice() throws PriceValueTooLowException, PriceValueTooLowException, CannotOutbidUsersOwnBidException, PasswordTooShortException, CannotBidUsersOwnAuctionException, CannotBidAuctionThatEndedException {
 //        User buyer = new User("buyer", "buyer", "password");
 //        Offer newOffer = new Offer(buyer, auction, new BigDecimal(5));
 //
@@ -133,7 +133,7 @@
 //    }
 //
 //    @Test
-//    public void testSetNewOfferForOfferHigherThanLastOffer() throws PriceValueTooLowException, PriceNegativeValueException, CannotOutbidUsersOwnBidException, PasswordTooShortException, CannotBidUsersOwnAuctionException, CannotBidAuctionThatEndedException {
+//    public void testSetNewOfferForOfferHigherThanLastOffer() throws PriceValueTooLowException, PriceValueTooLowException, CannotOutbidUsersOwnBidException, PasswordTooShortException, CannotBidUsersOwnAuctionException, CannotBidAuctionThatEndedException {
 //        User oldBuyer = new User("oldbuyer", "oldbuyer", "password");
 //        Offer oldOffer = new Offer(oldBuyer, auction, BigDecimal.valueOf(5));
 //
@@ -146,7 +146,7 @@
 //    }
 //
 //    @Test(expected = CannotBidAuctionThatEndedException.class)
-//    public void testSetNewOfferWhenAuctionNotActive() throws PasswordTooShortException, PriceNegativeValueException, CannotBidUsersOwnAuctionException, CannotBidAuctionThatEndedException, PriceValueTooLowException, CannotOutbidUsersOwnBidException {
+//    public void testSetNewOfferWhenAuctionNotActive() throws PasswordTooShortException, PriceValueTooLowException, CannotBidUsersOwnAuctionException, CannotBidAuctionThatEndedException, PriceValueTooLowException, CannotOutbidUsersOwnBidException {
 //        auction.disable();
 //
 //        User buyer = new User("buyer", "buyer", "password");
@@ -156,13 +156,13 @@
 //    }
 //
 //    @Test(expected = CannotBidUsersOwnAuctionException.class)
-//    public void testSetNewOfferWhenBiddingOwnAuction() throws PriceNegativeValueException, CannotBidUsersOwnAuctionException, CannotBidAuctionThatEndedException, PriceValueTooLowException, CannotOutbidUsersOwnBidException {
+//    public void testSetNewOfferWhenBiddingOwnAuction() throws PriceValueTooLowException, CannotBidUsersOwnAuctionException, CannotBidAuctionThatEndedException, PriceValueTooLowException, CannotOutbidUsersOwnBidException {
 //        Offer newOffer = new Offer(seller, auction, BigDecimal.valueOf(5));
 //        auction.setNewOffer(newOffer);
 //    }
 //
 //    @Test(expected = CannotOutbidUsersOwnBidException.class)
-//    public void testSetNewOfferWhenTryingToOutbidUsersOwnBid() throws PriceNegativeValueException, CannotBidUsersOwnAuctionException, CannotBidAuctionThatEndedException, PriceValueTooLowException, CannotOutbidUsersOwnBidException, PasswordTooShortException {
+//    public void testSetNewOfferWhenTryingToOutbidUsersOwnBid() throws PriceValueTooLowException, CannotBidUsersOwnAuctionException, CannotBidAuctionThatEndedException, PriceValueTooLowException, CannotOutbidUsersOwnBidException, PasswordTooShortException {
 //        User buyer = new User("buyer", "buyer", "password");
 //        Offer firstOffer = new Offer(buyer, auction, BigDecimal.valueOf(5));
 //        auction.setNewOffer(firstOffer);
@@ -172,7 +172,7 @@
 //    }
 //
 //    @Test(expected = PriceValueTooLowException.class)
-//    public void testSetNewOfferForOfferEqualsLastOffer() throws PriceValueTooLowException, PriceNegativeValueException, CannotOutbidUsersOwnBidException, PasswordTooShortException, CannotBidUsersOwnAuctionException, CannotBidAuctionThatEndedException {
+//    public void testSetNewOfferForOfferEqualsLastOffer() throws PriceValueTooLowException, PriceValueTooLowException, CannotOutbidUsersOwnBidException, PasswordTooShortException, CannotBidUsersOwnAuctionException, CannotBidAuctionThatEndedException {
 //        User oldBuyer = new User("oldbuyer", "oldbuyer", "password");
 //        Offer oldOffer = new Offer(oldBuyer, auction, BigDecimal.valueOf(5));
 //
@@ -184,7 +184,7 @@
 //    }
 //
 //    @Test(expected = PriceValueTooLowException.class)
-//    public void testSetNewOfferForOfferLowerThanLastOffer() throws PriceValueTooLowException, PriceNegativeValueException, CannotOutbidUsersOwnBidException, PasswordTooShortException, CannotBidUsersOwnAuctionException, CannotBidAuctionThatEndedException {
+//    public void testSetNewOfferForOfferLowerThanLastOffer() throws PriceValueTooLowException, PriceValueTooLowException, CannotOutbidUsersOwnBidException, PasswordTooShortException, CannotBidUsersOwnAuctionException, CannotBidAuctionThatEndedException {
 //        User oldBuyer = new User("oldbuyer", "oldbuyer", "password");
 //        Offer oldOffer = new Offer(oldBuyer, auction, BigDecimal.valueOf(5));
 //
@@ -196,7 +196,7 @@
 //    }
 //
 //    @Test(expected = PriceValueTooLowException.class)
-//    public void testSetNewOfferForOfferEqualsPrice() throws PriceValueTooLowException, PriceNegativeValueException, CannotOutbidUsersOwnBidException, PasswordTooShortException, CannotBidUsersOwnAuctionException, CannotBidAuctionThatEndedException {
+//    public void testSetNewOfferForOfferEqualsPrice() throws PriceValueTooLowException, PriceValueTooLowException, CannotOutbidUsersOwnBidException, PasswordTooShortException, CannotBidUsersOwnAuctionException, CannotBidAuctionThatEndedException {
 //        User buyer = new User("buyer", "buyer", "password");
 //        Offer newOffer = new Offer(buyer, auction, BigDecimal.valueOf(3.5));
 //
@@ -204,7 +204,7 @@
 //    }
 //
 //    @Test(expected = PriceValueTooLowException.class)
-//    public void testSetNewOfferForOfferLowerThanPrice() throws PriceValueTooLowException, PriceNegativeValueException, CannotOutbidUsersOwnBidException, PasswordTooShortException, CannotBidUsersOwnAuctionException, CannotBidAuctionThatEndedException {
+//    public void testSetNewOfferForOfferLowerThanPrice() throws PriceValueTooLowException, PriceValueTooLowException, CannotOutbidUsersOwnBidException, PasswordTooShortException, CannotBidUsersOwnAuctionException, CannotBidAuctionThatEndedException {
 //        User buyer = new User("buyer", "buyer", "password");
 //        Offer newOffer = new Offer(buyer, auction, BigDecimal.valueOf(1.5));
 //
@@ -258,24 +258,24 @@
 //    }
 //
 //    @Test
-//    public void testSetPriceSetsValueCorrectly() throws PriceNegativeValueException, CannotModifyAuctionThatEndedException {
+//    public void testSetPriceSetsValueCorrectly() throws PriceValueTooLowException, CannotModifyAuctionThatEndedException {
 //        auction.changeStartingPrice(BigDecimal.valueOf(15));
 //        assertEquals(BigDecimal.valueOf(15), auction.getStartingPrice());
 //    }
 //
 //    @Test(expected = CannotModifyAuctionThatEndedException.class)
-//    public void testSetPriceWhenAuctionNotActive() throws PriceNegativeValueException, CannotModifyAuctionThatEndedException {
+//    public void testSetPriceWhenAuctionNotActive() throws PriceValueTooLowException, CannotModifyAuctionThatEndedException {
 //        auction.disable();
 //        auction.changeStartingPrice(BigDecimal.valueOf(15));
 //    }
 //
 //    @Test(expected = NullPointerException.class)
-//    public void testSetPriceForNull() throws PriceNegativeValueException, CannotModifyAuctionThatEndedException {
+//    public void testSetPriceForNull() throws PriceValueTooLowException, CannotModifyAuctionThatEndedException {
 //        auction.changeStartingPrice(null);
 //    }
 //
-//    @Test(expected = PriceNegativeValueException.class)
-//    public void testSetPriceForNegativeValue() throws PriceNegativeValueException, CannotModifyAuctionThatEndedException {
+//    @Test(expected = PriceValueTooLowException.class)
+//    public void testSetPriceForNegativeValue() throws PriceValueTooLowException, CannotModifyAuctionThatEndedException {
 //        auction.changeStartingPrice(BigDecimal.valueOf(-5));
 //    }
 //
@@ -293,7 +293,7 @@
 //    }
 //
 //    @Test
-//    public void testIsAuctionWonForNotEnoughOffers() throws PasswordTooShortException, PriceNegativeValueException, CannotBidUsersOwnAuctionException, CannotBidAuctionThatEndedException, PriceValueTooLowException, CannotOutbidUsersOwnBidException {
+//    public void testIsAuctionWonForNotEnoughOffers() throws PasswordTooShortException, PriceValueTooLowException, CannotBidUsersOwnAuctionException, CannotBidAuctionThatEndedException, PriceValueTooLowException, CannotOutbidUsersOwnBidException {
 //        User bidder = new User("buyer", "buyer", "password");
 //        Offer firstOffer = new Offer(bidder, auction, BigDecimal.valueOf(5));
 //
@@ -307,7 +307,7 @@
 //    }
 //
 //    @Test
-//    public void testIsAuctionWonForWin() throws PasswordTooShortException, PriceNegativeValueException, CannotBidUsersOwnAuctionException, CannotBidAuctionThatEndedException, PriceValueTooLowException, CannotOutbidUsersOwnBidException {
+//    public void testIsAuctionWonForWin() throws PasswordTooShortException, PriceValueTooLowException, CannotBidUsersOwnAuctionException, CannotBidAuctionThatEndedException, PriceValueTooLowException, CannotOutbidUsersOwnBidException {
 //        User bidder = new User("buyer", "buyer", "password");
 //        Offer firstOffer = new Offer(bidder, auction, BigDecimal.valueOf(5));
 //

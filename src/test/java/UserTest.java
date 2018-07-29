@@ -43,7 +43,7 @@
 //    }
 //
 //    @Test
-//    public void testByCreateUsersOffer() throws PriceNegativeValueException, PasswordTooShortException, CannotModifyAuctionThatEndedException, AuctionTitleTooShortException, AuctionDescriptionTooShortException {
+//    public void testByCreateUsersOffer() throws PriceValueTooLowException, PasswordTooShortException, CannotModifyAuctionThatEndedException, AuctionTitleTooShortException, AuctionDescriptionTooShortException {
 //        User user = new User("Name", "Login", "password");
 //        Category category = new Category("Name");
 //        Auction auction = new Auction(user, category, "description", "title", BigDecimal.valueOf(10));
@@ -54,7 +54,7 @@
 //    }
 //
 //    @Test
-//    public void testByCreateOwnedAuctions() throws PasswordTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException, AuctionTitleTooShortException, AuctionDescriptionTooShortException {
+//    public void testByCreateOwnedAuctions() throws PasswordTooShortException, PriceValueTooLowException, CannotModifyAuctionThatEndedException, AuctionTitleTooShortException, AuctionDescriptionTooShortException {
 //        User user = new User("Name", "Login", "password");
 //        Category category = new Category("Name");
 //        Auction auction = new Auction(user, category, "description", "title", BigDecimal.valueOf(10));
@@ -64,7 +64,7 @@
 //    }
 //
 //    @Test
-//    public void testByCreateWoAuctions() throws PasswordTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException, AuctionTitleTooShortException, AuctionDescriptionTooShortException {
+//    public void testByCreateWoAuctions() throws PasswordTooShortException, PriceValueTooLowException, CannotModifyAuctionThatEndedException, AuctionTitleTooShortException, AuctionDescriptionTooShortException {
 //        User user = new User("Name", "Login", "password");
 //        Category category = new Category("Name");
 //        Auction auction = new Auction(user, category, "description", "title", BigDecimal.valueOf(10));

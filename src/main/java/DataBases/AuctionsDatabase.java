@@ -2,7 +2,7 @@ package DataBases;
 
 import exceptions.auctionExceptions.*;
 import exceptions.categoryExceptions.CategoryNotFoundException;
-import exceptions.userExceptions.UserNotFoundException;
+import exceptions.userExceptions.UserNotInDatabaseException;
 import models.Auction;
 import models.Category;
 import models.User;
@@ -58,9 +58,9 @@ public class AuctionsDatabase {
         this.auctionsWonByUser.get(winner).add(auction);
     }
 
-    public List<Auction> getAuctionsByLogin(String login) throws AuctionsNotFoundException, UserNotFoundException {
+    public List<Auction> getAuctionsByLogin(String login) throws AuctionsNotFoundException, UserNotInDatabaseException {
         if (!auctionMapByLogin.containsKey(login)) {
-            throw new UserNotFoundException();
+            throw new UserNotInDatabaseException();
         }
         if (auctionMapByLogin.get(login) == null ||
                 auctionMapByLogin.get(login).isEmpty()) {
@@ -69,9 +69,9 @@ public class AuctionsDatabase {
         return this.auctionMapByLogin.get(login);
     }
 
-    public List<Auction> getWonAuctions(String login) throws AuctionsNotFoundException, UserNotFoundException {
+    public List<Auction> getWonAuctions(String login) throws AuctionsNotFoundException, UserNotInDatabaseException {
         if (!auctionsWonByUser.containsKey(login)) {
-            throw new UserNotFoundException();
+            throw new UserNotInDatabaseException();
         }
         if (auctionsWonByUser.get(login) == null ||
                 auctionsWonByUser.get(login).isEmpty()) {

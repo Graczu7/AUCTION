@@ -1,6 +1,6 @@
 package models;
 
-import exceptions.PriceNegativeValueException;
+import exceptions.PriceValueTooLowException;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -11,7 +11,7 @@ public class Offer {
     private Auction objectToSell;
     private BigDecimal price;
 
-    public Offer(User user, Auction objectToSell, BigDecimal price) throws PriceNegativeValueException {
+    public Offer(User user, Auction objectToSell, BigDecimal price) throws PriceValueTooLowException {
         this.user = user;
         this.objectToSell = objectToSell;
         setPrice(price);
@@ -22,10 +22,10 @@ public class Offer {
         this.user = user;
     }
 
-    public void setPrice(BigDecimal price) throws PriceNegativeValueException {
+    public void setPrice(BigDecimal price) throws PriceValueTooLowException {
         // user can give item away for free
         if (price.compareTo(BigDecimal.valueOf(0)) < 0) {
-            throw new PriceNegativeValueException();
+            throw new PriceValueTooLowException();
         }
         this.price = price;
     }

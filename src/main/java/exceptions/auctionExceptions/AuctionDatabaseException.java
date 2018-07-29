@@ -1,4 +1,4 @@
 package exceptions.auctionExceptions;
 
-public class AuctionDatabaseException extends Exception {
+public class AuctionDatabaseException extends AuctionException {
 }

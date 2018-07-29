@@ -125,12 +125,24 @@ public class UserView {
         System.out.println("Please log out before you login to different account.");
     }
 
+    public static void printAuctionTitleTooShortError() {
+        System.out.println("Title must contain at least " + Auction.TITLE_LENGHT + " characters.");
+    }
+
+    public static void printAuctionDescriptionTooShortError() {
+        System.out.println("Description must contain at least " + Auction.DESCRIPTION_LENGHT + " characters.");
+    }
+
+    public static void printAuctionPriceTooLowError() {
+        System.out.println("Price must be higher than " + Auction.MIN_PRICE);
+    }
+
     public static void printNoAuctionsFoundError() {
-        System.out.println("No auctions found");
+        System.out.println("No auctions found.");
     }
 
     public static void printCategoryNotFoundError(String categoryName) {
-        System.out.println(categoryName + " doesn't exist");
+        System.out.println(categoryName + " doesn't exist.");
     }
 
     public static void printAuctionsList(List<Auction> auctionList) {
@@ -140,6 +152,6 @@ public class UserView {
     }
 
     public static void printUserNotFindError() {
-        System.out.println("User not found");
+        System.out.println("User not found.");
     }
 }

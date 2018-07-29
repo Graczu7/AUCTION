@@ -1,4 +1,4 @@
 package exceptions;
 
-public class PriceValueTooLowException extends Exception {
+public class PriceValueTooLowException extends Throwable {
 }

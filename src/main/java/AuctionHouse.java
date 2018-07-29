@@ -1,10 +1,11 @@
 import controllers.AuctionController;
 import controllers.UserController;
 import controllers.UserInputController;
-import exceptions.auctionExceptions.AuctionsNotFoundException;
+import exceptions.PriceValueTooLowException;
+import exceptions.auctionExceptions.*;
 import exceptions.categoryExceptions.CannotAddSubcategoryToCategoryContaingAuctionException;
 import exceptions.categoryExceptions.CategoryNotFoundException;
-import exceptions.userExceptions.UserNotFoundException;
+import exceptions.userExceptions.UserNotInDatabaseException;
 import helpers.Categories;
 import helpers.State;
 import helpers.StateHolder;
@@ -142,14 +143,31 @@ public class AuctionHouse {
     }
 
     private void addNewAuction() {
-        UserView.printCategoryPrompt();
-        String auctionCategory = UserInputController.getTextFromUser();
         UserView.printAuctionTitlePrompt();
         String auctionTitle = UserInputController.getTextFromUser();
         UserView.printAuctionDescriptionPrompt();
         String auctionDescription = UserInputController.getTextFromUser();
+        UserView.printCategoryPrompt();
+        String auctionCategory = UserInputController.getTextFromUser();
         UserView.printAuctionPricePrompt();
         BigDecimal auctionPrice = UserInputController.getPriceFromUser();
+        try {
+            AuctionController.createNewAuction(
+                    auctionTitle,
+                    auctionDescription,
+                    stateHolder.getLoggedUser(),
+                    mainCategory.getSubcategoryByName(auctionCategory),
+                    auctionPrice);
+        } catch (AuctionTitleTooShortException e) {
+            UserView.printAuctionTitleTooShortError();
+        } catch (AuctionDescriptionTooShortException e) {
+            UserView.printAuctionDescriptionTooShortError();
+        } catch (PriceValueTooLowException e) {
+            UserView.printAuctionPriceTooLowError();
+        } catch (AuctionException e) {
+            System.out.println("Something went terribly wrong! Please let us know about it!");
+            e.printStackTrace();
+        }
     }
 
     private void viewAuctionsByCategory() {
@@ -175,7 +193,7 @@ public class AuctionHouse {
             UserView.printAuctionsList(auctionList);
         } catch (AuctionsNotFoundException e) {
             UserView.printNoAuctionsFoundError();
-        } catch (UserNotFoundException e) {
+        } catch (UserNotInDatabaseException e) {
             UserView.printUserNotFindError();
         } finally {
             stateHolder.setState(State.LOGGED_IN);
@@ -188,7 +206,7 @@ public class AuctionHouse {
             UserView.printAuctionsList(auctionList);
         } catch (AuctionsNotFoundException e) {
             UserView.printNoAuctionsFoundError();
-        } catch (UserNotFoundException e) {
+        } catch (UserNotInDatabaseException e) {
             UserView.printUserNotFindError();
         } finally {
             stateHolder.setState(State.LOGGED_IN);

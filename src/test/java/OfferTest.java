@@ -17,7 +17,7 @@
 //public class OfferTest {
 //
 //    @Test
-//    public void testOfferNotNull() throws PriceNegativeValueException, AuctionDescriptionTooShortException, AuctionTitleTooShortException, PasswordTooShortException, CannotModifyAuctionThatEndedException {
+//    public void testOfferNotNull() throws PriceValueTooLowException, AuctionDescriptionTooShortException, AuctionTitleTooShortException, PasswordTooShortException, CannotModifyAuctionThatEndedException {
 //        //given
 //        User user = new User("Jacek", "Placek","burek");
 //        Category category = new Category("Category");
@@ -29,7 +29,7 @@
 //    }
 //
 //    @Test
-//    public void testOfferAssert() throws PriceNegativeValueException, AuctionDescriptionTooShortException, AuctionTitleTooShortException, PasswordTooShortException, CannotModifyAuctionThatEndedException {
+//    public void testOfferAssert() throws PriceValueTooLowException, AuctionDescriptionTooShortException, AuctionTitleTooShortException, PasswordTooShortException, CannotModifyAuctionThatEndedException {
 //        //given
 //        User second = new User("Henry", "James", "Zwrotnik");
 //        Category category = new Category("Category");
@@ -44,7 +44,7 @@
 //    }
 //
 //    @Test (expected = NullPointerException.class)
-//    public void testSetPriceIfNewPriceIsNull() throws PasswordTooShortException, AuctionDescriptionTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException, AuctionTitleTooShortException {
+//    public void testSetPriceIfNewPriceIsNull() throws PasswordTooShortException, AuctionDescriptionTooShortException, PriceValueTooLowException, CannotModifyAuctionThatEndedException, AuctionTitleTooShortException {
 //
 //        //given
 //        User second = new User("Henry", "James", "Zwrotnik");
@@ -55,8 +55,8 @@
 //        offer.setPrice(null);
 //   }
 //
-//   @Test (expected = PriceNegativeValueException.class)
-//    public void testSetPriceIsNegativeValue() throws PasswordTooShortException, AuctionDescriptionTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException, AuctionTitleTooShortException {
+//   @Test (expected = PriceValueTooLowException.class)
+//    public void testSetPriceIsNegativeValue() throws PasswordTooShortException, AuctionDescriptionTooShortException, PriceValueTooLowException, CannotModifyAuctionThatEndedException, AuctionTitleTooShortException {
 //
 //       User second = new User("Henry", "James", "Zwrotnik");
 //       Category category = new Category("Category");
@@ -69,7 +69,7 @@
 //
 //   @Test
 //
-//    public void testSetPriceIsPositive() throws PasswordTooShortException, AuctionDescriptionTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException, AuctionTitleTooShortException {
+//    public void testSetPriceIsPositive() throws PasswordTooShortException, AuctionDescriptionTooShortException, PriceValueTooLowException, CannotModifyAuctionThatEndedException, AuctionTitleTooShortException {
 //
 //       User second = new User("Henry", "James", "Zwrotnik");
 //       Category category = new Category("Category");
@@ -84,7 +84,7 @@
 //
 //   @Test
 //
-//    public void testSetPriceSetLowerPrice() throws PasswordTooShortException, AuctionDescriptionTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException, AuctionTitleTooShortException {
+//    public void testSetPriceSetLowerPrice() throws PasswordTooShortException, AuctionDescriptionTooShortException, PriceValueTooLowException, CannotModifyAuctionThatEndedException, AuctionTitleTooShortException {
 //
 //       User second = new User("Henry", "James", "Zwrotnik");
 //       Category category = new Category("Category");

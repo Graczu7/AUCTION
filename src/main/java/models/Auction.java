@@ -15,6 +15,10 @@ import java.util.LinkedList;
 import java.util.Objects;
 
 public class Auction {
+    public static final int TITLE_LENGHT = 5;
+    public static final int DESCRIPTION_LENGHT = 5;
+    public static final int OFFERS_TO_WIN = 5;
+    public static final int MIN_PRICE = 0;
     private static Integer count = 0;
     private Integer id;
     private LinkedList<Offer> offersList;
@@ -23,9 +27,9 @@ public class Auction {
     private BigDecimal startingPrice;
     private boolean isActive = true;
 
-    public Auction(String description, String title, BigDecimal startingPrice) throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceNegativeValueException, CannotModifyAuctionThatEndedException {
-        setDescription(description);
+    public Auction(String title, String description, BigDecimal startingPrice) throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceValueTooLowException, CannotModifyAuctionThatEndedException {
         setTitle(title);
+        setDescription(description);
         changeStartingPrice(startingPrice);
         this.offersList = new LinkedList<>();
         this.id = count;
@@ -58,7 +62,7 @@ public class Auction {
         if (!this.isActive) {
             throw new CannotModifyAuctionThatEndedException();
         }
-        if (description.length() == 0) {
+        if (description.length() < DESCRIPTION_LENGHT) {
             throw new AuctionDescriptionTooShortException();
         }
         this.description = description;
@@ -68,18 +72,18 @@ public class Auction {
         if (!this.isActive) {
             throw new CannotModifyAuctionThatEndedException();
         }
-        if (title.length() < 5) {
+        if (title.length() < TITLE_LENGHT) {
             throw new AuctionTitleTooShortException();
         }
         this.title = title;
     }
 
-    public void changeStartingPrice(BigDecimal startingPrice) throws PriceNegativeValueException, CannotModifyAuctionThatEndedException {
+    public void changeStartingPrice(BigDecimal startingPrice) throws PriceValueTooLowException, CannotModifyAuctionThatEndedException {
         if (!this.isActive) {
             throw new CannotModifyAuctionThatEndedException();
         }
-        if (startingPrice.compareTo(BigDecimal.valueOf(0)) < 0) {
-            throw new PriceNegativeValueException();
+        if (startingPrice.compareTo(BigDecimal.valueOf(0)) < MIN_PRICE) {
+            throw new PriceValueTooLowException();
         }
         this.startingPrice = startingPrice;
     }
@@ -89,7 +93,7 @@ public class Auction {
     }
 
     public boolean isAuctionWon() {
-        return offersList.size() >= 3;
+        return offersList.size() >= OFFERS_TO_WIN;
     }
 
     public Integer getId() {
