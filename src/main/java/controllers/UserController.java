@@ -13,7 +13,7 @@ public class UserController {
             user = UserDatabase.getInstance().getUser(login, password);
             UserView.printUserLoginConfirmation(user);
             return true;
-        } catch (NoSuchUserInDatabaseException e) {
+        } catch (UserNotFoundException e) {
             UserView.printUserDoesNotExistError(login);
             return false;
         }

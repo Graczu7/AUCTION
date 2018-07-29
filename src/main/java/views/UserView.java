@@ -138,4 +138,8 @@ public class UserView {
             System.out.println(auc);
         }
     }
+
+    public static void printUserNotFindError() {
+        System.out.println("User not found");
+    }
 }

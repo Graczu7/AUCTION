@@ -4,6 +4,8 @@ import DataBases.AuctionsDatabase;
 import exceptions.auctionExceptions.AuctionAlreadyInDatabaseException;
 import exceptions.auctionExceptions.AuctionsNotFoundException;
 import exceptions.auctionExceptions.CannotAddInactiveAuctionToDatabaseException;
+import exceptions.categoryExceptions.CategoryNotFoundException;
+import exceptions.userExceptions.UserNotFoundException;
 import models.Auction;
 import models.Category;
 import models.Offer;
@@ -26,19 +28,16 @@ public class AuctionController {
 
     }
 
-    public static List<Auction> getAuctionsWon(String winnerLogin) throws AuctionsNotFoundException {
-        List<Auction> auctions = AuctionsDatabase.getInstance().getWonAuctions(winnerLogin);
-        if (auctions.isEmpty()) {
-            throw new AuctionsNotFoundException();
-        }
-        return auctions;
+    public static List<Auction> getAuctionsByLogin(String login) throws AuctionsNotFoundException, UserNotFoundException {
+        return AuctionsDatabase.getInstance().getAuctionsByLogin(login);
     }
 
-    public static List<Auction> getAuctionsByLogin(String login) throws AuctionsNotFoundException {
-        List<Auction> auctions = AuctionsDatabase.getInstance().getAuctionsByLogin(login);
-        if (auctions.isEmpty()) {
-            throw new AuctionsNotFoundException();
-        }
-        return auctions;
+    public static List<Auction> getWonAuctions(String login) throws AuctionsNotFoundException, UserNotFoundException {
+        return AuctionsDatabase.getInstance().getWonAuctions(login);
     }
+
+    public static List<Auction> getAuctionsByCategoryName(String categoryName) throws AuctionsNotFoundException, CategoryNotFoundException {
+        return AuctionsDatabase.getInstance().getAuctionsByCategoryName(categoryName);
+    }
+
 }
