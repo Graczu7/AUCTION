@@ -23,6 +23,8 @@ public class UserDatabase {
         return instance;
     }
 
+
+
     public List<User> getUsersList() {
         List<User> usersAsList = new ArrayList<>();
         for (User user : this.users.values()) {
@@ -33,6 +35,10 @@ public class UserDatabase {
 //            usersAsList.add(entry.getValue());
 //        }
         return usersAsList;
+    }
+
+    public Map<String, User> getUsers() {
+        return users;
     }
 
     public boolean isLoginTaken(String login) {

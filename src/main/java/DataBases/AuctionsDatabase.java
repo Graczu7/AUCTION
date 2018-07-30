@@ -92,7 +92,15 @@ public class AuctionsDatabase {
         return this.auctionMapByCategory.get(categoryName);
     }
 
+    public Map<String, List<Auction>> getAuctionMapByLogin() {
+        return auctionMapByLogin;
+    }
 
+    public Map<String, List<Auction>> getAuctionMapByCategory() {
+        return auctionMapByCategory;
+    }
 
-
+    public Map<String, List<Auction>> getAuctionsWonByUser() {
+        return auctionsWonByUser;
+    }
 }

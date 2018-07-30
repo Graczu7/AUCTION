@@ -2,7 +2,6 @@ package models;
 
 import exceptions.*;
 import exceptions.auctionExceptions.*;
-import exceptions.offerExceptions.*;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -26,15 +25,7 @@ public class Auction {
         count++;
     }
 
-    public void setNewOffer(Offer newOffer) throws PriceValueTooLowException, CannotOutbidUsersOwnBidException, CannotBidUsersOwnAuctionException, CannotBidAuctionThatEndedException, AuctionAlreadyInDatabaseException {
-        if (!this.isActive) {
-            throw new CannotBidAuctionThatEndedException();
-        }
-
-
-    }
-
-    public void setDescription(String description) throws AuctionDescriptionTooShortException, CannotModifyAuctionThatEndedException {
+    private void setDescription(String description) throws AuctionDescriptionTooShortException, CannotModifyAuctionThatEndedException {
         if (!this.isActive) {
             throw new CannotModifyAuctionThatEndedException();
         }
@@ -44,7 +35,7 @@ public class Auction {
         this.description = description;
     }
 
-    public void setTitle(String title) throws AuctionTitleTooShortException, CannotModifyAuctionThatEndedException {
+    private void setTitle(String title) throws AuctionTitleTooShortException, CannotModifyAuctionThatEndedException {
         if (!this.isActive) {
             throw new CannotModifyAuctionThatEndedException();
         }
@@ -54,7 +45,7 @@ public class Auction {
         this.title = title;
     }
 
-    public void changeStartingPrice(BigDecimal startingPrice) throws PriceValueTooLowException, CannotModifyAuctionThatEndedException {
+    private void changeStartingPrice(BigDecimal startingPrice) throws PriceValueTooLowException, CannotModifyAuctionThatEndedException {
         if (!this.isActive) {
             throw new CannotModifyAuctionThatEndedException();
         }
@@ -106,7 +97,6 @@ public class Auction {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(id, description, title, startingPrice, isActive);
     }
 

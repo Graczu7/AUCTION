@@ -87,7 +87,7 @@ public class AuctionHouse {
                             stateHolder.setState(State.LOGGED_IN);
                             break;
                         case "2":
-
+                            addNewOffer();
                             stateHolder.setState(State.LOGGED_IN);
                             break;
                         case "3":
@@ -147,7 +147,6 @@ public class AuctionHouse {
         }
     }
 
-    //TODO
     private void addNewOffer() {
         UserView.printAuctionTitlePrompt();
         String auctionName = UserInputController.getTextFromUser();
