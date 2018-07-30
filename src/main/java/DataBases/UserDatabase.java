@@ -6,7 +6,6 @@ import models.User;
 
 import java.util.*;
 
-//TODO
 public class UserDatabase {
 
     private static UserDatabase instance;

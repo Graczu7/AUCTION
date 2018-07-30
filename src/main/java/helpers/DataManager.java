@@ -3,45 +3,46 @@ package helpers;
 import models.User;
 
 import java.io.*;
-import java.util.List;
+import java.util.Map;
 
 public class DataManager {
 
-//    public void userFileReader() {
-//
-//        String fileName = "userfile.txt";
-//        String line = null;
-//
-//        try {
-//            FileReader fileReader = new FileReader(fileName);
-//
-//            BufferedReader bufferedReader = new BufferedReader(fileReader);
-//
-//            while ((line = bufferedReader.readLine()) != null) {
-//                System.out.println(line);
-//            }
-//
-//            bufferedReader.close();
-//        } catch (FileNotFoundException ex) {
-//            System.out.println("Unable to open file '" + fileName + "'");
-//        } catch (IOException ex) {
-//            System.out.println("Error reading file '" + fileName + "'");
-//
-//        }
-//    }
+    public void userFileReader() {
 
-    public void userFileWriter(List<User> users) {
+        String fileName = "userfile.txt";
+        String line = null;
+
+        try {
+            FileReader fileReader = new FileReader(fileName);
+
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+            while ((line = bufferedReader.readLine()) != null) {
+
+            }
+
+            bufferedReader.close();
+        } catch (FileNotFoundException ex) {
+            System.out.println("Unable to open file '" + fileName + "'");
+        } catch (IOException ex) {
+            System.out.println("Error reading file '" + fileName + "'");
+
+        }
+    }
+
+    public void userFileWriter(Map<String, User> users) {
         String fileName = "userfile.txt";
         try {
             FileWriter fileWriter = new FileWriter(fileName);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
-            for (User user : users) {
-                bufferedWriter.write(user.getName());
-                bufferedWriter.write(",");
-                bufferedWriter.write(user.getLogin());
-                bufferedWriter.write(",");
-                bufferedWriter.write(user.getPassword());
+            for (Map.Entry<String, User> entry : users.entrySet())
+            {
+                bufferedWriter.write(entry.getValue().getName());
+                bufferedWriter.write(";");
+                bufferedWriter.write(entry.getValue().getLogin());
+                bufferedWriter.write(";");
+                bufferedWriter.write(entry.getValue().getPassword());
                 bufferedWriter.write("\n");
             }
             bufferedWriter.close();
