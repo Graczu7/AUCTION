@@ -27,7 +27,7 @@ public class OfferDatabase {
             throw new OfferAlreadyExistsException();
         }
         if (!this.offersMapByAuctions.get(auction).contains(offer)) {
-            this.offersMapByAuctions.put(auction, new ArrayDeque<>());
+            this.offersMapByAuctions.put(auction, new ArrayList<>());
         }
         this.offersMapByAuctions.get(auction).add(offer);
     }

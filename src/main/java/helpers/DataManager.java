@@ -5,6 +5,7 @@ import DataBases.UserDatabase;
 import exceptions.userExceptions.LoginAlreadyExistsException;
 import exceptions.userExceptions.PasswordTooShortException;
 import models.Auction;
+import models.Offer;
 import models.User;
 
 import java.io.*;
@@ -14,6 +15,7 @@ import java.util.Map;
 public class DataManager {
     private static final String DIVIDER = ";";
     private static final String OBJECT_DIVIDER = "/";
+    private static final String KEY_DIVIDER = "?";
     private static final String FILE_NAME = "datafile.data";
 
 
@@ -47,16 +49,16 @@ public class DataManager {
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
             bufferedWriter.write("{UserDatabase}\n");
-            userFileWriter(UserDatabase.getInstance().getUsers(), bufferedWriter);
+            userWriter(UserDatabase.getInstance().getUsers(), bufferedWriter);
 
             bufferedWriter.write("{AuctionDatabase.auctionMapByLogin}\n");
-            auctionFileWriter(AuctionsDatabase.getInstance().getAuctionMapByLogin());
+            auctionWriter(AuctionsDatabase.getInstance().getAuctionMapByLogin(), bufferedWriter);
 
             bufferedWriter.write("{AuctionDatabase.auctionMapByCategory}\n");
-            auctionFileWriter(AuctionsDatabase.getInstance().getAuctionMapByCategory());
+            auctionWriter(AuctionsDatabase.getInstance().getAuctionMapByCategory(), bufferedWriter);
 
             bufferedWriter.write("{AuctionDatabase.auctionsWonByUser}\n");
-            auctionFileWriter(AuctionsDatabase.getInstance().getAuctionsWonByUser());
+            auctionWriter(AuctionsDatabase.getInstance().getAuctionsWonByUser(), bufferedWriter);
 
 
 
@@ -67,7 +69,7 @@ public class DataManager {
 
     }
 
-    private void userFileWriter(Map<String, User> users, BufferedWriter bufferedWriter) throws IOException {
+    private void userWriter(Map<String, User> users, BufferedWriter bufferedWriter) throws IOException {
         for (Map.Entry<String, User> entry : users.entrySet()) {
             bufferedWriter.write(entry.getValue().getName());
             bufferedWriter.write(DIVIDER);
@@ -79,7 +81,7 @@ public class DataManager {
 
     }
 
-    private void auctionFileWriter(Map<String, List<Auction>> auctionMap, BufferedWriter bufferedWriter) throws IOException {
+    private void auctionWriter(Map<String, List<Auction>> auctionMap, BufferedWriter bufferedWriter) throws IOException {
         for (Map.Entry<String, List<Auction>> entry : auctionMap.entrySet()) {
             bufferedWriter.write(entry.getKey());
             bufferedWriter.write(OBJECT_DIVIDER);
@@ -91,16 +93,31 @@ public class DataManager {
                 bufferedWriter.write(auction.getDescription());
                 bufferedWriter.write(DIVIDER);
                 bufferedWriter.write(String.valueOf(auction.getStartingPrice()));
-                bufferedWriter.write("\n");
             }
+            bufferedWriter.write(KEY_DIVIDER);
         }
     }
 
-    
-
-    public void auctionFileWriter(Map<String, List<Auction>> auctionsMap) {
+    private void offerWriter(Map<Auction, List<Offer>> offersMap, BufferedWriter bufferedWriter) throws IOException {
+        for (Map.Entry<Auction, List<Offer>> entry : offersMap.entrySet()) {
+            bufferedWriter.write(entry.getKey().getId());
+            bufferedWriter.write(DIVIDER);
+            bufferedWriter.write(entry.getKey().getTitle());
+            bufferedWriter.write(DIVIDER);
+            bufferedWriter.write(entry.getKey().getDescription());
+            bufferedWriter.write(DIVIDER);
+            bufferedWriter.write(String.valueOf(entry.getKey().getStartingPrice()));
+            bufferedWriter.write("\n");
+            for (Offer offer : entry.getValue()) {
+                bufferedWriter.write(offer.getUser().getLogin());
+                bufferedWriter.write(OBJECT_DIVIDER);
+                bufferedWriter.write(String.valueOf(offer.getPrice()));
+                bufferedWriter.write("\n");
+            }
+        }
 
     }
+
 
 //    public static void main(String[] args) throws PasswordTooShortException {
 //
@@ -112,7 +129,7 @@ public class DataManager {
 //
 //
 //        DataManager dataManager = new DataManager();
-//        dataManager.userFileWriter(users);
+//        dataManager.userWriter(users);
 //    }
 }
 
