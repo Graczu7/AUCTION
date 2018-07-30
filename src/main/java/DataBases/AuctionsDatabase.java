@@ -7,6 +7,7 @@ import models.Auction;
 import models.Category;
 import models.User;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 public class AuctionsDatabase {
@@ -91,16 +92,7 @@ public class AuctionsDatabase {
         return this.auctionMapByCategory.get(categoryName);
     }
 
-    public Auction searchForAuction(String auctionName) throws AuctionNotFoundException {
-        for (Map.Entry<String, List<Auction>> entry : auctionMapByLogin.entrySet()) {
-            for (Auction auction : entry.getValue()) {
-                if (auction != null && auction.getTitle().equals(auctionName)){
-                    return auction;
-                }
-            }
-        }
-        throw new AuctionNotFoundException();
-    }
+
 
 
 }

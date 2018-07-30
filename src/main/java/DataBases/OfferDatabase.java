@@ -1,17 +1,15 @@
 package DataBases;
 
 import exceptions.offerExceptions.OfferAlreadyExistsException;
+import exceptions.offerExceptions.OffersNotFound;
 import models.Auction;
 import models.Offer;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class OfferDatabase {
     private static OfferDatabase instance;
-    private Map<Auction, List<Offer>> offersMapByAuctions;
+    private Map<Auction, ArrayDeque<Offer>> offersMapByAuctions;
 
     private OfferDatabase() {
         this.offersMapByAuctions = new HashMap<>();
@@ -29,13 +27,21 @@ public class OfferDatabase {
             throw new OfferAlreadyExistsException();
         }
         if (!this.offersMapByAuctions.get(auction).contains(offer)) {
-            this.offersMapByAuctions.put(auction, new LinkedList<>());
+            this.offersMapByAuctions.put(auction, new ArrayDeque<>());
         }
         this.offersMapByAuctions.get(auction).add(offer);
     }
 
-    public List<Offer> getOffersMapByCategory(Auction auction) {
+    public ArrayDeque<Offer> getOffersMapByAuction(Auction auction) throws OffersNotFound {
+        if (!offersMapByAuctions.containsKey(auction) &&
+                offersMapByAuctions.containsKey(auction) ||
+                offersMapByAuctions.get(auction).isEmpty()){
+            throw new OffersNotFound();
+        }
         return this.offersMapByAuctions.get(auction);
     }
 
+    public Offer getLastOffer(Auction auction) throws OffersNotFound {
+        return getOffersMapByAuction(auction).peekLast();
+    }
 }

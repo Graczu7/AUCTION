@@ -5,19 +5,16 @@ import exceptions.auctionExceptions.*;
 import exceptions.offerExceptions.*;
 
 import java.math.BigDecimal;
-import java.util.LinkedList;
 import java.util.Objects;
 
 public class Auction {
     public static final int TITLE_LENGTH = 5;
     public static final int DESCRIPTION_LENGTH = 5;
-    public static final int OFFERS_TO_WIN = 3;
     public static final int MIN_PRICE = 0;
     private static Integer count = 0;
     private Integer id;
-    private LinkedList<Offer> offersList;
-    private String description;
     private String title;
+    private String description;
     private BigDecimal startingPrice;
     private boolean isActive = true;
 
@@ -25,7 +22,6 @@ public class Auction {
         setTitle(title);
         setDescription(description);
         changeStartingPrice(startingPrice);
-        this.offersList = new LinkedList<>();
         this.id = count;
         count++;
     }
@@ -34,17 +30,7 @@ public class Auction {
         if (!this.isActive) {
             throw new CannotBidAuctionThatEndedException();
         }
-        if (this.getLastOffer() != null &&
-                this.getLastOffer().getUser().equals(newOffer.getUser())) {
-            throw new CannotOutbidUsersOwnBidException();
-        }
-        if (newOffer.getPrice().compareTo(this.startingPrice) <= 0 ||
-                (this.getLastOffer() != null &&
-                        newOffer.getPrice().compareTo(this.getLastOffer().getPrice()) <= 0)) {
-            throw new PriceValueTooLowException();
-        } else {
-            this.offersList.push(newOffer);
-        }
+
 
     }
 
@@ -82,24 +68,12 @@ public class Auction {
         this.isActive = false;
     }
 
-    public boolean isAuctionWon() {
-        return offersList.size() >= OFFERS_TO_WIN;
-    }
-
     public Integer getId() {
         return id;
     }
 
     public static Integer getCount() {
         return count;
-    }
-
-    public LinkedList<Offer> getOffersList() {
-        return offersList;
-    }
-
-    public Offer getLastOffer() {
-        return offersList.peek();
     }
 
     public String getDescription() {
@@ -125,7 +99,6 @@ public class Auction {
         Auction auction = (Auction) o;
         return id == auction.id &&
                 isActive == auction.isActive &&
-                Objects.equals(offersList, auction.offersList) &&
                 Objects.equals(description, auction.description) &&
                 Objects.equals(title, auction.title) &&
                 Objects.equals(startingPrice, auction.startingPrice);
@@ -134,7 +107,7 @@ public class Auction {
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, offersList, description, title, startingPrice, isActive);
+        return Objects.hash(id, description, title, startingPrice, isActive);
     }
 
     @Override

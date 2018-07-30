@@ -165,8 +165,8 @@ public class UserView {
         System.out.println("Price must be higher than " + Auction.MIN_PRICE);
     }
 
-    public static void printBidPriceTooLowError(BigDecimal minPrice) {
-        System.out.println("Bid price must be higher than " + minPrice);
+    public static void printBidPriceTooLowError() {
+        System.out.println("Bid price too low!");
     }
 
     public static void printUsersHighestBidError() {

@@ -7,6 +7,8 @@ import exceptions.auctionExceptions.*;
 import exceptions.categoryExceptions.CategoryNotFoundException;
 import exceptions.offerExceptions.CannotBidUsersOwnAuctionException;
 import exceptions.offerExceptions.CannotOutbidUsersOwnBidException;
+import exceptions.offerExceptions.OfferAlreadyExistsException;
+import exceptions.offerExceptions.OffersNotFound;
 import exceptions.userExceptions.UserNotInDatabaseException;
 import models.Auction;
 import models.Category;
@@ -19,6 +21,8 @@ import java.util.List;
 
 public class AuctionController {
 
+
+    private static final int OFFERS_TO_WIN = 5;
 
     public static void createNewAuction(String title, String description, User user, Category category, BigDecimal price) {
         try {
@@ -41,25 +45,41 @@ public class AuctionController {
     }
 
     public static void addNewOffer(String auctionName, String auctionOwner, BigDecimal auctionLastPrice, User user, BigDecimal userPrice) {
-        BigDecimal minPrice = null;
         try {
+            if (auctionOwner.equals(user.getLogin())){
+                throw new CannotBidUsersOwnAuctionException();
+            }
+            Auction auction = searchForAuction(auctionOwner, auctionName, auctionLastPrice);
+            if (getAuctionLastOffer(auction).getUser().getLogin().equals(user.getLogin())){
+                throw new CannotOutbidUsersOwnBidException();
+            }
             Offer newOffer = new Offer(user, userPrice);
-            Auction auction = AuctionsDatabase.getInstance().searchForAuction(auctionName);
-            minPrice = auction.getLastOffer().getPrice();
-            auction.setNewOffer(newOffer);
-            OfferDatabase.getInstance().addOffersMapByAuctions(auction, newOffer);
-
-            if (auction.isAuctionWon()) {
-                auction.disable();
+            if (newOffer.getPrice().compareTo(getAuctionPrice(auction)) > 0) {
+                OfferDatabase.getInstance().addOffersMapByAuctions(auction, newOffer);
+            }
+            if (isAuctionWon(auction)) {
                 AuctionsDatabase.getInstance().addAuctionWon(user.getLogin(), auction);
+                auction.disable();
             }
 
         } catch (PriceValueTooLowException e) {
-            UserView.printBidPriceTooLowError(minPrice);
+            UserView.printBidPriceTooLowError();
         } catch (CannotOutbidUsersOwnBidException e) {
-            UserView.printUsersHighestBidError();
+            e.printStackTrace();
+        } catch (OffersNotFound offersNotFound) {
+            offersNotFound.printStackTrace();
+        } catch (OfferAlreadyExistsException e) {
+            e.printStackTrace();
+        } catch (AuctionAlreadyInDatabaseException e) {
+            e.printStackTrace();
+        } catch (AuctionNotFoundException e) {
+            e.printStackTrace();
+        } catch (AuctionsNotFoundException e) {
+            e.printStackTrace();
         } catch (CannotBidUsersOwnAuctionException e) {
-            UserView.printBidOwnAuctionError();
+            e.printStackTrace();
+        } catch (UserNotInDatabaseException e) {
+            e.printStackTrace();
         } catch (Exception e) {
             UserView.printFatalError();
             e.printStackTrace();
@@ -97,11 +117,39 @@ public class AuctionController {
         } catch (CategoryNotFoundException e) {
             UserView.printCategoryNotFoundError(categoryName);
         }
-
     }
 
-    public static Auction getAuction(String auctionName) {
+    private static Auction searchForAuction(String userName, String auctionName, BigDecimal auctionPrice) throws AuctionNotFoundException, UserNotInDatabaseException, AuctionsNotFoundException {
+        List<Auction> auctions = AuctionsDatabase.getInstance().getAuctionsByLogin(userName);
 
+        if (auctions == null) {
+            throw new AuctionNotFoundException();
+        }
+        for (Auction auction : auctions) {
+            if (auction != null && auction.getTitle().equals(auctionName) && auctionPrice.equals(getAuctionPrice(auction))){
+                return auction;
+            }
+        }
+        throw new AuctionNotFoundException();
     }
 
+    private static Offer getAuctionLastOffer(Auction auction) throws OffersNotFound {
+        return OfferDatabase.getInstance().getLastOffer(auction);
+    }
+
+    private static BigDecimal getAuctionPrice(Auction auction) {
+        try {
+            return getAuctionLastOffer(auction).getPrice();
+        } catch (OffersNotFound offersNotFound) {
+            return auction.getStartingPrice();
+        }
+    }
+
+    private static boolean isAuctionWon(Auction auction) {
+        try {
+            return OfferDatabase.getInstance().getOffersMapByAuction(auction).size() >= OFFERS_TO_WIN;
+        } catch (OffersNotFound offersNotFound) {
+            return false;
+        }
+    }
 }
