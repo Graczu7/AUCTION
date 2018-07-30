@@ -16,9 +16,9 @@ import java.util.Map;
 
 public class DataManager {
     private static final String DIVIDER = ";";
-    private static final String OBJECT_DIVIDER = "/";
+    private static final String OBJECT_DIVIDER = "|";
     private static final String KEY_DIVIDER = "?";
-    private static final String FILE_NAME = "datafile.data";
+    private static final String FILE_NAME = "datafile.txt";
 
 
     public static void userFileReader() throws LoginAlreadyExistsException, PasswordTooShortException {
@@ -89,7 +89,7 @@ public class DataManager {
             bufferedWriter.write(entry.getKey());
             bufferedWriter.write(OBJECT_DIVIDER);
             for (Auction auction : entry.getValue()) {
-                bufferedWriter.write(auction.getId());
+                bufferedWriter.write(String.valueOf(auction.getId()));
                 bufferedWriter.write(DIVIDER);
                 bufferedWriter.write(auction.getTitle());
                 bufferedWriter.write(DIVIDER);
@@ -103,7 +103,7 @@ public class DataManager {
 
     private static void offerWriter(Map<Auction, List<Offer>> offersMap, BufferedWriter bufferedWriter) throws IOException {
         for (Map.Entry<Auction, List<Offer>> entry : offersMap.entrySet()) {
-            bufferedWriter.write(entry.getKey().getId());
+            bufferedWriter.write(String.valueOf(entry.getKey().getId()));
             bufferedWriter.write(DIVIDER);
             bufferedWriter.write(entry.getKey().getTitle());
             bufferedWriter.write(DIVIDER);

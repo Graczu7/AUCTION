@@ -1,13 +1,16 @@
+import DataBases.AuctionsDatabase;
+import DataBases.UserDatabase;
 import controllers.AuctionController;
 import controllers.UserController;
 import controllers.UserInputController;
-import exceptions.PriceValueTooLowException;
 import exceptions.categoryExceptions.CannotAddSubcategoryToCategoryContaingAuctionException;
 import helpers.Categories;
+import helpers.DataManager;
 import helpers.State;
 import helpers.StateHolder;
+import models.Auction;
 import models.Category;
-import models.Offer;
+import models.User;
 import views.UserView;
 
 import java.math.BigDecimal;
@@ -22,7 +25,8 @@ public class AuctionHouse {
         this.mainCategory = Categories.initializeCategories();
     }
 
-    public void run() {
+    public void run() throws Exception {
+        testInit();
         UserView.printGreetings();
 
         while (stateHolder.getState() != State.EXIT) {
@@ -190,5 +194,20 @@ public class AuctionHouse {
                 stateHolder.getLoggedUser(),
                 mainCategory.getSubcategoryByName(auctionCategory),
                 auctionPrice);
+    }
+
+
+    private void testInit() throws Exception {
+        User userStefan = new User("stefan", "login", "password");
+        User userStasiek = new User("stasiek", "login8", "password");
+        UserDatabase.getInstance().addUserToDataBase(userStefan);
+        UserDatabase.getInstance().addUserToDataBase(userStasiek);
+
+        Auction auctionStefan = new Auction("costam", "znowu costam", BigDecimal.valueOf(3.50));
+        AuctionsDatabase.getInstance().addAuctionToDatabase(auctionStefan, mainCategory.getSubcategoryByName("Vans"), userStefan);
+        Auction auctionStasiek = new Auction("costam", "znowu costam", BigDecimal.valueOf(3.50));
+        AuctionsDatabase.getInstance().addAuctionToDatabase(auctionStasiek, mainCategory.getSubcategoryByName("Vans"), userStasiek);
+
+        DataManager.writeAll();
     }
 }
