@@ -59,9 +59,17 @@ public class AuctionHouse {
                     String userInput = UserInputController.getTextFromUser();
                     switch (userInput) {
                         case "1":
-                            stateHolder.setState(State.VIEW_CATEGORIES);
+                            addNewAuction();
+                            stateHolder.setState(State.LOGGED_IN);
                             break;
                         case "2":
+                            addNewOffer();
+                            stateHolder.setState(State.LOGGED_IN);
+                            break;
+                        case "3":
+                            stateHolder.setState(State.VIEW_CATEGORIES);
+                            break;
+                        case "4":
                             stateHolder.setState(State.VIEW_AUCTIONS_MENU);
                             break;
                         case "0":
@@ -83,14 +91,6 @@ public class AuctionHouse {
                     String userInput = UserInputController.getTextFromUser();
                     switch (userInput) {
                         case "1":
-                            addNewAuction();
-                            stateHolder.setState(State.LOGGED_IN);
-                            break;
-                        case "2":
-                            addNewOffer();
-                            stateHolder.setState(State.LOGGED_IN);
-                            break;
-                        case "3":
                             UserView.printAuctionChoice();
                             String categoryName = UserInputController.getTextFromUser();
 
@@ -98,12 +98,12 @@ public class AuctionHouse {
 
                             stateHolder.setState(State.LOGGED_IN);
                             break;
-                        case "4":
+                        case "2":
                             AuctionController.getAuctionsByLogin(stateHolder.getLoggedUser().getLogin());
 
                             stateHolder.setState(State.LOGGED_IN);
                             break;
-                        case "5":
+                        case "3":
                             AuctionController.getWonAuctions(stateHolder.getLoggedUser().getLogin());
 
                             stateHolder.setState(State.LOGGED_IN);

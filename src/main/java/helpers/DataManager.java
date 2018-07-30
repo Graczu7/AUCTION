@@ -1,6 +1,7 @@
 package helpers;
 
 import DataBases.AuctionsDatabase;
+import DataBases.OfferDatabase;
 import DataBases.UserDatabase;
 import exceptions.userExceptions.LoginAlreadyExistsException;
 import exceptions.userExceptions.PasswordTooShortException;
@@ -9,6 +10,7 @@ import models.Offer;
 import models.User;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +21,7 @@ public class DataManager {
     private static final String FILE_NAME = "datafile.data";
 
 
-    public void userFileReader() throws LoginAlreadyExistsException, PasswordTooShortException {
+    public static void userFileReader() throws LoginAlreadyExistsException, PasswordTooShortException {
 
         String fileName = "userfile.txt";
         String line = null;
@@ -42,7 +44,7 @@ public class DataManager {
         }
     }
 
-    public void writeAll() {
+    public static void writeAll() {
         try {
 
             FileWriter fileWriter = new FileWriter(FILE_NAME);
@@ -60,7 +62,8 @@ public class DataManager {
             bufferedWriter.write("{AuctionDatabase.auctionsWonByUser}\n");
             auctionWriter(AuctionsDatabase.getInstance().getAuctionsWonByUser(), bufferedWriter);
 
-
+            bufferedWriter.write("{OfferDatabase.offersMapByAuctions}\n");
+            offerWriter(OfferDatabase.getInstance().getOffersMapByAuctions(), bufferedWriter);
 
             bufferedWriter.close();
         } catch (IOException ex) {
@@ -69,7 +72,7 @@ public class DataManager {
 
     }
 
-    private void userWriter(Map<String, User> users, BufferedWriter bufferedWriter) throws IOException {
+    private static void userWriter(Map<String, User> users, BufferedWriter bufferedWriter) throws IOException {
         for (Map.Entry<String, User> entry : users.entrySet()) {
             bufferedWriter.write(entry.getValue().getName());
             bufferedWriter.write(DIVIDER);
@@ -81,7 +84,7 @@ public class DataManager {
 
     }
 
-    private void auctionWriter(Map<String, List<Auction>> auctionMap, BufferedWriter bufferedWriter) throws IOException {
+    private static void auctionWriter(Map<String, List<Auction>> auctionMap, BufferedWriter bufferedWriter) throws IOException {
         for (Map.Entry<String, List<Auction>> entry : auctionMap.entrySet()) {
             bufferedWriter.write(entry.getKey());
             bufferedWriter.write(OBJECT_DIVIDER);
@@ -98,7 +101,7 @@ public class DataManager {
         }
     }
 
-    private void offerWriter(Map<Auction, List<Offer>> offersMap, BufferedWriter bufferedWriter) throws IOException {
+    private static void offerWriter(Map<Auction, List<Offer>> offersMap, BufferedWriter bufferedWriter) throws IOException {
         for (Map.Entry<Auction, List<Offer>> entry : offersMap.entrySet()) {
             bufferedWriter.write(entry.getKey().getId());
             bufferedWriter.write(DIVIDER);
@@ -114,23 +117,9 @@ public class DataManager {
                 bufferedWriter.write(String.valueOf(offer.getPrice()));
                 bufferedWriter.write("\n");
             }
+            bufferedWriter.write(KEY_DIVIDER);
         }
-
     }
-
-
-//    public static void main(String[] args) throws PasswordTooShortException {
-//
-//        List<User> users = new ArrayList<>();
-//
-//        users.add(new User("jan", "kowalski", "123456"));
-//        users.add(new User("maria", "kowalska", "1aa23456"));
-//        users.add(new User("ula", "nowak", "1234vv56"));
-//
-//
-//        DataManager dataManager = new DataManager();
-//        dataManager.userWriter(users);
-//    }
 }
 
 
