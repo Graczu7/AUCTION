@@ -1,22 +1,16 @@
 package models;
 
-import controllers.AuctionController;
 import exceptions.*;
-import exceptions.auctionExceptions.AuctionAlreadyInDatabaseException;
-import exceptions.offerExceptions.CannotBidAuctionThatEndedException;
-import exceptions.offerExceptions.CannotBidUsersOwnAuctionException;
-import exceptions.offerExceptions.CannotOutbidUsersOwnBidException;
-import exceptions.auctionExceptions.CannotModifyAuctionThatEndedException;
-import exceptions.auctionExceptions.AuctionDescriptionTooShortException;
-import exceptions.auctionExceptions.AuctionTitleTooShortException;
+import exceptions.auctionExceptions.*;
+import exceptions.offerExceptions.*;
 
 import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.Objects;
 
 public class Auction {
-    public static final int TITLE_LENGHT = 5;
-    public static final int DESCRIPTION_LENGHT = 5;
+    public static final int TITLE_LENGTH = 5;
+    public static final int DESCRIPTION_LENGTH = 5;
     public static final int OFFERS_TO_WIN = 3;
     public static final int MIN_PRICE = 0;
     private static Integer count = 0;
@@ -58,7 +52,7 @@ public class Auction {
         if (!this.isActive) {
             throw new CannotModifyAuctionThatEndedException();
         }
-        if (description.length() < DESCRIPTION_LENGHT) {
+        if (description.length() < DESCRIPTION_LENGTH) {
             throw new AuctionDescriptionTooShortException();
         }
         this.description = description;
@@ -68,7 +62,7 @@ public class Auction {
         if (!this.isActive) {
             throw new CannotModifyAuctionThatEndedException();
         }
-        if (title.length() < TITLE_LENGHT) {
+        if (title.length() < TITLE_LENGTH) {
             throw new AuctionTitleTooShortException();
         }
         this.title = title;

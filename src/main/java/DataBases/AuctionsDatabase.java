@@ -28,7 +28,7 @@ public class AuctionsDatabase {
         return instance;
     }
 
-    public void addAuctionToDatabase(User user, Category category, Auction auctionToAdd) throws AuctionAlreadyInDatabaseException, CannotAddInactiveAuctionToDatabaseException {
+    public void addAuctionToDatabase(Auction auctionToAdd, Category category, User user) throws AuctionAlreadyInDatabaseException, CannotAddInactiveAuctionToDatabaseException {
         if (!auctionToAdd.isActive()) {
             throw new CannotAddInactiveAuctionToDatabaseException();
         }
@@ -89,6 +89,17 @@ public class AuctionsDatabase {
             throw new AuctionsNotFoundException();
         }
         return this.auctionMapByCategory.get(categoryName);
+    }
+
+    public Auction searchForAuction(String auctionName) throws AuctionNotFoundException {
+        for (Map.Entry<String, List<Auction>> entry : auctionMapByLogin.entrySet()) {
+            for (Auction auction : entry.getValue()) {
+                if (auction != null && auction.getTitle().equals(auctionName)){
+                    return auction;
+                }
+            }
+        }
+        throw new AuctionNotFoundException();
     }
 
 

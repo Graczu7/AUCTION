@@ -1,6 +1,5 @@
 package views;
 
-import DataBases.AuctionsDatabase;
 import models.Auction;
 import models.Category;
 import models.User;
@@ -78,6 +77,25 @@ public class UserView {
         System.out.println("> ");
     }
 
+    public static void printAuctionOwnerNamePrompt() {
+        System.out.println("Please enter auction owner name");
+        System.out.println("> ");
+    }
+
+    public static void printItemPricePrompt() {
+        System.out.println("Please enter items last price");
+        System.out.println("> ");
+    }
+
+    public static void printBidPricePrompt() {
+        System.out.println("Please enter your bid");
+        System.out.println("> ");
+    }
+
+    public static void printBigDecimalInputError() {
+        System.out.println("This is not a number!");
+    }
+
     public static void printMenuChoiceError(String userInpit) {
         System.out.println("\'" + userInpit + "\' is not an option!");
         System.out.println("Try again.");
@@ -136,11 +154,11 @@ public class UserView {
     }
 
     public static void printAuctionTitleTooShortError() {
-        System.out.println("Title must contain at least " + Auction.TITLE_LENGHT + " characters.");
+        System.out.println("Title must contain at least " + Auction.TITLE_LENGTH + " characters.");
     }
 
     public static void printAuctionDescriptionTooShortError() {
-        System.out.println("Description must contain at least " + Auction.DESCRIPTION_LENGHT + " characters.");
+        System.out.println("Description must contain at least " + Auction.DESCRIPTION_LENGTH + " characters.");
     }
 
     public static void printAuctionPriceTooLowError() {
@@ -151,12 +169,24 @@ public class UserView {
         System.out.println("Bid price must be higher than " + minPrice);
     }
 
-    public static void printUsersHighestBidError(){
+    public static void printUsersHighestBidError() {
         System.out.println("Cannot outbid your own bid.");
+    }
+
+    public static void printBidOwnAuctionError() {
+        System.out.println("Cannot bid your own auction.");
+    }
+
+    public static void printAuctionEndedError() {
+        System.out.println("This auction has already ended.");
     }
 
     public static void printNoAuctionsFoundError() {
         System.out.println("No auctions found.");
+    }
+
+    public static void printAuctionNotFoundError() {
+        System.out.println("Auction not found.");
     }
 
     public static void printCategoryNotFoundError(String categoryName) {

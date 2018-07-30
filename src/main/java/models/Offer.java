@@ -8,12 +8,10 @@ import java.util.Objects;
 public class Offer {
 
     private User user;
-    private Auction objectToSell;
     private BigDecimal price;
 
-    public Offer(User user, Auction objectToSell, BigDecimal price) throws PriceValueTooLowException {
+    public Offer(User user, BigDecimal price) throws PriceValueTooLowException {
         this.user = user;
-        this.objectToSell = objectToSell;
         setPrice(price);
     }
 
@@ -34,15 +32,6 @@ public class Offer {
         return user;
     }
 
-    public Auction getObjectToSell() {
-        return objectToSell;
-    }
-
-    public void setObjectToSell(Auction objectToSell) {
-        this.objectToSell = objectToSell;
-    }
-
-
     public BigDecimal getPrice() {
         return price;
     }
@@ -51,7 +40,6 @@ public class Offer {
     public String toString() {
         return "Offer{" +
                 "user=" + user +
-                ", objectToSell=" + objectToSell +
                 ", price=" + price +
                 '}';
     }
@@ -62,13 +50,12 @@ public class Offer {
         if (o == null || getClass() != o.getClass()) return false;
         Offer offer = (Offer) o;
         return Objects.equals(user, offer.user) &&
-                Objects.equals(objectToSell, offer.objectToSell) &&
                 Objects.equals(price, offer.price);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(user, objectToSell, price);
+        return Objects.hash(user, price);
     }
 }

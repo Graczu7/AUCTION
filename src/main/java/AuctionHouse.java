@@ -2,19 +2,16 @@ import controllers.AuctionController;
 import controllers.UserController;
 import controllers.UserInputController;
 import exceptions.PriceValueTooLowException;
-import exceptions.auctionExceptions.*;
 import exceptions.categoryExceptions.CannotAddSubcategoryToCategoryContaingAuctionException;
-import exceptions.categoryExceptions.CategoryNotFoundException;
-import exceptions.userExceptions.UserNotInDatabaseException;
 import helpers.Categories;
 import helpers.State;
 import helpers.StateHolder;
-import models.Auction;
 import models.Category;
+import models.Offer;
 import views.UserView;
 
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.InputMismatchException;
 
 public class AuctionHouse {
 
@@ -91,6 +88,7 @@ public class AuctionHouse {
                             break;
                         case "2":
 
+                            stateHolder.setState(State.LOGGED_IN);
                             break;
                         case "3":
                             UserView.printAuctionChoice();
@@ -149,6 +147,31 @@ public class AuctionHouse {
         }
     }
 
+    //TODO
+    private void addNewOffer() {
+        UserView.printAuctionTitlePrompt();
+        String auctionName = UserInputController.getTextFromUser();
+        UserView.printAuctionOwnerNamePrompt();
+        String ownerName = UserInputController.getTextFromUser();
+
+        try {
+            UserView.printItemPricePrompt();
+            BigDecimal lastPrice = UserInputController.getPriceFromUser();
+            UserView.printBidPricePrompt();
+            BigDecimal newOfferPrice = UserInputController.getPriceFromUser();
+
+            AuctionController.addNewOffer(auctionName,
+                    ownerName,
+                    lastPrice,
+                    stateHolder.getLoggedUser(),
+                    newOfferPrice);
+        } catch (InputMismatchException e) {
+            UserView.printBigDecimalInputError();
+        }
+
+
+    }
+
     private void addNewAuction() {
         UserView.printAuctionTitlePrompt();
         String auctionTitle = UserInputController.getTextFromUser();
@@ -168,6 +191,5 @@ public class AuctionHouse {
                 stateHolder.getLoggedUser(),
                 mainCategory.getSubcategoryByName(auctionCategory),
                 auctionPrice);
-
     }
 }
