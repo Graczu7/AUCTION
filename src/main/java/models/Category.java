@@ -14,7 +14,7 @@ public class Category {
         this.subcategories = new HashSet<>();
     }
 
-
+    //test done
     public void addSubcategory(Category category) {
 
 //        if(!AuctionsDatabase.getInstance().getAuctionsByCategoryName(category).isEmpty()){
@@ -39,7 +39,7 @@ public class Category {
         return null;
     }
 
-
+    //test done
     public List<Category> asList() {
         List<Category> categories = new LinkedList<>();
         this.subcategoriesAsList(categories);

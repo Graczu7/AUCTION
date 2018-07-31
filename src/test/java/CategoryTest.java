@@ -123,5 +123,20 @@ public class CategoryTest {
         assertTrue(categoryList.contains(expected));
     }
 
+    @Test
+    public void testSubcategoriesAsListNotNull() {
+        //Given
+        Category electronics = new Category("Electronics");
+        Category computers = new Category("Computers");
+        electronics.addSubcategory(computers);
+
+        //When
+        Category returnedCategory = electronics.getSubcategoryByName("Komputery");
+        List<Category> result = electronics.asList();
+
+        //Then
+        assertNotNull(result);
+    }
+
 
 }
