@@ -210,4 +210,14 @@ public class UserView {
     public static void printUserNotFindError() {
         System.out.println("User not found.");
     }
+
+    public static void printIllegalLoginCharacter(){
+        System.out.println("Illegal character.");
+    }
+    public static void printIllegalPasswordCharacter(){
+        System.out.println("Illegal character.");
+    }
+    public static void printIllegalNameCharacter(){
+        System.out.println("Illegal character.");
+    }
 }

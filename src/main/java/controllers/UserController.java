@@ -31,6 +31,15 @@ public class UserController {
         } catch (LoginAlreadyExistsException e) {
             UserView.printLoginTakenError(login);
             return false;
+        } catch (NameIllegalCharacterException e) {
+            UserView.printIllegalNameCharacter();
+            return false;
+        } catch (LoginIllegalCharacterException e) {
+            UserView.printIllegalLoginCharacter();
+            return false;
+        } catch (PasswordIllegalCharacterException e) {
+            UserView.printIllegalPasswordCharacter();
+            return false;
         }
     }
 
