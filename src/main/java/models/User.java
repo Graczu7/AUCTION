@@ -15,15 +15,16 @@ public class User {
     private String login;
     private String password;
 
-    public User(String name, String login, String password) throws PasswordTooShortException, LoginAlreadyExistsException, LoginIllegalCharacterException, PasswordIllegalCharacterException {
-        this.name = name;
+    public User(String name, String login, String password) throws PasswordTooShortException, LoginAlreadyExistsException, LoginIllegalCharacterException, PasswordIllegalCharacterException, NameIllegalCharacterException {
+        setName(name);
         setLogin(login);
         setPassword(password);
     }
 
     public void setName(String name) throws NameIllegalCharacterException {
         for (int i = 0; i < name.length(); i++) {
-            if (name.charAt(i) < 48 || name.charAt(i) > 90) {
+            if (name.charAt(i) < 48 || (name.charAt(i) > 90 && name.charAt(i) < 97) || name.charAt(i) > 122) {
+
                 throw new NameIllegalCharacterException();
             }
         }
@@ -35,7 +36,7 @@ public class User {
             throw new LoginAlreadyExistsException();
         }
         for (int i = 0; i < login.length(); i++) {
-            if (login.charAt(i) < 48 || login.charAt(i) > 90) {
+            if (login.charAt(i) < 48 || (login.charAt(i) > 90 && login.charAt(i) < 97) || login.charAt(i) > 122) {
                 throw new LoginIllegalCharacterException();
             }
         }
@@ -48,7 +49,7 @@ public class User {
             throw new PasswordTooShortException();
         }
         for (int i = 0; i < newPassword.length(); i++) {
-            if (newPassword.charAt(i) < 48 || newPassword.charAt(i) > 90) {
+            if (newPassword.charAt(i) < 48 || (newPassword.charAt(i) > 90 && newPassword.charAt(i) < 97) || newPassword.charAt(i) > 122) {
                 throw new PasswordIllegalCharacterException();
             }
             this.password = newPassword;

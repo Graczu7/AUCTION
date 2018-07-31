@@ -1,4 +1,4 @@
 package exceptions.userExceptions;
 
-public class PasswordIllegalCharacterException extends Throwable {
+public class PasswordIllegalCharacterException extends UserException {
 }

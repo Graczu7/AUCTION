@@ -1,4 +1,4 @@
 package exceptions.userExceptions;
 
-public class NameIllegalCharacterException extends Throwable {
+public class NameIllegalCharacterException extends UserException {
 }
