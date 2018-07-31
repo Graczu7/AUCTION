@@ -1,8 +1,8 @@
 //import exceptions.*;
-//import exceptions.auctionExceptions.CannotModifyAuctionThatEndedException;
-//import exceptions.auctionExceptions.AuctionDescriptionTooShortException;
-//import exceptions.auctionExceptions.AuctionTitleTooShortException;
-//import exceptions.userExceptions.PasswordTooShortException;
+//import exceptions.auctionHouseExceptions.auctionExceptions.CannotModifyAuctionThatEndedException;
+//import exceptions.auctionHouseExceptions.auctionExceptions.AuctionDescriptionTooShortException;
+//import exceptions.auctionHouseExceptions.auctionExceptions.AuctionTitleTooShortException;
+//import exceptions.auctionHouseExceptions.userExceptions.PasswordTooShortException;
 //import models.Auction;
 //import models.Category;
 //import models.Offer;

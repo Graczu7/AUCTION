@@ -1,13 +1,12 @@
 package DataBases;
 
-import exceptions.auctionExceptions.*;
-import exceptions.categoryExceptions.CategoryNotFoundException;
-import exceptions.userExceptions.UserNotInDatabaseException;
+import exceptions.auctionHouseExceptions.auctionExceptions.*;
+import exceptions.auctionHouseExceptions.categoryExceptions.CategoryNotFoundException;
+import exceptions.auctionHouseExceptions.userExceptions.UserNotInDatabaseException;
 import models.Auction;
 import models.Category;
 import models.User;
 
-import java.math.BigDecimal;
 import java.util.*;
 
 public class AuctionsDatabase {
@@ -33,20 +32,28 @@ public class AuctionsDatabase {
         if (!auctionToAdd.isActive()) {
             throw new CannotAddInactiveAuctionToDatabaseException();
         }
-        if (!this.auctionMapByLogin.containsKey(user.getLogin())) {
-            this.auctionMapByLogin.put(user.getLogin(), new LinkedList<>());
+        addToAuctionMapByLogin(user.getName(), auctionToAdd);
+        addToAuctionMapByCategory(category.getName(), auctionToAdd);
+    }
+
+    public void addToAuctionMapByLogin(String userName, Auction auctionToAdd) throws AuctionAlreadyInDatabaseException {
+        if (!this.auctionMapByLogin.containsKey(userName)) {
+            this.auctionMapByLogin.put(userName, new LinkedList<>());
         }
-        if (!this.auctionMapByCategory.containsKey(category.getName())) {
-            this.auctionMapByCategory.put(category.getName(), new LinkedList<>());
-        }
-        if (this.auctionMapByLogin.get(user.getLogin()).contains(auctionToAdd)) {
+        if (this.auctionMapByLogin.get(userName).contains(auctionToAdd)) {
             throw new AuctionAlreadyInDatabaseException();
         }
-        if (this.auctionMapByCategory.get(category.getName()).contains(auctionToAdd)) {
+        this.auctionMapByLogin.get(userName).add(auctionToAdd);
+    }
+
+    public void addToAuctionMapByCategory(String categoryName, Auction auctionToAdd) throws AuctionAlreadyInDatabaseException {
+        if (!this.auctionMapByCategory.containsKey(categoryName)) {
+            this.auctionMapByCategory.put(categoryName, new LinkedList<>());
+        }
+        if (this.auctionMapByCategory.get(categoryName).contains(auctionToAdd)) {
             throw new AuctionAlreadyInDatabaseException();
         }
-        this.auctionMapByLogin.get(user.getLogin()).add(auctionToAdd);
-        this.auctionMapByCategory.get(category.getName()).add(auctionToAdd);
+        this.auctionMapByCategory.get(categoryName).add(auctionToAdd);
     }
 
     public void addAuctionWon(String winner, Auction auction) throws AuctionAlreadyInDatabaseException {

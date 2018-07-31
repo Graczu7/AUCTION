@@ -1,7 +1,7 @@
 package DataBases;
 
-import exceptions.offerExceptions.OfferAlreadyExistsException;
-import exceptions.offerExceptions.OffersNotFound;
+import exceptions.auctionHouseExceptions.offerExceptions.OfferAlreadyExistsException;
+import exceptions.auctionHouseExceptions.offerExceptions.OffersNotFound;
 import models.Auction;
 import models.Offer;
 
@@ -32,7 +32,7 @@ public class OfferDatabase {
         this.offersMapByAuctions.get(auction).add(offer);
     }
 
-    public List<Offer> getOffersMapByAuction(Auction auction) throws OffersNotFound {
+    public List<Offer> getOffersListByAuction(Auction auction) throws OffersNotFound {
         if (!offersMapByAuctions.containsKey(auction) &&
                 offersMapByAuctions.containsKey(auction) ||
                 offersMapByAuctions.get(auction).isEmpty()){
@@ -42,9 +42,11 @@ public class OfferDatabase {
     }
 
     public Offer getLastOffer(Auction auction) throws OffersNotFound {
-        return getOffersMapByAuction(auction)
-                .get(getOffersMapByAuction(auction).size()-1);
+        return getOffersListByAuction(auction)
+                .get(getOffersListByAuction(auction).size()-1);
     }
+
+
 
     public Map<Auction, List<Offer>> getOffersMapByAuctions() {
         return offersMapByAuctions;

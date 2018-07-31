@@ -1,6 +1,6 @@
 package models;
 
-import exceptions.PriceValueTooLowException;
+import exceptions.auctionHouseExceptions.PriceValueTooLowException;
 
 import java.math.BigDecimal;
 import java.util.Objects;

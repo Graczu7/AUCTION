@@ -1,7 +1,7 @@
 package DataBases;
 
-import exceptions.userExceptions.LoginAlreadyExistsException;
-import exceptions.userExceptions.UserNotInDatabaseException;
+import exceptions.auctionHouseExceptions.userExceptions.LoginAlreadyExistsException;
+import exceptions.auctionHouseExceptions.userExceptions.UserNotInDatabaseException;
 import models.User;
 
 import java.util.*;
@@ -24,7 +24,6 @@ public class UserDatabase {
     }
 
 
-
     public List<User> getUsersList() {
         List<User> usersAsList = new ArrayList<>();
         for (User user : this.users.values()) {
@@ -43,6 +42,14 @@ public class UserDatabase {
 
     public boolean isLoginTaken(String login) {
         return users.containsKey(login);
+    }
+
+    public User getUserByName(String login) throws UserNotInDatabaseException {
+        if (this.users.containsKey(login) && this.users.get(login) != null) {
+            return this.users.get(login);
+        } else {
+            throw new UserNotInDatabaseException();
+        }
     }
 
     public User getUser(String login, String password) throws UserNotInDatabaseException {

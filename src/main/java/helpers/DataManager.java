@@ -3,15 +3,13 @@ package helpers;
 import DataBases.AuctionsDatabase;
 import DataBases.OfferDatabase;
 import DataBases.UserDatabase;
-import controllers.UserController;
-import exceptions.userExceptions.LoginAlreadyExistsException;
-import exceptions.userExceptions.PasswordTooShortException;
-import exceptions.userExceptions.UserException;
+import exceptions.AuctionHouseException;
 import models.Auction;
 import models.Offer;
 import models.User;
 
 import java.io.*;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +17,7 @@ public class DataManager {
     private static final String DIVIDER = ";";
     private static final String OBJECT_DIVIDER = ">";
     private static final String KEY_DIVIDER = "|";
+    private static final String ENTRY_DIVIDER = "$";
     private static final String FILE_NAME = "datafile";
     private static final String USER_DB = "?USERDB";
     private static final String AUCTION_LOG_DB = "?AUCTIONLOGDB";
@@ -61,15 +60,15 @@ public class DataManager {
                         break;
                     }
                     case AUCTION_CAT_DB: {
-
+                        auctionByCategoryReader(bufferedReader);
                         break;
                     }
                     case AUCTION_WON_DB: {
-
+                        auctionWonReader(bufferedReader);
                         break;
                     }
                     case OFFER_DB: {
-
+                        offerReader(bufferedReader);
                         break;
                     }
                 }
@@ -93,14 +92,135 @@ public class DataManager {
                     UserDatabase.getInstance().addUserToDataBase(new User(temp[0], temp[1], temp[2]));
                 }
             }
-        } catch (UserException e) {
+        } catch (AuctionHouseException e) {
             System.out.println("Data file corrupted");
             e.printStackTrace();
         }
     }
 
-    private static void auctionByLoginReader(BufferedReader bufferedReader){
-        
+    private static void auctionByLoginReader(BufferedReader bufferedReader) throws IOException {
+        try {
+            String line = null;
+            if ((line = bufferedReader.readLine()) != null) {
+                String[] entries = line.split(KEY_DIVIDER);
+                String key = entries[0];
+                String[] auctions = entries[1].split(OBJECT_DIVIDER);
+                for (String auction : auctions) {
+                    String[] auctionAsString = auction.split(DIVIDER);
+                    Integer auctionID = new Integer(auctionAsString[0]);
+                    String auctionTitle = auctionAsString[1];
+                    String auctionDescription = auctionAsString[2];
+                    BigDecimal auctionPrice = new BigDecimal(auctionAsString[3]);
+
+                    AuctionsDatabase
+                            .getInstance()
+                            .addToAuctionMapByLogin(
+                                    key,
+                                    new Auction(auctionID,
+                                            auctionTitle,
+                                            auctionDescription,
+                                            auctionPrice));
+                }
+            }
+        } catch (AuctionHouseException e) {
+            System.out.println("Data file corrupted");
+            e.printStackTrace();
+        }
+    }
+
+    private static void auctionByCategoryReader(BufferedReader bufferedReader) throws IOException {
+        try {
+            String line = null;
+            if ((line = bufferedReader.readLine()) != null) {
+                String[] entries = line.split(KEY_DIVIDER);
+                String key = entries[0];
+                String[] auctions = entries[1].split(OBJECT_DIVIDER);
+                for (String auction : auctions) {
+                    String[] auctionAsString = auction.split(DIVIDER);
+                    Integer auctionID = new Integer(auctionAsString[0]);
+                    String auctionTitle = auctionAsString[1];
+                    String auctionDescription = auctionAsString[2];
+                    BigDecimal auctionPrice = new BigDecimal(auctionAsString[3]);
+
+                    AuctionsDatabase
+                            .getInstance()
+                            .addToAuctionMapByCategory(
+                                    key,
+                                    new Auction(auctionID,
+                                            auctionTitle,
+                                            auctionDescription,
+                                            auctionPrice));
+                }
+            }
+        } catch (AuctionHouseException e) {
+            System.out.println("Data file corrupted");
+            e.printStackTrace();
+        }
+    }
+
+    private static void auctionWonReader(BufferedReader bufferedReader) throws IOException {
+        try {
+            String line = null;
+            if ((line = bufferedReader.readLine()) != null) {
+                String[] entries = line.split(KEY_DIVIDER);
+                String key = entries[0];
+                String[] auctions = entries[1].split(OBJECT_DIVIDER);
+                for (String auction : auctions) {
+                    String[] auctionAsString = auction.split(DIVIDER);
+                    Integer auctionID = new Integer(auctionAsString[0]);
+                    String auctionTitle = auctionAsString[1];
+                    String auctionDescription = auctionAsString[2];
+                    BigDecimal auctionPrice = new BigDecimal(auctionAsString[3]);
+
+                    AuctionsDatabase
+                            .getInstance()
+                            .addAuctionWon(
+                                    key,
+                                    new Auction(auctionID,
+                                            auctionTitle,
+                                            auctionDescription,
+                                            auctionPrice));
+                }
+            }
+        } catch (AuctionHouseException e) {
+            System.out.println("Data file corrupted");
+            e.printStackTrace();
+        }
+    }
+
+    private static void offerReader(BufferedReader bufferedReader) throws IOException {
+        try {
+            String line = null;
+            if ((line = bufferedReader.readLine()) != null) {
+                String[] entries = line.split(ENTRY_DIVIDER);
+                for (String entry : entries) {
+                    String[] keyAndList = entry.split(KEY_DIVIDER);
+
+                    String[] keyAuction = keyAndList[0].split(DIVIDER);
+                    Integer auctionID = new Integer(keyAuction[0]);
+                    String auctionTitle = keyAuction[1];
+                    String auctionDescription = keyAuction[2];
+                    BigDecimal auctionPrice = new BigDecimal(keyAuction[3]);
+
+                    Auction auction = new Auction(auctionID, auctionTitle, auctionDescription, auctionPrice);
+
+                    String[] offers = keyAndList[1].split(OBJECT_DIVIDER);
+                    for (String offer : offers) {
+                        String[] offerAsString = offer.split(DIVIDER);
+                        String offersUserLogin = offerAsString[0];
+                        BigDecimal offerPrice = new BigDecimal(offerAsString[1]);
+
+                        Offer newOffer = new Offer(UserDatabase.getInstance().getUserByName(offersUserLogin), offerPrice);
+
+                        OfferDatabase.getInstance().addOffersMapByAuctions(auction, newOffer);
+                    }
+                }
+            }
+        } catch (AuctionHouseException e) {
+            System.out.println("Data file corrupted");
+            e.printStackTrace();
+
+        }
     }
 
     public static void writeAll() {
@@ -110,18 +230,23 @@ public class DataManager {
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
             bufferedWriter.write(USER_DB);
+            bufferedWriter.write("\n");
             userWriter(UserDatabase.getInstance().getUsers(), bufferedWriter);
 
             bufferedWriter.write(AUCTION_LOG_DB);
+            bufferedWriter.write("\n");
             auctionWriter(AuctionsDatabase.getInstance().getAuctionMapByLogin(), bufferedWriter);
 
             bufferedWriter.write(AUCTION_CAT_DB);
+            bufferedWriter.write("\n");
             auctionWriter(AuctionsDatabase.getInstance().getAuctionMapByCategory(), bufferedWriter);
 
             bufferedWriter.write(AUCTION_WON_DB);
+            bufferedWriter.write("\n");
             auctionWriter(AuctionsDatabase.getInstance().getAuctionsWonByUser(), bufferedWriter);
 
             bufferedWriter.write(OFFER_DB);
+            bufferedWriter.write("\n");
             offerWriter(OfferDatabase.getInstance().getOffersMapByAuctions(), bufferedWriter);
 
             bufferedWriter.close();
@@ -179,7 +304,7 @@ public class DataManager {
                 bufferedWriter.write(String.valueOf(offer.getPrice()));
                 bufferedWriter.write(OBJECT_DIVIDER);
             }
-            bufferedWriter.write("\n");
+            bufferedWriter.write(ENTRY_DIVIDER);
         }
     }
 }

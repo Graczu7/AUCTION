@@ -3,7 +3,7 @@ import DataBases.UserDatabase;
 import controllers.AuctionController;
 import controllers.UserController;
 import controllers.UserInputController;
-import exceptions.categoryExceptions.CannotAddSubcategoryToCategoryContaingAuctionException;
+import exceptions.auctionHouseExceptions.categoryExceptions.CannotAddSubcategoryToCategoryContaingAuctionException;
 import helpers.Categories;
 import helpers.DataManager;
 import helpers.State;
