@@ -1,8 +1,10 @@
 package models;
 
 import DataBases.UserDatabase;
-import exceptions.LoginIllegalCharacterException;
+import exceptions.userExceptions.LoginIllegalCharacterException;
+import exceptions.userExceptions.PasswordIllegalCharacterException;
 import exceptions.userExceptions.LoginAlreadyExistsException;
+import exceptions.userExceptions.NameIllegalCharacterException;
 import exceptions.userExceptions.PasswordTooShortException;
 
 import java.util.Objects;
@@ -13,13 +15,20 @@ public class User {
     private String login;
     private String password;
 
-    public User(String name, String login, String password) throws PasswordTooShortException, LoginAlreadyExistsException, LoginIllegalCharacterException {
+    public User(String name, String login, String password) throws PasswordTooShortException, LoginAlreadyExistsException, LoginIllegalCharacterException, PasswordIllegalCharacterException {
         this.name = name;
         setLogin(login);
         setPassword(password);
     }
 
-    
+    public void setName(String name) throws NameIllegalCharacterException {
+        for (int i = 0; i < name.length(); i++) {
+            if (name.charAt(i) < 48 || name.charAt(i) > 90) {
+                throw new NameIllegalCharacterException();
+            }
+        }
+        this.name = name;
+    }
 
     public void setLogin(String login) throws LoginAlreadyExistsException, LoginIllegalCharacterException {
         if (UserDatabase.getInstance().isLoginTaken(login)) {
@@ -33,14 +42,14 @@ public class User {
         this.login = login;
     }
 
-    public void setPassword(String newPassword) throws PasswordTooShortException, LoginIllegalCharacterException {
+    public void setPassword(String newPassword) throws PasswordTooShortException, PasswordIllegalCharacterException {
 
         if (newPassword.length() < 5) {
             throw new PasswordTooShortException();
         }
         for (int i = 0; i < newPassword.length(); i++) {
             if (newPassword.charAt(i) < 48 || newPassword.charAt(i) > 90) {
-                throw new LoginIllegalCharacterException();
+                throw new PasswordIllegalCharacterException();
             }
             this.password = newPassword;
         }
