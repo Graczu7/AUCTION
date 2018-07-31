@@ -163,7 +163,8 @@ public class AuctionHouse {
             UserView.printBidPricePrompt();
             BigDecimal newOfferPrice = UserInputController.getPriceFromUser();
 
-            AuctionController.addNewOffer(auctionName,
+            AuctionController.addNewOffer(
+                    auctionName,
                     ownerName,
                     lastPrice,
                     stateHolder.getLoggedUser(),
@@ -171,8 +172,6 @@ public class AuctionHouse {
         } catch (InputMismatchException e) {
             UserView.printBigDecimalInputError();
         }
-
-
     }
 
     private void addNewAuction() {

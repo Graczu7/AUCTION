@@ -3,6 +3,10 @@ package helpers;
 import DataBases.AuctionsDatabase;
 import DataBases.OfferDatabase;
 import DataBases.UserDatabase;
+import controllers.UserController;
+import exceptions.userExceptions.LoginAlreadyExistsException;
+import exceptions.userExceptions.PasswordTooShortException;
+import exceptions.userExceptions.UserException;
 import models.Auction;
 import models.Offer;
 import models.User;
@@ -13,18 +17,14 @@ import java.util.Map;
 
 public class DataManager {
     private static final String DIVIDER = ";";
-    private static final String OBJECT_DIVIDER = "|";
-    private static final String KEY_DIVIDER = "?";
+    private static final String OBJECT_DIVIDER = ">";
+    private static final String KEY_DIVIDER = "|";
     private static final String FILE_NAME = "datafile";
-    private static final String USER_DB = "?USERDB\n";
-    private static final String AUCTION_LOG_DB = "?AUCTIONLOGDB\n";
-    private static final String AUCTION_CAT_DB = "?AUCTIONCATDB\n";
-    private static final String AUCTION_WON_DB = "?AUCTIONWONDB\n";
-    private static final String OFFER_DB = "?OFFERDB\n";
-    private static final String STRING_KEY = "?STRINGKEY\n";
-    private static final String USER = "?USER\n";
-    private static final String AUCTION = "?AUCTION\n";
-    private static final String OFFER = "?OFFER\n";
+    private static final String USER_DB = "?USERDB";
+    private static final String AUCTION_LOG_DB = "?AUCTIONLOGDB";
+    private static final String AUCTION_CAT_DB = "?AUCTIONCATDB";
+    private static final String AUCTION_WON_DB = "?AUCTIONWONDB";
+    private static final String OFFER_DB = "?OFFERDB";
 
 
     private static FileStateHolder state = new FileStateHolder();
@@ -49,86 +49,31 @@ public class DataManager {
                     state.db_type = FileStateHolder.DBType.AUCTION_WON_DB;
                 } else if (line.contains(OFFER_DB)) {
                     state.db_type = FileStateHolder.DBType.OFFER_DB;
-                } else if (line.contains(STRING_KEY)) {
-                    state.classType = FileStateHolder.ClassType.STRING_KEY;
-                } else if (line.contains(USER)) {
-                    state.classType = FileStateHolder.ClassType.USER;
-                } else if (line.contains(AUCTION)) {
-                    state.classType = FileStateHolder.ClassType.AUCTION;
-                } else if (line.contains(OFFER)) {
-                    state.classType = FileStateHolder.ClassType.OFFER;
                 }
 
-                switch (state.db_type){
-                    case USER_DB:{
-                        switch (state.classType){
-                            case STRING_KEY:{
-
-                                break;
-                            }
-                            case USER:{
-
-                                break;
-                            }
-                        }
+                switch (state.db_type) {
+                    case USER_DB: {
+                        userReader(bufferedReader);
                         break;
                     }
                     case AUCTION_LOG_DB: {
-                        switch (state.classType){
-                            case STRING_KEY:{
-
-                                break;
-                            }
-                            case AUCTION:{
-
-                                break;
-                            }
-                        }
+                        auctionByLoginReader(bufferedReader);
                         break;
                     }
                     case AUCTION_CAT_DB: {
-                        switch (state.classType){
-                            case STRING_KEY:{
 
-                                break;
-                            }
-                            case AUCTION:{
-
-                                break;
-                            }
-                        }
                         break;
                     }
-                    case AUCTION_WON_DB:{
-                        switch (state.classType){
-                            case STRING_KEY:{
+                    case AUCTION_WON_DB: {
 
-                                break;
-                            }
-                            case AUCTION:{
-
-                                break;
-                            }
-                        }
                         break;
                     }
-                    case OFFER_DB:{
-                        switch (state.classType){
-                            case AUCTION:{
+                    case OFFER_DB: {
 
-                                break;
-                            }
-                            case OFFER:{
-
-                                break;
-                            }
-                        }
                         break;
                     }
                 }
-
             }
-
             bufferedReader.close();
         } catch (FileNotFoundException ex) {
             System.out.println("Unable to open file '" + FILE_NAME + "'");
@@ -136,6 +81,26 @@ public class DataManager {
             System.out.println("Error reading file '" + FILE_NAME + "'");
 
         }
+    }
+
+    private static void userReader(BufferedReader bufferedReader) throws IOException {
+        try {
+            String line = null;
+            if ((line = bufferedReader.readLine()) != null) {
+                String[] users = line.split(OBJECT_DIVIDER);
+                for (String userString : users) {
+                    String[] temp = userString.split(DIVIDER);
+                    UserDatabase.getInstance().addUserToDataBase(new User(temp[0], temp[1], temp[2]));
+                }
+            }
+        } catch (UserException e) {
+            System.out.println("Data file corrupted");
+            e.printStackTrace();
+        }
+    }
+
+    private static void auctionByLoginReader(BufferedReader bufferedReader){
+        
     }
 
     public static void writeAll() {
@@ -173,15 +138,16 @@ public class DataManager {
             bufferedWriter.write(entry.getValue().getLogin());
             bufferedWriter.write(DIVIDER);
             bufferedWriter.write(entry.getValue().getPassword());
-            bufferedWriter.write("\n");
+            bufferedWriter.write(OBJECT_DIVIDER);
         }
+        bufferedWriter.write("\n");
 
     }
 
     private static void auctionWriter(Map<String, List<Auction>> auctionMap, BufferedWriter bufferedWriter) throws IOException {
         for (Map.Entry<String, List<Auction>> entry : auctionMap.entrySet()) {
             bufferedWriter.write(entry.getKey());
-            bufferedWriter.write(OBJECT_DIVIDER);
+            bufferedWriter.write(KEY_DIVIDER);
             for (Auction auction : entry.getValue()) {
                 bufferedWriter.write(String.valueOf(auction.getId()));
                 bufferedWriter.write(DIVIDER);
@@ -190,8 +156,9 @@ public class DataManager {
                 bufferedWriter.write(auction.getDescription());
                 bufferedWriter.write(DIVIDER);
                 bufferedWriter.write(String.valueOf(auction.getStartingPrice()));
+                bufferedWriter.write(OBJECT_DIVIDER);
             }
-            bufferedWriter.write(KEY_DIVIDER);
+            bufferedWriter.write("\n");
         }
     }
 
@@ -204,14 +171,15 @@ public class DataManager {
             bufferedWriter.write(entry.getKey().getDescription());
             bufferedWriter.write(DIVIDER);
             bufferedWriter.write(String.valueOf(entry.getKey().getStartingPrice()));
-            bufferedWriter.write("\n");
-            for (Offer offer : entry.getValue()) {
-                bufferedWriter.write(offer.getUser().getLogin());
-                bufferedWriter.write(OBJECT_DIVIDER);
-                bufferedWriter.write(String.valueOf(offer.getPrice()));
-                bufferedWriter.write("\n");
-            }
             bufferedWriter.write(KEY_DIVIDER);
+            for (Offer offer : entry.getValue()) {
+                bufferedWriter.write(DIVIDER);
+                bufferedWriter.write(offer.getUser().getLogin());
+                bufferedWriter.write(DIVIDER);
+                bufferedWriter.write(String.valueOf(offer.getPrice()));
+                bufferedWriter.write(OBJECT_DIVIDER);
+            }
+            bufferedWriter.write("\n");
         }
     }
 }
