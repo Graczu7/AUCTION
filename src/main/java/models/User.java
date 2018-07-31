@@ -1,6 +1,7 @@
 package models;
 
 import DataBases.UserDatabase;
+import exceptions.LoginIllegalCharacterException;
 import exceptions.userExceptions.LoginAlreadyExistsException;
 import exceptions.userExceptions.PasswordTooShortException;
 
@@ -12,25 +13,37 @@ public class User {
     private String login;
     private String password;
 
-    public User(String name, String login, String password) throws PasswordTooShortException, LoginAlreadyExistsException {
+    public User(String name, String login, String password) throws PasswordTooShortException, LoginAlreadyExistsException, LoginIllegalCharacterException {
         this.name = name;
         setLogin(login);
         setPassword(password);
     }
 
-    public void setLogin(String login) throws LoginAlreadyExistsException {
+    
+
+    public void setLogin(String login) throws LoginAlreadyExistsException, LoginIllegalCharacterException {
         if (UserDatabase.getInstance().isLoginTaken(login)) {
             throw new LoginAlreadyExistsException();
+        }
+        for (int i = 0; i < login.length(); i++) {
+            if (login.charAt(i) < 48 || login.charAt(i) > 90) {
+                throw new LoginIllegalCharacterException();
+            }
         }
         this.login = login;
     }
 
-    public void setPassword(String newPassword) throws PasswordTooShortException {
+    public void setPassword(String newPassword) throws PasswordTooShortException, LoginIllegalCharacterException {
 
         if (newPassword.length() < 5) {
             throw new PasswordTooShortException();
         }
-        this.password = newPassword;
+        for (int i = 0; i < newPassword.length(); i++) {
+            if (newPassword.charAt(i) < 48 || newPassword.charAt(i) > 90) {
+                throw new LoginIllegalCharacterException();
+            }
+            this.password = newPassword;
+        }
     }
 
     public String getName() {

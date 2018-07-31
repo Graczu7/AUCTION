@@ -3,8 +3,6 @@ package helpers;
 import DataBases.AuctionsDatabase;
 import DataBases.OfferDatabase;
 import DataBases.UserDatabase;
-import exceptions.userExceptions.LoginAlreadyExistsException;
-import exceptions.userExceptions.PasswordTooShortException;
 import models.Auction;
 import models.Offer;
 import models.User;
@@ -17,28 +15,125 @@ public class DataManager {
     private static final String DIVIDER = ";";
     private static final String OBJECT_DIVIDER = "|";
     private static final String KEY_DIVIDER = "?";
-    private static final String FILE_NAME = "datafile.txt";
+    private static final String FILE_NAME = "datafile";
+    private static final String USER_DB = "?USERDB\n";
+    private static final String AUCTION_LOG_DB = "?AUCTIONLOGDB\n";
+    private static final String AUCTION_CAT_DB = "?AUCTIONCATDB\n";
+    private static final String AUCTION_WON_DB = "?AUCTIONWONDB\n";
+    private static final String OFFER_DB = "?OFFERDB\n";
+    private static final String STRING_KEY = "?STRINGKEY\n";
+    private static final String USER = "?USER\n";
+    private static final String AUCTION = "?AUCTION\n";
+    private static final String OFFER = "?OFFER\n";
 
 
-    public static void userFileReader() throws LoginAlreadyExistsException, PasswordTooShortException {
+    private static FileStateHolder state = new FileStateHolder();
 
-        String fileName = "userfile.txt";
+
+    public static void userFileReader() {
+
         String line = null;
 
         try {
-            FileReader fileReader = new FileReader(fileName);
+            FileReader fileReader = new FileReader(FILE_NAME);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
 
             while ((line = bufferedReader.readLine()) != null) {
-                String[] strings = line.split(DIVIDER);
-                UserDatabase.getInstance().addUserToDataBase(new User(strings[0], strings[1], strings[2]));
+                if (line.contains(USER_DB)) {
+                    state.db_type = FileStateHolder.DBType.USER_DB;
+                } else if (line.contains(AUCTION_LOG_DB)) {
+                    state.db_type = FileStateHolder.DBType.AUCTION_LOG_DB;
+                } else if (line.contains(AUCTION_CAT_DB)) {
+                    state.db_type = FileStateHolder.DBType.AUCTION_CAT_DB;
+                } else if (line.contains(AUCTION_WON_DB)) {
+                    state.db_type = FileStateHolder.DBType.AUCTION_WON_DB;
+                } else if (line.contains(OFFER_DB)) {
+                    state.db_type = FileStateHolder.DBType.OFFER_DB;
+                } else if (line.contains(STRING_KEY)) {
+                    state.classType = FileStateHolder.ClassType.STRING_KEY;
+                } else if (line.contains(USER)) {
+                    state.classType = FileStateHolder.ClassType.USER;
+                } else if (line.contains(AUCTION)) {
+                    state.classType = FileStateHolder.ClassType.AUCTION;
+                } else if (line.contains(OFFER)) {
+                    state.classType = FileStateHolder.ClassType.OFFER;
+                }
+
+                switch (state.db_type){
+                    case USER_DB:{
+                        switch (state.classType){
+                            case STRING_KEY:{
+
+                                break;
+                            }
+                            case USER:{
+
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                    case AUCTION_LOG_DB: {
+                        switch (state.classType){
+                            case STRING_KEY:{
+
+                                break;
+                            }
+                            case AUCTION:{
+
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                    case AUCTION_CAT_DB: {
+                        switch (state.classType){
+                            case STRING_KEY:{
+
+                                break;
+                            }
+                            case AUCTION:{
+
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                    case AUCTION_WON_DB:{
+                        switch (state.classType){
+                            case STRING_KEY:{
+
+                                break;
+                            }
+                            case AUCTION:{
+
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                    case OFFER_DB:{
+                        switch (state.classType){
+                            case AUCTION:{
+
+                                break;
+                            }
+                            case OFFER:{
+
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+
             }
 
             bufferedReader.close();
         } catch (FileNotFoundException ex) {
-            System.out.println("Unable to open file '" + fileName + "'");
+            System.out.println("Unable to open file '" + FILE_NAME + "'");
         } catch (IOException ex) {
-            System.out.println("Error reading file '" + fileName + "'");
+            System.out.println("Error reading file '" + FILE_NAME + "'");
 
         }
     }
@@ -49,19 +144,19 @@ public class DataManager {
             FileWriter fileWriter = new FileWriter(FILE_NAME);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
-            bufferedWriter.write("{UserDatabase}\n");
+            bufferedWriter.write(USER_DB);
             userWriter(UserDatabase.getInstance().getUsers(), bufferedWriter);
 
-            bufferedWriter.write("{AuctionDatabase.auctionMapByLogin}\n");
+            bufferedWriter.write(AUCTION_LOG_DB);
             auctionWriter(AuctionsDatabase.getInstance().getAuctionMapByLogin(), bufferedWriter);
 
-            bufferedWriter.write("{AuctionDatabase.auctionMapByCategory}\n");
+            bufferedWriter.write(AUCTION_CAT_DB);
             auctionWriter(AuctionsDatabase.getInstance().getAuctionMapByCategory(), bufferedWriter);
 
-            bufferedWriter.write("{AuctionDatabase.auctionsWonByUser}\n");
+            bufferedWriter.write(AUCTION_WON_DB);
             auctionWriter(AuctionsDatabase.getInstance().getAuctionsWonByUser(), bufferedWriter);
 
-            bufferedWriter.write("{OfferDatabase.offersMapByAuctions}\n");
+            bufferedWriter.write(OFFER_DB);
             offerWriter(OfferDatabase.getInstance().getOffersMapByAuctions(), bufferedWriter);
 
             bufferedWriter.close();
