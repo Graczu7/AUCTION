@@ -8,6 +8,7 @@ public class Category {
     private String name;
     private Set<Category> subcategories;
 
+    //test done
     public Category(String name) {
         this.name = name;
         this.subcategories = new HashSet<>();
@@ -23,7 +24,7 @@ public class Category {
 //        }
     }
 
-
+    //test done
     public Category getSubcategoryByName(String name) {
         if (this.name != null && this.name.equals(name)) {
             return this;
