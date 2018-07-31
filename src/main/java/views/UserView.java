@@ -169,8 +169,8 @@ public class UserView {
         System.out.println("Bid price too low!");
     }
 
-    public static void printUsersHighestBidError() {
-        System.out.println("Cannot outbid your own bid.");
+    public static void printUserHighestBidError() {
+        System.out.println("You are the highest bidder already!");
     }
 
     public static void printBidOwnAuctionError() {
@@ -187,6 +187,10 @@ public class UserView {
 
     public static void printAuctionNotFoundError() {
         System.out.println("Auction not found.");
+    }
+
+    public static void printOfferNotFoundError() {
+        System.out.println("Offer not found.");
     }
 
     public static void printCategoryNotFoundError(String categoryName) {

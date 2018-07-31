@@ -5,10 +5,7 @@ import DataBases.OfferDatabase;
 import exceptions.PriceValueTooLowException;
 import exceptions.auctionExceptions.*;
 import exceptions.categoryExceptions.CategoryNotFoundException;
-import exceptions.offerExceptions.CannotBidUsersOwnAuctionException;
-import exceptions.offerExceptions.CannotOutbidUsersOwnBidException;
-import exceptions.offerExceptions.OfferAlreadyExistsException;
-import exceptions.offerExceptions.OffersNotFound;
+import exceptions.offerExceptions.*;
 import exceptions.userExceptions.UserNotInDatabaseException;
 import models.Auction;
 import models.Category;
@@ -46,11 +43,14 @@ public class AuctionController {
 
     public static void addNewOffer(String auctionName, String auctionOwner, BigDecimal auctionLastPrice, User user, BigDecimal userPrice) {
         try {
-            if (auctionOwner.equals(user.getLogin())){
+            if (auctionOwner.equals(user.getLogin())) {
                 throw new CannotBidUsersOwnAuctionException();
             }
             Auction auction = searchForAuction(auctionOwner, auctionName, auctionLastPrice);
-            if (getAuctionLastOffer(auction).getUser().getLogin().equals(user.getLogin())){
+            if (!auction.isActive()) {
+                throw new CannotBidAuctionThatEndedException();
+            }
+            if (getAuctionLastOffer(auction).getUser().getLogin().equals(user.getLogin())) {
                 throw new CannotOutbidUsersOwnBidException();
             }
             Offer newOffer = new Offer(user, userPrice);
@@ -61,25 +61,16 @@ public class AuctionController {
                 AuctionsDatabase.getInstance().addAuctionWon(user.getLogin(), auction);
                 auction.disable();
             }
-
         } catch (PriceValueTooLowException e) {
             UserView.printBidPriceTooLowError();
-        } catch (CannotOutbidUsersOwnBidException e) {
-            e.printStackTrace();
-        } catch (OffersNotFound offersNotFound) {
-            offersNotFound.printStackTrace();
-        } catch (OfferAlreadyExistsException e) {
-            e.printStackTrace();
-        } catch (AuctionAlreadyInDatabaseException e) {
-            e.printStackTrace();
         } catch (AuctionNotFoundException e) {
-            e.printStackTrace();
-        } catch (AuctionsNotFoundException e) {
-            e.printStackTrace();
+            UserView.printAuctionNotFoundError();
+        } catch (CannotOutbidUsersOwnBidException e) {
+            UserView.printUserHighestBidError();
         } catch (CannotBidUsersOwnAuctionException e) {
-            e.printStackTrace();
-        } catch (UserNotInDatabaseException e) {
-            e.printStackTrace();
+            UserView.printBidOwnAuctionError();
+        } catch (CannotBidAuctionThatEndedException e) {
+            UserView.printAuctionEndedError();
         } catch (Exception e) {
             UserView.printFatalError();
             e.printStackTrace();
@@ -126,7 +117,7 @@ public class AuctionController {
             throw new AuctionNotFoundException();
         }
         for (Auction auction : auctions) {
-            if (auction != null && auction.getTitle().equals(auctionName) && auctionPrice.equals(getAuctionPrice(auction))){
+            if (auction != null && auction.getTitle().equals(auctionName) && auctionPrice.equals(getAuctionPrice(auction))) {
                 return auction;
             }
         }

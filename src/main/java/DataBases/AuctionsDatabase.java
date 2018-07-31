@@ -33,17 +33,17 @@ public class AuctionsDatabase {
         if (!auctionToAdd.isActive()) {
             throw new CannotAddInactiveAuctionToDatabaseException();
         }
-        if (this.auctionMapByLogin.get(user.getLogin()).contains(auctionToAdd)) {
-            throw new AuctionAlreadyInDatabaseException();
-        }
-        if (this.auctionMapByCategory.get(category.getName()).contains(auctionToAdd)) {
-            throw new AuctionAlreadyInDatabaseException();
-        }
         if (!this.auctionMapByLogin.containsKey(user.getLogin())) {
             this.auctionMapByLogin.put(user.getLogin(), new LinkedList<>());
         }
         if (!this.auctionMapByCategory.containsKey(category.getName())) {
             this.auctionMapByCategory.put(category.getName(), new LinkedList<>());
+        }
+        if (this.auctionMapByLogin.get(user.getLogin()).contains(auctionToAdd)) {
+            throw new AuctionAlreadyInDatabaseException();
+        }
+        if (this.auctionMapByCategory.get(category.getName()).contains(auctionToAdd)) {
+            throw new AuctionAlreadyInDatabaseException();
         }
         this.auctionMapByLogin.get(user.getLogin()).add(auctionToAdd);
         this.auctionMapByCategory.get(category.getName()).add(auctionToAdd);
@@ -92,7 +92,15 @@ public class AuctionsDatabase {
         return this.auctionMapByCategory.get(categoryName);
     }
 
+    public Map<String, List<Auction>> getAuctionMapByLogin() {
+        return auctionMapByLogin;
+    }
 
+    public Map<String, List<Auction>> getAuctionMapByCategory() {
+        return auctionMapByCategory;
+    }
 
-
+    public Map<String, List<Auction>> getAuctionsWonByUser() {
+        return auctionsWonByUser;
+    }
 }

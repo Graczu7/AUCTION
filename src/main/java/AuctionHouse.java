@@ -1,13 +1,16 @@
+import DataBases.AuctionsDatabase;
+import DataBases.UserDatabase;
 import controllers.AuctionController;
 import controllers.UserController;
 import controllers.UserInputController;
-import exceptions.PriceValueTooLowException;
 import exceptions.categoryExceptions.CannotAddSubcategoryToCategoryContaingAuctionException;
 import helpers.Categories;
+import helpers.DataManager;
 import helpers.State;
 import helpers.StateHolder;
+import models.Auction;
 import models.Category;
-import models.Offer;
+import models.User;
 import views.UserView;
 
 import java.math.BigDecimal;
@@ -22,7 +25,8 @@ public class AuctionHouse {
         this.mainCategory = Categories.initializeCategories();
     }
 
-    public void run() {
+    public void run() throws Exception {
+        testInit();
         UserView.printGreetings();
 
         while (stateHolder.getState() != State.EXIT) {
@@ -59,9 +63,17 @@ public class AuctionHouse {
                     String userInput = UserInputController.getTextFromUser();
                     switch (userInput) {
                         case "1":
-                            stateHolder.setState(State.VIEW_CATEGORIES);
+                            addNewAuction();
+                            stateHolder.setState(State.LOGGED_IN);
                             break;
                         case "2":
+                            addNewOffer();
+                            stateHolder.setState(State.LOGGED_IN);
+                            break;
+                        case "3":
+                            stateHolder.setState(State.VIEW_CATEGORIES);
+                            break;
+                        case "4":
                             stateHolder.setState(State.VIEW_AUCTIONS_MENU);
                             break;
                         case "0":
@@ -83,14 +95,6 @@ public class AuctionHouse {
                     String userInput = UserInputController.getTextFromUser();
                     switch (userInput) {
                         case "1":
-                            addNewAuction();
-                            stateHolder.setState(State.LOGGED_IN);
-                            break;
-                        case "2":
-
-                            stateHolder.setState(State.LOGGED_IN);
-                            break;
-                        case "3":
                             UserView.printAuctionChoice();
                             String categoryName = UserInputController.getTextFromUser();
 
@@ -98,12 +102,12 @@ public class AuctionHouse {
 
                             stateHolder.setState(State.LOGGED_IN);
                             break;
-                        case "4":
+                        case "2":
                             AuctionController.getAuctionsByLogin(stateHolder.getLoggedUser().getLogin());
 
                             stateHolder.setState(State.LOGGED_IN);
                             break;
-                        case "5":
+                        case "3":
                             AuctionController.getWonAuctions(stateHolder.getLoggedUser().getLogin());
 
                             stateHolder.setState(State.LOGGED_IN);
@@ -147,7 +151,6 @@ public class AuctionHouse {
         }
     }
 
-    //TODO
     private void addNewOffer() {
         UserView.printAuctionTitlePrompt();
         String auctionName = UserInputController.getTextFromUser();
@@ -191,5 +194,20 @@ public class AuctionHouse {
                 stateHolder.getLoggedUser(),
                 mainCategory.getSubcategoryByName(auctionCategory),
                 auctionPrice);
+    }
+
+
+    private void testInit() throws Exception {
+        User userStefan = new User("stefan", "login", "password");
+        User userStasiek = new User("stasiek", "login8", "password");
+        UserDatabase.getInstance().addUserToDataBase(userStefan);
+        UserDatabase.getInstance().addUserToDataBase(userStasiek);
+
+        Auction auctionStefan = new Auction("costam", "znowu costam", BigDecimal.valueOf(3.50));
+        AuctionsDatabase.getInstance().addAuctionToDatabase(auctionStefan, mainCategory.getSubcategoryByName("Vans"), userStefan);
+        Auction auctionStasiek = new Auction("costam", "znowu costam", BigDecimal.valueOf(3.50));
+        AuctionsDatabase.getInstance().addAuctionToDatabase(auctionStasiek, mainCategory.getSubcategoryByName("Vans"), userStasiek);
+
+        DataManager.writeAll();
     }
 }
