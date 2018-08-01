@@ -71,10 +71,6 @@ public class Auction {
         return id;
     }
 
-    public static Integer getCount() {
-        return count;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -96,7 +92,7 @@ public class Auction {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Auction auction = (Auction) o;
-        return id == auction.id &&
+        return id.equals(auction.id) &&
                 isActive == auction.isActive &&
                 Objects.equals(description, auction.description) &&
                 Objects.equals(title, auction.title) &&

@@ -132,7 +132,6 @@ public class CategoryTest {
         electronics.addSubcategory(computers);
 
         //When
-        Category returnedCategory = electronics.getSubcategoryByName("Komputery");
         List<Category> result = electronics.asList();
 
         //Then

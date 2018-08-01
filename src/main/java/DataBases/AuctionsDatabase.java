@@ -11,9 +11,9 @@ import java.util.*;
 
 public class AuctionsDatabase {
     private static AuctionsDatabase instance;
-    private Map<String, List<Auction>> auctionMapByLogin;
-    private Map<String, List<Auction>> auctionMapByCategory;
-    private Map<String, List<Auction>> auctionsWonByUser;
+    private final Map<String, List<Auction>> auctionMapByLogin;
+    private final Map<String, List<Auction>> auctionMapByCategory;
+    private final Map<String, List<Auction>> auctionsWonByUser;
 
     private AuctionsDatabase() {
         this.auctionMapByLogin = new HashMap<>();

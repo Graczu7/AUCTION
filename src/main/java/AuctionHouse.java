@@ -13,14 +13,14 @@ import java.util.InputMismatchException;
 
 public class AuctionHouse {
 
-    private Category mainCategory;
-    private StateHolder stateHolder = StateHolder.getInstance();
+    private final Category mainCategory;
+    private final StateHolder stateHolder = StateHolder.getInstance();
 
     public AuctionHouse() {
         this.mainCategory = Categories.initializeCategories();
     }
 
-    public void run() throws Exception {
+    public void run() {
         FileManager.loadDatabase();
         UserView.printGreetings();
 

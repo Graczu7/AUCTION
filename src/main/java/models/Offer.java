@@ -15,11 +15,6 @@ public class Offer {
         setPrice(price);
     }
 
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public void setPrice(BigDecimal price) throws PriceValueTooLowException {
         if (price.compareTo(BigDecimal.valueOf(0)) <= 0) {
             throw new PriceValueTooLowException();

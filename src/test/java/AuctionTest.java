@@ -134,7 +134,7 @@
 //
 //    @Test
 //    public void testSetNewOfferForOfferHigherThanLastOffer() throws PriceValueTooLowException, PriceValueTooLowException, CannotOutbidUsersOwnBidException, PasswordTooShortException, CannotBidUsersOwnAuctionException, CannotBidAuctionThatEndedException {
-//        User oldBuyer = new User("oldbuyer", "oldbuyer", "password");
+//        User oldBuyer = new User("oldBuyer", "oldBuyer", "password");
 //        Offer oldOffer = new Offer(oldBuyer, auction, BigDecimal.valueOf(5));
 //
 //        User buyer = new User("buyer", "buyer", "password");
@@ -173,7 +173,7 @@
 //
 //    @Test(expected = PriceValueTooLowException.class)
 //    public void testSetNewOfferForOfferEqualsLastOffer() throws PriceValueTooLowException, PriceValueTooLowException, CannotOutbidUsersOwnBidException, PasswordTooShortException, CannotBidUsersOwnAuctionException, CannotBidAuctionThatEndedException {
-//        User oldBuyer = new User("oldbuyer", "oldbuyer", "password");
+//        User oldBuyer = new User("oldBuyer", "oldBuyer", "password");
 //        Offer oldOffer = new Offer(oldBuyer, auction, BigDecimal.valueOf(5));
 //
 //        User buyer = new User("buyer", "buyer", "password");
@@ -185,7 +185,7 @@
 //
 //    @Test(expected = PriceValueTooLowException.class)
 //    public void testSetNewOfferForOfferLowerThanLastOffer() throws PriceValueTooLowException, PriceValueTooLowException, CannotOutbidUsersOwnBidException, PasswordTooShortException, CannotBidUsersOwnAuctionException, CannotBidAuctionThatEndedException {
-//        User oldBuyer = new User("oldbuyer", "oldbuyer", "password");
+//        User oldBuyer = new User("oldBuyer", "oldBuyer", "password");
 //        Offer oldOffer = new Offer(oldBuyer, auction, BigDecimal.valueOf(5));
 //
 //        User buyer = new User("buyer", "buyer", "password");
@@ -297,7 +297,7 @@
 //        User bidder = new User("buyer", "buyer", "password");
 //        Offer firstOffer = new Offer(bidder, auction, BigDecimal.valueOf(5));
 //
-//        User secondBidder = new User("buyer", "secondbuyer", "password");
+//        User secondBidder = new User("buyer", "secondBuyer", "password");
 //        Offer secondOffer = new Offer(secondBidder, auction, BigDecimal.valueOf(7));
 //
 //        auction.setNewOffer(firstOffer);
@@ -311,10 +311,10 @@
 //        User bidder = new User("buyer", "buyer", "password");
 //        Offer firstOffer = new Offer(bidder, auction, BigDecimal.valueOf(5));
 //
-//        User secondBidder = new User("secondbidder", "secondbidder", "password");
+//        User secondBidder = new User("secondBidder", "secondBidder", "password");
 //        Offer secondOffer = new Offer(secondBidder, auction, BigDecimal.valueOf(7));
 //
-//        User thirdBidder = new User("thirdbidder", "thirdbidder", "password");
+//        User thirdBidder = new User("thirdBidder", "thirdBidder", "password");
 //        Offer thirdOffer = new Offer(thirdBidder, auction, BigDecimal.valueOf(10));
 //
 //        auction.setNewOffer(firstOffer);

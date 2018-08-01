@@ -1,4 +1,0 @@
-package exceptions.auctionHouseExceptions.categoryExceptions;
-
-public class CannotAddSubcategoryToCategoryContaingAuctionException extends CategoryException {
-}

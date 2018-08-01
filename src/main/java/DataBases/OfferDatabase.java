@@ -9,7 +9,7 @@ import java.util.*;
 
 public class OfferDatabase {
     private static OfferDatabase instance;
-    private Map<Auction, List<Offer>> offersMapByAuctions;
+    private final Map<Auction, List<Offer>> offersMapByAuctions;
 
     private OfferDatabase() {
         this.offersMapByAuctions = new HashMap<>();

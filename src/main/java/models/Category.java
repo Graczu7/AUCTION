@@ -5,8 +5,8 @@ import java.util.*;
 public class Category {
 
 
-    private String name;
-    private Set<Category> subcategories;
+    private final String name;
+    private final Set<Category> subcategories;
 
     //test done
     public Category(String name) {
@@ -18,7 +18,7 @@ public class Category {
     public void addSubcategory(Category category) {
 
 //        if(!AuctionsDatabase.getInstance().getAuctionsByCategoryName(category).isEmpty()){
-//            throw new CannotAddSubcategoryToCategoryContaingAuctionException();
+//            throw new CannotAddSubcategoryToCategoryCongaingAuctionException();
 //        } else{
         this.subcategories.add(category);
 //        }

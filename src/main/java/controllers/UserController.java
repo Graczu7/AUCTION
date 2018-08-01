@@ -43,9 +43,7 @@ public class UserController {
         }
     }
 
-    public static boolean logout() {
+    public static void logout() {
         UserView.printUserLogoutConfirmation();
-        return true;
-
     }
 }
