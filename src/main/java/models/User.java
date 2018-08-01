@@ -4,11 +4,11 @@ import DataBases.UserDatabase;
 
 import exceptions.auctionHouseExceptions.userExceptions.LoginAlreadyExistsException;
 import exceptions.auctionHouseExceptions.userExceptions.PasswordTooShortException;
-import exceptions.userExceptions.LoginIllegalCharacterException;
-import exceptions.userExceptions.PasswordIllegalCharacterException;
-import exceptions.userExceptions.LoginAlreadyExistsException;
-import exceptions.userExceptions.NameIllegalCharacterException;
-import exceptions.userExceptions.PasswordTooShortException;
+import exceptions.auctionHouseExceptions.userExceptions.LoginIllegalCharacterException;
+import exceptions.auctionHouseExceptions.userExceptions.PasswordIllegalCharacterException;
+
+import exceptions.auctionHouseExceptions.userExceptions.NameIllegalCharacterException;
+
 
 import java.util.Objects;
 
