@@ -2,11 +2,11 @@ package controllers;
 
 import DataBases.AuctionsDatabase;
 import DataBases.OfferDatabase;
-import exceptions.PriceValueTooLowException;
-import exceptions.auctionExceptions.*;
-import exceptions.categoryExceptions.CategoryNotFoundException;
-import exceptions.offerExceptions.*;
-import exceptions.userExceptions.UserNotInDatabaseException;
+import exceptions.auctionHouseExceptions.PriceValueTooLowException;
+import exceptions.auctionHouseExceptions.auctionExceptions.*;
+import exceptions.auctionHouseExceptions.categoryExceptions.CategoryNotFoundException;
+import exceptions.auctionHouseExceptions.offerExceptions.*;
+import exceptions.auctionHouseExceptions.userExceptions.UserNotInDatabaseException;
 import models.Auction;
 import models.Category;
 import models.Offer;
@@ -138,7 +138,7 @@ public class AuctionController {
 
     private static boolean isAuctionWon(Auction auction) {
         try {
-            return OfferDatabase.getInstance().getOffersMapByAuction(auction).size() >= OFFERS_TO_WIN;
+            return OfferDatabase.getInstance().getOffersListByAuction(auction).size() >= OFFERS_TO_WIN;
         } catch (OffersNotFound offersNotFound) {
             return false;
         }

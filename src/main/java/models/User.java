@@ -1,6 +1,9 @@
 package models;
 
 import DataBases.UserDatabase;
+
+import exceptions.auctionHouseExceptions.userExceptions.LoginAlreadyExistsException;
+import exceptions.auctionHouseExceptions.userExceptions.PasswordTooShortException;
 import exceptions.userExceptions.LoginIllegalCharacterException;
 import exceptions.userExceptions.PasswordIllegalCharacterException;
 import exceptions.userExceptions.LoginAlreadyExistsException;

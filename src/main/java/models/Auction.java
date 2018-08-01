@@ -1,7 +1,7 @@
 package models;
 
-import exceptions.*;
-import exceptions.auctionExceptions.*;
+import exceptions.auctionHouseExceptions.PriceValueTooLowException;
+import exceptions.auctionHouseExceptions.auctionExceptions.*;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -22,6 +22,14 @@ public class Auction {
         setDescription(description);
         changeStartingPrice(startingPrice);
         this.id = count;
+        count++;
+    }
+
+    public Auction(Integer id, String title, String description, BigDecimal startingPrice) throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceValueTooLowException, CannotModifyAuctionThatEndedException {
+        this.id = id;
+        setTitle(title);
+        setDescription(description);
+        changeStartingPrice(startingPrice);
         count++;
     }
 

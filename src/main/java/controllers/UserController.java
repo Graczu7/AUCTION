@@ -1,6 +1,6 @@
 package controllers;
 
-import exceptions.userExceptions.*;
+import exceptions.auctionHouseExceptions.userExceptions.*;
 import models.User;
 import DataBases.UserDatabase;
 import views.UserView;

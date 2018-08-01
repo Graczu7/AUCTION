@@ -3,7 +3,7 @@ import DataBases.UserDatabase;
 import controllers.AuctionController;
 import controllers.UserController;
 import controllers.UserInputController;
-import exceptions.categoryExceptions.CannotAddSubcategoryToCategoryContaingAuctionException;
+import exceptions.auctionHouseExceptions.categoryExceptions.CannotAddSubcategoryToCategoryContaingAuctionException;
 import helpers.Categories;
 import helpers.DataManager;
 import helpers.State;
@@ -163,7 +163,8 @@ public class AuctionHouse {
             UserView.printBidPricePrompt();
             BigDecimal newOfferPrice = UserInputController.getPriceFromUser();
 
-            AuctionController.addNewOffer(auctionName,
+            AuctionController.addNewOffer(
+                    auctionName,
                     ownerName,
                     lastPrice,
                     stateHolder.getLoggedUser(),
@@ -171,8 +172,6 @@ public class AuctionHouse {
         } catch (InputMismatchException e) {
             UserView.printBigDecimalInputError();
         }
-
-
     }
 
     private void addNewAuction() {

@@ -1,4 +1,4 @@
-package exceptions.offerExceptions;
+package exceptions.auctionHouseExceptions.offerExceptions;
 
 public class CannotOutbidUsersOwnBidException extends OfferException {
 }

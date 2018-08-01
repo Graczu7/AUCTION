@@ -1,4 +1,4 @@
-package exceptions.userExceptions;
+package exceptions.auctionHouseExceptions.userExceptions;
 
 public class UserNotInDatabaseException extends UserException {
 }

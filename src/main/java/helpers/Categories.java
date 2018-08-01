@@ -1,6 +1,6 @@
 package helpers;
 
-import exceptions.categoryExceptions.CannotAddSubcategoryToCategoryContaingAuctionException;
+import exceptions.auctionHouseExceptions.categoryExceptions.CannotAddSubcategoryToCategoryContaingAuctionException;
 import models.Category;
 
 

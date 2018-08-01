@@ -1,4 +1,4 @@
-package exceptions.categoryExceptions;
+package exceptions.auctionHouseExceptions.categoryExceptions;
 
 public class CategoryNotFoundException extends CategoryException {
 }
