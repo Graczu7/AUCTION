@@ -82,7 +82,7 @@ public class FileManager {
         }
     }
 
-    private static void userReader(String initLine) throws IOException {
+    private static void userReader(String initLine) {
         try {
             String[] line = initLine.split(USER_DB);
             if (line.length < 2) {
@@ -103,7 +103,7 @@ public class FileManager {
         }
     }
 
-    private static void auctionByLoginReader(String initLine) throws IOException {
+    private static void auctionByLoginReader(String initLine) {
         try {
             String[] line = initLine.split(AUCTION_LOG_DB);
             if (line.length < 2) {
@@ -142,7 +142,7 @@ public class FileManager {
         }
     }
 
-    private static void auctionByCategoryReader(String initLine) throws IOException {
+    private static void auctionByCategoryReader(String initLine) {
         try {
             String[] line = initLine.split(AUCTION_CAT_DB);
             if (line.length < 2) {
@@ -183,7 +183,7 @@ public class FileManager {
         }
     }
 
-    private static void auctionWonReader(String initLine) throws IOException {
+    private static void auctionWonReader(String initLine) {
         try {
             String[] line = initLine.split(AUCTION_WON_DB);
             if (line.length < 2) {
@@ -221,7 +221,7 @@ public class FileManager {
         }
     }
 
-    private static void offerReader(String initLine) throws IOException {
+    private static void offerReader(String initLine) {
         try {
             String[] line = initLine.split(OFFER_DB);
             if (line.length < 2) {

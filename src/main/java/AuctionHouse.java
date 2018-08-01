@@ -20,7 +20,7 @@ public class AuctionHouse {
         this.mainCategory = Categories.initializeCategories();
     }
 
-    public void run() throws Exception {
+    public void run() {
         FileManager.loadDatabase();
         UserView.printGreetings();
 
