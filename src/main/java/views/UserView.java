@@ -58,37 +58,37 @@ public class UserView {
 
     public static void printCategoryPrompt() {
         System.out.println("Please enter Category name");
-        System.out.println("> ");
+        System.out.print("> ");
     }
 
     public static void printAuctionTitlePrompt() {
         System.out.println("Please enter Auction name");
-        System.out.println("> ");
+        System.out.print("> ");
     }
 
     public static void printAuctionDescriptionPrompt() {
         System.out.println("Please enter Auction description");
-        System.out.println("> ");
+        System.out.print("> ");
     }
 
     public static void printAuctionPricePrompt() {
         System.out.println("Please enter starting price");
-        System.out.println("> ");
+        System.out.print("> ");
     }
 
     public static void printAuctionOwnerNamePrompt() {
         System.out.println("Please enter auction owner name");
-        System.out.println("> ");
+        System.out.print("> ");
     }
 
     public static void printItemPricePrompt() {
         System.out.println("Please enter items last price");
-        System.out.println("> ");
+        System.out.print("> ");
     }
 
     public static void printBidPricePrompt() {
         System.out.println("Please enter your bid");
-        System.out.println("> ");
+        System.out.print("> ");
     }
 
     public static void printBigDecimalInputError() {
