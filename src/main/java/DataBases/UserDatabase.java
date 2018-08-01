@@ -6,11 +6,10 @@ import models.User;
 
 import java.util.*;
 
-//TODO
 public class UserDatabase {
 
     private static UserDatabase instance;
-    private Map<String, User> users;
+    private final Map<String, User> users;
 
     private UserDatabase() {
         this.users = new HashMap<>();

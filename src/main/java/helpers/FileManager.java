@@ -26,7 +26,7 @@ public class FileManager {
     private static final String OFFER_DB = "<OFFERDB";
 
 
-    private static FileStateHolder state = new FileStateHolder();
+    private static final FileStateHolder state = new FileStateHolder();
 
 
     public static void loadDatabase() {
@@ -142,7 +142,9 @@ public class FileManager {
         }
     }
 
+
     private static void auctionByCategoryReader(String initLine) {
+
         try {
             String[] line = initLine.split(AUCTION_CAT_DB);
             if (line.length < 2) {
