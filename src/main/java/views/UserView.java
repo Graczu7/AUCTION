@@ -207,7 +207,20 @@ public class UserView {
         System.out.println("Something went terribly wrong! Please let us know about it!");
     }
 
-    public static void printUserNotFindError() {
+    public static void printUserNotFoundError() {
         System.out.println("User not found.");
+    }
+
+    public static void printIllegalLoginCharacter(){
+        System.out.println("Illegal character.");
+    }
+    public static void printIllegalPasswordCharacter(){
+        System.out.println("Illegal character.");
+    }
+    public static void printIllegalNameCharacter(){
+        System.out.println("Illegal character.");
+    }
+    public static void printCategoryDoesntExist(){
+        System.out.println("Category doesn't exist");
     }
 }

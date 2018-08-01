@@ -7,30 +7,39 @@ import views.UserView;
 
 public class UserController {
 
-    public static boolean login(String login, String password) {
+    public static User login(String login, String password) {
         User user;
         try {
             user = UserDatabase.getInstance().getUser(login, password);
             UserView.printUserLoginConfirmation(user);
-            return true;
+            return user;
         } catch (UserNotInDatabaseException e) {
             UserView.printUserDoesNotExistError(login);
-            return false;
+            return null;
         }
     }
 
-    public static boolean register(String name, String login, String password) {
+    public static User register(String name, String login, String password) {
         try {
             User user = new User(name, login, password);
             UserDatabase.getInstance().addUserToDataBase(user);
             UserView.printUserRegisterConfirmation();
-            return true;
+            return user;
         } catch (PasswordTooShortException e) {
             UserView.printUserPasswordTooShortError();
-            return false;
+            return null;
         } catch (LoginAlreadyExistsException e) {
             UserView.printLoginTakenError(login);
-            return false;
+            return null;
+        } catch (NameIllegalCharacterException e) {
+            UserView.printIllegalNameCharacter();
+            return null;
+        } catch (LoginIllegalCharacterException e) {
+            UserView.printIllegalLoginCharacter();
+            return null;
+        } catch (PasswordIllegalCharacterException e) {
+            UserView.printIllegalPasswordCharacter();
+            return null;
         }
     }
 

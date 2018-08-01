@@ -5,7 +5,7 @@ import models.Category;
 
 
 public class Categories {
-    public static Category initializeCategories() throws CannotAddSubcategoryToCategoryContaingAuctionException {
+    public static Category initializeCategories(){
 
         Category parentcategory = new Category(null);
 

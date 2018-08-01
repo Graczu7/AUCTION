@@ -8,12 +8,13 @@ public class Category {
     private String name;
     private Set<Category> subcategories;
 
+    //test done
     public Category(String name) {
         this.name = name;
         this.subcategories = new HashSet<>();
     }
 
-
+    //test done
     public void addSubcategory(Category category) {
 
 //        if(!AuctionsDatabase.getInstance().getAuctionsByCategoryName(category).isEmpty()){
@@ -23,7 +24,7 @@ public class Category {
 //        }
     }
 
-
+    //test done
     public Category getSubcategoryByName(String name) {
         if (this.name != null && this.name.equals(name)) {
             return this;
@@ -38,7 +39,7 @@ public class Category {
         return null;
     }
 
-
+    //test done
     public List<Category> asList() {
         List<Category> categories = new LinkedList<>();
         this.subcategoriesAsList(categories);
