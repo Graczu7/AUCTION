@@ -1,4 +1,7 @@
-import exceptions.userExceptions.*;
+import exceptions.auctionHouseExceptions.userExceptions.LoginIllegalCharacterException;
+import exceptions.auctionHouseExceptions.userExceptions.NameIllegalCharacterException;
+import exceptions.auctionHouseExceptions.userExceptions.PasswordIllegalCharacterException;
+import exceptions.auctionHouseExceptions.userExceptions.PasswordTooShortException;
 import models.Auction;
 import models.Category;
 import models.Offer;
@@ -87,3 +90,4 @@ public class UserTest {
         user.setPassword("!#$@!#&!");
     }
 }
+

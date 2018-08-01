@@ -4,7 +4,6 @@ import models.Auction;
 import models.Category;
 import models.User;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public class UserView {
@@ -96,8 +95,8 @@ public class UserView {
         System.out.println("This is not a number!");
     }
 
-    public static void printMenuChoiceError(String userInpit) {
-        System.out.println("\'" + userInpit + "\' is not an option!");
+    public static void printMenuChoiceError(String userInput) {
+        System.out.println("\'" + userInput + "\' is not an option!");
         System.out.println("Try again.");
     }
 
@@ -128,10 +127,6 @@ public class UserView {
         System.out.println("You have been logged out.");
     }
 
-    public static void printUserNotLoggedInError() {
-        System.out.println("User is not logged in.");
-    }
-
     public static void printUserDoesNotExistError(String login) {
         System.out.println(login + " does not exist!");
     }
@@ -148,10 +143,6 @@ public class UserView {
         System.out.println("Auction creation successful.");
     }
 
-    public static void printDifferentUserLoggedIn(User user) {
-        System.out.println("You are currently logged as: " + user.getLogin());
-        System.out.println("Please log out before you login to different account.");
-    }
 
     public static void printAuctionTitleTooShortError() {
         System.out.println("Title must contain at least " + Auction.TITLE_LENGTH + " characters.");
@@ -207,7 +198,7 @@ public class UserView {
         System.out.println("Something went terribly wrong! Please let us know about it!");
     }
 
-    public static void printUserNotFindError() {
+    public static void printUserNotFoundError() {
         System.out.println("User not found.");
     }
 
@@ -219,5 +210,8 @@ public class UserView {
     }
     public static void printIllegalNameCharacter(){
         System.out.println("Illegal character.");
+    }
+    public static void printCategoryDoesntExist(){
+        System.out.println("Category doesn't exist");
     }
 }

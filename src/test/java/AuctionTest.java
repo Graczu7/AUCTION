@@ -1,5 +1,6 @@
 import exceptions.*;
-import exceptions.auctionExceptions.AuctionDescriptionTooShortException;
+import exceptions.auctionHouseExceptions.PriceValueTooLowException;
+import exceptions.auctionHouseExceptions.auctionExceptions.AuctionDescriptionTooShortException;
 import models.Auction;
 import org.junit.Assert;
 import org.junit.Before;

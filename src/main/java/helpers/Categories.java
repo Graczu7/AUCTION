@@ -1,18 +1,17 @@
 package helpers;
 
-import exceptions.categoryExceptions.CannotAddSubcategoryToCategoryContaingAuctionException;
 import models.Category;
 
 
 public class Categories {
-    public static Category initializeCategories() throws CannotAddSubcategoryToCategoryContaingAuctionException {
+    public static Category initializeCategories(){
 
-        Category parentcategory = new Category(null);
+        Category parentCategory = new Category(null);
 
         Category electronics = new Category("Electronics");
         Category computers = new Category("Computers");
         Category laptops = new Category("Laptops");
-        Category desctops = new Category("Desktops");
+        Category desktops = new Category("Desktops");
         Category phones = new Category("Phones");
         Category iphones = new Category("iPhones");
         Category androids = new Category("Androids");
@@ -23,12 +22,12 @@ public class Categories {
         Category trucks = new Category("Trucks");
         Category motorcycles = new Category("Motorcycles");
 
-        parentcategory.addSubcategory(electronics);
-        parentcategory.addSubcategory(automotive);
+        parentCategory.addSubcategory(electronics);
+        parentCategory.addSubcategory(automotive);
 
         electronics.addSubcategory(computers);
         computers.addSubcategory(laptops);
-        computers.addSubcategory(desctops);
+        computers.addSubcategory(desktops);
         electronics.addSubcategory(phones);
         phones.addSubcategory(iphones);
         phones.addSubcategory(androids);
@@ -39,6 +38,6 @@ public class Categories {
 
         automotive.addSubcategory(motorcycles);
 
-        return parentcategory;
+        return parentCategory;
     }
 }

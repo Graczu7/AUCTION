@@ -5,25 +5,26 @@ import java.util.*;
 public class Category {
 
 
-    private String name;
-    private Set<Category> subcategories;
+    private final String name;
+    private final Set<Category> subcategories;
 
+    //test done
     public Category(String name) {
         this.name = name;
         this.subcategories = new HashSet<>();
     }
 
-
+    //test done
     public void addSubcategory(Category category) {
 
 //        if(!AuctionsDatabase.getInstance().getAuctionsByCategoryName(category).isEmpty()){
-//            throw new CannotAddSubcategoryToCategoryContaingAuctionException();
+//            throw new CannotAddSubcategoryToCategoryCongaingAuctionException();
 //        } else{
         this.subcategories.add(category);
 //        }
     }
 
-
+    //test done
     public Category getSubcategoryByName(String name) {
         if (this.name != null && this.name.equals(name)) {
             return this;
@@ -38,7 +39,7 @@ public class Category {
         return null;
     }
 
-
+    //test done
     public List<Category> asList() {
         List<Category> categories = new LinkedList<>();
         this.subcategoriesAsList(categories);
