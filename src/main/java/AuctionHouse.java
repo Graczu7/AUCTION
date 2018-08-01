@@ -1,17 +1,11 @@
-import DataBases.AuctionsDatabase;
-import DataBases.UserDatabase;
 import controllers.AuctionController;
 import controllers.UserController;
 import controllers.UserInputController;
-import exceptions.auctionHouseExceptions.categoryExceptions.CannotAddSubcategoryToCategoryContaingAuctionException;
-import exceptions.auctionHouseExceptions.userExceptions.UserNotInDatabaseException;
 import helpers.Categories;
 import helpers.FileManager;
 import helpers.State;
 import helpers.StateHolder;
-import models.Auction;
 import models.Category;
-import models.User;
 import views.UserView;
 
 import java.math.BigDecimal;
@@ -22,12 +16,11 @@ public class AuctionHouse {
     private Category mainCategory;
     private StateHolder stateHolder = StateHolder.getInstance();
 
-    public AuctionHouse() throws CannotAddSubcategoryToCategoryContaingAuctionException {
+    public AuctionHouse() {
         this.mainCategory = Categories.initializeCategories();
     }
 
     public void run() throws Exception {
-//        testInit();
         FileManager.loadDatabase();
         UserView.printGreetings();
 
@@ -204,20 +197,5 @@ public class AuctionHouse {
                 stateHolder.getLoggedUser(),
                 mainCategory.getSubcategoryByName(auctionCategory),
                 auctionPrice);
-    }
-
-
-    private void testInit() throws Exception {
-        User userStefan = new User("stefan", "login", "password");
-        User userStasiek = new User("stasiek", "login8", "password");
-        UserDatabase.getInstance().addUserToDataBase(userStefan);
-        UserDatabase.getInstance().addUserToDataBase(userStasiek);
-
-        Auction auctionStefan = new Auction("costam", "znowu costam", BigDecimal.valueOf(3.50));
-        AuctionsDatabase.getInstance().addAuctionToDatabase(auctionStefan, mainCategory.getSubcategoryByName("Vans"), userStefan);
-        Auction auctionStasiek = new Auction("costam", "znowu costam", BigDecimal.valueOf(3.50));
-        AuctionsDatabase.getInstance().addAuctionToDatabase(auctionStasiek, mainCategory.getSubcategoryByName("Vans"), userStasiek);
-
-        FileManager.saveDatabase();
     }
 }
