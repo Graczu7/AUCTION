@@ -46,7 +46,7 @@ public class UserTest {
         User user = new User("Name", "Login", "password");
         Category category = new Category("Name");
         Auction auction = new Auction("Title", "Description", BigDecimal.valueOf(0));
-        Offer offer = new Offer(user, BigDecimal.valueOf(0));
+        Offer offer = new Offer(user, BigDecimal.valueOf(1));
         ArrayList<Offer> usersOffer = new ArrayList<Offer>();
         usersOffer.add(offer);
         Assert.assertEquals(offer, usersOffer.get(0));
