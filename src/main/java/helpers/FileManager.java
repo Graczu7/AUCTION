@@ -13,23 +13,23 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
-public class DataManager {
+public class FileManager {
     private static final String DIVIDER = ";";
     private static final String OBJECT_DIVIDER = ">";
     private static final String KEY_DIVIDER = "|";
     private static final String ENTRY_DIVIDER = "$";
     private static final String FILE_NAME = "datafile";
-    private static final String USER_DB = "?USERDB";
-    private static final String AUCTION_LOG_DB = "?AUCTIONLOGDB";
-    private static final String AUCTION_CAT_DB = "?AUCTIONCATDB";
-    private static final String AUCTION_WON_DB = "?AUCTIONWONDB";
-    private static final String OFFER_DB = "?OFFERDB";
+    private static final String USER_DB = "<USERDB";
+    private static final String AUCTION_LOG_DB = "<AUCTIONLOGDB";
+    private static final String AUCTION_CAT_DB = "<AUCTIONCATDB";
+    private static final String AUCTION_WON_DB = "<AUCTIONWONDB";
+    private static final String OFFER_DB = "<OFFERDB";
 
 
     private static FileStateHolder state = new FileStateHolder();
 
 
-    public static void fileReader() {
+    public static void loadDatabase() {
 
         String line = null;
 
@@ -84,10 +84,16 @@ public class DataManager {
 
     private static void userReader(String initLine) throws IOException {
         try {
-            String[] line = initLine.split(OFFER_DB);
-            String[] users = line[0].split(OBJECT_DIVIDER);
+            String[] line = initLine.split(USER_DB);
+            if (line.length < 2) {
+                return;
+            }
+            String[] users = line[1].split(OBJECT_DIVIDER);
             for (String userString : users) {
                 String[] temp = userString.split(DIVIDER);
+                if (temp.length < 3) {
+                    break;
+                }
                 UserDatabase.getInstance().addUserToDataBase(new User(temp[0], temp[1], temp[2]));
             }
 
@@ -99,12 +105,22 @@ public class DataManager {
 
     private static void auctionByLoginReader(String initLine) throws IOException {
         try {
-            String[] line = initLine.split(OFFER_DB);
-            String[] entries = line[0].split(KEY_DIVIDER);
+            String[] line = initLine.split(AUCTION_LOG_DB);
+            if (line.length < 2) {
+                return;
+            }
+
+            String[] entries = line[1].split(KEY_DIVIDER);
+            if (entries.length < 2) {
+                return;
+            }
             String key = entries[0];
             String[] auctions = entries[1].split(OBJECT_DIVIDER);
             for (String auction : auctions) {
                 String[] auctionAsString = auction.split(DIVIDER);
+                if (auctionAsString.length < 4) {
+                    break;
+                }
                 Integer auctionID = new Integer(auctionAsString[0]);
                 String auctionTitle = auctionAsString[1];
                 String auctionDescription = auctionAsString[2];
@@ -128,12 +144,24 @@ public class DataManager {
 
     private static void auctionByCategoryReader(String initLine) throws IOException {
         try {
-            String[] line = initLine.split(OFFER_DB);
-            String[] entries = line[0].split(KEY_DIVIDER);
+            String[] line = initLine.split(AUCTION_CAT_DB);
+            if (line.length < 2) {
+                return;
+            }
+
+            String[] entries = line[1].split(KEY_DIVIDER);
+            if (entries.length < 2) {
+                return;
+            }
+
             String key = entries[0];
             String[] auctions = entries[1].split(OBJECT_DIVIDER);
             for (String auction : auctions) {
                 String[] auctionAsString = auction.split(DIVIDER);
+                if (auctionAsString.length < 4) {
+                    break;
+                }
+
                 Integer auctionID = new Integer(auctionAsString[0]);
                 String auctionTitle = auctionAsString[1];
                 String auctionDescription = auctionAsString[2];
@@ -157,12 +185,22 @@ public class DataManager {
 
     private static void auctionWonReader(String initLine) throws IOException {
         try {
-            String[] line = initLine.split(OFFER_DB);
-            String[] entries = line[0].split(KEY_DIVIDER);
+            String[] line = initLine.split(AUCTION_WON_DB);
+            if (line.length < 2) {
+                return;
+            }
+            String[] entries = line[1].split(KEY_DIVIDER);
+            if (entries.length < 2) {
+                return;
+            }
             String key = entries[0];
             String[] auctions = entries[1].split(OBJECT_DIVIDER);
             for (String auction : auctions) {
                 String[] auctionAsString = auction.split(DIVIDER);
+                if (auctionAsString.length < 4) {
+                    break;
+                }
+
                 Integer auctionID = new Integer(auctionAsString[0]);
                 String auctionTitle = auctionAsString[1];
                 String auctionDescription = auctionAsString[2];
@@ -186,11 +224,17 @@ public class DataManager {
     private static void offerReader(String initLine) throws IOException {
         try {
             String[] line = initLine.split(OFFER_DB);
-            String[] entries = line[0].split(ENTRY_DIVIDER);
+            if (line.length < 2) {
+                return;
+            }
+            String[] entries = line[1].split(ENTRY_DIVIDER);
             for (String entry : entries) {
                 String[] keyAndList = entry.split(KEY_DIVIDER);
 
                 String[] keyAuction = keyAndList[0].split(DIVIDER);
+                if (keyAuction.length < 4) {
+                    break;
+                }
                 Integer auctionID = new Integer(keyAuction[0]);
                 String auctionTitle = keyAuction[1];
                 String auctionDescription = keyAuction[2];
@@ -201,6 +245,9 @@ public class DataManager {
                 String[] offers = keyAndList[1].split(OBJECT_DIVIDER);
                 for (String offer : offers) {
                     String[] offerAsString = offer.split(DIVIDER);
+                    if (offerAsString.length < 2) {
+                        break;
+                    }
                     String offersUserLogin = offerAsString[0];
                     BigDecimal offerPrice = new BigDecimal(offerAsString[1]);
 
@@ -217,7 +264,7 @@ public class DataManager {
         }
     }
 
-    public static void writeAll() {
+    public static void saveDatabase() {
         try {
 
             FileWriter fileWriter = new FileWriter(FILE_NAME);

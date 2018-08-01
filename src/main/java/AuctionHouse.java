@@ -5,7 +5,7 @@ import controllers.UserController;
 import controllers.UserInputController;
 import exceptions.auctionHouseExceptions.categoryExceptions.CannotAddSubcategoryToCategoryContaingAuctionException;
 import helpers.Categories;
-import helpers.DataManager;
+import helpers.FileManager;
 import helpers.State;
 import helpers.StateHolder;
 import models.Auction;
@@ -26,7 +26,8 @@ public class AuctionHouse {
     }
 
     public void run() throws Exception {
-        testInit();
+//        testInit();
+        FileManager.loadDatabase();
         UserView.printGreetings();
 
         while (stateHolder.getState() != State.EXIT) {
@@ -122,6 +123,7 @@ public class AuctionHouse {
             }
 
         }
+        FileManager.saveDatabase();
     }
 
     private void logging() {
@@ -207,6 +209,6 @@ public class AuctionHouse {
         Auction auctionStasiek = new Auction("costam", "znowu costam", BigDecimal.valueOf(3.50));
         AuctionsDatabase.getInstance().addAuctionToDatabase(auctionStasiek, mainCategory.getSubcategoryByName("Vans"), userStasiek);
 
-        DataManager.writeAll();
+        FileManager.saveDatabase();
     }
 }
