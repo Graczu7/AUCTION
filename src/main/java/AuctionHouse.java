@@ -72,7 +72,8 @@ public class AuctionHouse {
                             stateHolder.setState(State.VIEW_AUCTIONS_MENU);
                             break;
                         case "0":
-                            stateHolder.setState(State.EXIT);
+                            stateHolder.setState(State.INIT);
+                            stateHolder.setLoggedUser(null);
                             break;
                         default:
                             stateHolder.setState(State.LOGGED_IN);

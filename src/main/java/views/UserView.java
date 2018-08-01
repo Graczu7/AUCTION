@@ -24,7 +24,7 @@ public class UserView {
         System.out.println("2. Put bid on an auction");
         System.out.println("3. View categories");
         System.out.println("4. View auctions");
-        System.out.println("0. Exit");
+        System.out.println("0. Logout");
         System.out.print("> ");
     }
 
