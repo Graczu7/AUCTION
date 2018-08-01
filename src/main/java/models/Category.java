@@ -1,41 +1,30 @@
 package models;
 
-import exceptions.categoryExceptions.CannotAddAuctionToCategoryContainingSubcategoriesException;
-import exceptions.categoryExceptions.CannotAddSubcategoryToCategoryContaingAuctionException;
-
 import java.util.*;
 
 public class Category {
 
 
-    private String name;
-    private Set<Auction> auctions;
-    private Set<Category> subcategories;
+    private final String name;
+    private final Set<Category> subcategories;
 
+    //test done
     public Category(String name) {
         this.name = name;
-        this.auctions = new HashSet<>();
         this.subcategories = new HashSet<>();
     }
 
-    public void addAuction(Auction auction) throws CannotAddAuctionToCategoryContainingSubcategoriesException {
-        if(this.subcategories.isEmpty()){
-            this.auctions.add(auction);
-        } else {
-            throw new CannotAddAuctionToCategoryContainingSubcategoriesException();
-        }
+    //test done
+    public void addSubcategory(Category category) {
+
+//        if(!AuctionsDatabase.getInstance().getAuctionsByCategoryName(category).isEmpty()){
+//            throw new CannotAddSubcategoryToCategoryCongaingAuctionException();
+//        } else{
+        this.subcategories.add(category);
+//        }
     }
 
-
-    public void addSubcategory(Category category) throws CannotAddSubcategoryToCategoryContaingAuctionException {
-        if(!this.auctions.isEmpty()){
-            throw new CannotAddSubcategoryToCategoryContaingAuctionException();
-        } else{
-            this.subcategories.add(category);
-        }
-    }
-
-
+    //test done
     public Category getSubcategoryByName(String name) {
         if (this.name != null && this.name.equals(name)) {
             return this;
@@ -48,27 +37,23 @@ public class Category {
             }
         }
         return null;
-
     }
 
-
-    public List<Category> asList(){
-
+    //test done
+    public List<Category> asList() {
         List<Category> categories = new LinkedList<>();
         this.subcategoriesAsList(categories);
         return categories;
     }
 
 
-    private List<Category> subcategoriesAsList(List<Category> categories) {
+    private void subcategoriesAsList(List<Category> categories) {
         if (this.name != null) {
             categories.add(this);
         }
-
         for (Category subcategory : this.subcategories) {
             subcategory.subcategoriesAsList(categories);
         }
-        return categories;
     }
 
 
@@ -89,21 +74,9 @@ public class Category {
         return name;
     }
 
-    public Set<Auction> getAuctions() {
-        return auctions;
-    }
 
     public Set<Category> getSubcategories() {
         return subcategories;
-    }
-
-    @Override
-    public String toString() {
-        return "Category{" +
-                "name='" + name + '\'' +
-                ", auctions=" + auctions +
-                ", subcategories=" + subcategories +
-                '}';
     }
 
     @Override
@@ -112,15 +85,20 @@ public class Category {
         if (o == null || getClass() != o.getClass()) return false;
         Category category = (Category) o;
         return Objects.equals(name, category.name) &&
-                Objects.equals(auctions, category.auctions) &&
                 Objects.equals(subcategories, category.subcategories);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(name, auctions, subcategories);
+        return Objects.hash(name, subcategories);
     }
 
-
+    @Override
+    public String toString() {
+        return "Category{" +
+                "name='" + name + '\'' +
+                ", subcategories=" + subcategories +
+                '}';
+    }
 }

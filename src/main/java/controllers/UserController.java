@@ -1,43 +1,49 @@
 package controllers;
 
-import exceptions.userExceptions.AnotherUserAlreadyLoggedInException;
-import exceptions.userExceptions.NoSuchUserInDatabaseException;
-import exceptions.userExceptions.PasswordTooShortException;
-import exceptions.userExceptions.LoginAlreadyExistsInDatabaseException;
-import models.LoggedUser;
+import exceptions.auctionHouseExceptions.userExceptions.*;
 import models.User;
-import models.UserDatabase;
+import DataBases.UserDatabase;
 import views.UserView;
 
 public class UserController {
 
     public static User login(String login, String password) {
-        User user = null;
+        User user;
         try {
-            user = UserDatabase.getInstance().findUser(login, password);
-            user = LoggedUser.getInstance().login(user);
+            user = UserDatabase.getInstance().getUser(login, password);
             UserView.printUserLoginConfirmation(user);
             return user;
-        } catch (NoSuchUserInDatabaseException e) {
+        } catch (UserNotInDatabaseException e) {
             UserView.printUserDoesNotExistError(login);
             return null;
-        } catch (AnotherUserAlreadyLoggedInException e) {
-            UserView.printDifferentUserLoggedIn(user);
-            return user;
         }
     }
 
-    public boolean register(String name, String login, String password) {
+    public static User register(String name, String login, String password) {
         try {
             User user = new User(name, login, password);
             UserDatabase.getInstance().addUserToDataBase(user);
-            return true;
-        } catch (PasswordTooShortException e){
+            UserView.printUserRegisterConfirmation();
+            return user;
+        } catch (PasswordTooShortException e) {
             UserView.printUserPasswordTooShortError();
-            return false;
-        } catch (LoginAlreadyExistsInDatabaseException e){
+            return null;
+        } catch (LoginAlreadyExistsException e) {
             UserView.printLoginTakenError(login);
-            return false;
+            return null;
+        } catch (NameIllegalCharacterException e) {
+            UserView.printIllegalNameCharacter();
+            return null;
+        } catch (LoginIllegalCharacterException e) {
+            UserView.printIllegalLoginCharacter();
+            return null;
+        } catch (PasswordIllegalCharacterException e) {
+            UserView.printIllegalPasswordCharacter();
+            return null;
         }
+    }
+
+    public static void logout() {
+        UserView.printUserLogoutConfirmation();
     }
 }

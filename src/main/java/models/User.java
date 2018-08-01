@@ -1,6 +1,14 @@
 package models;
 
-import exceptions.userExceptions.PasswordTooShortException;
+import DataBases.UserDatabase;
+
+import exceptions.auctionHouseExceptions.userExceptions.LoginAlreadyExistsException;
+import exceptions.auctionHouseExceptions.userExceptions.PasswordTooShortException;
+import exceptions.auctionHouseExceptions.userExceptions.LoginIllegalCharacterException;
+import exceptions.auctionHouseExceptions.userExceptions.PasswordIllegalCharacterException;
+
+import exceptions.auctionHouseExceptions.userExceptions.NameIllegalCharacterException;
+
 
 import java.util.Objects;
 
@@ -9,14 +17,46 @@ public class User {
     private String name;
     private String login;
     private String password;
-    //TODO add list auctions owned
-    //TODO add list of won auctions
-    //TODO add list of users bids
 
-    public User(String name, String login, String password) throws PasswordTooShortException {
-        this.name = name;
-        this.login = login;
+    public User(String name, String login, String password) throws PasswordTooShortException, LoginAlreadyExistsException, LoginIllegalCharacterException, PasswordIllegalCharacterException, NameIllegalCharacterException {
+        setName(name);
+        setLogin(login);
         setPassword(password);
+    }
+
+    public void setName(String name) throws NameIllegalCharacterException {
+        for (int i = 0; i < name.length(); i++) {
+            if (name.charAt(i) < 48 || (name.charAt(i) > 90 && name.charAt(i) < 97) || name.charAt(i) > 122) {
+
+                throw new NameIllegalCharacterException();
+            }
+        }
+        this.name = name;
+    }
+
+    public void setLogin(String login) throws LoginAlreadyExistsException, LoginIllegalCharacterException {
+        if (UserDatabase.getInstance().isLoginTaken(login)) {
+            throw new LoginAlreadyExistsException();
+        }
+        for (int i = 0; i < login.length(); i++) {
+            if (login.charAt(i) < 48 || (login.charAt(i) > 90 && login.charAt(i) < 97) || login.charAt(i) > 122) {
+                throw new LoginIllegalCharacterException();
+            }
+        }
+        this.login = login;
+    }
+
+    public void setPassword(String newPassword) throws PasswordTooShortException, PasswordIllegalCharacterException {
+
+        if (newPassword.length() < 5) {
+            throw new PasswordTooShortException();
+        }
+        for (int i = 0; i < newPassword.length(); i++) {
+            if (newPassword.charAt(i) < 48 || (newPassword.charAt(i) > 90 && newPassword.charAt(i) < 97) || newPassword.charAt(i) > 122) {
+                throw new PasswordIllegalCharacterException();
+            }
+            this.password = newPassword;
+        }
     }
 
     public String getName() {
@@ -29,14 +69,6 @@ public class User {
 
     public String getPassword() {
         return password;
-    }
-
-    public void setPassword (String newPassword) throws PasswordTooShortException {
-
-        if(newPassword.length() < 5){
-            throw new PasswordTooShortException();
-        }
-        this.password = newPassword;
     }
 
     @Override
@@ -57,9 +89,6 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "login='" + login + '\'' +
-                '}';
+        return login;
     }
 }
-

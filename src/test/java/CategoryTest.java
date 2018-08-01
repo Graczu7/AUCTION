@@ -1,19 +1,9 @@
-import exceptions.*;
 
-import exceptions.auctionExceptions.CannotModifyAuctionThatEndedException;
-import exceptions.auctionExceptions.AuctionDescriptionTooShortException;
-import exceptions.auctionExceptions.AuctionTitleTooShortException;
-import exceptions.categoryExceptions.CannotAddAuctionToCategoryContainingSubcategoriesException;
-import exceptions.categoryExceptions.CannotAddSubcategoryToCategoryContaingAuctionException;
-import exceptions.userExceptions.PasswordTooShortException;
-import models.Auction;
+
 import models.Category;
-
-import models.User;
 
 import org.junit.Test;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import static helpers.Categories.initializeCategories;
@@ -22,7 +12,7 @@ import static org.junit.Assert.*;
 public class CategoryTest {
 
     @Test
-    public void testInitializeCategoriesNotNull() throws CannotAddSubcategoryToCategoryContaingAuctionException {
+    public void testInitializeCategoriesNotNull() {
         //Given
 
         //When
@@ -33,7 +23,7 @@ public class CategoryTest {
     }
 
     @Test
-    public void testInitializeCategoriesCreateSubcategory() throws CannotAddSubcategoryToCategoryContaingAuctionException {
+    public void testInitializeCategoriesCreateSubcategory() {
         //Given
 
         //When
@@ -45,7 +35,7 @@ public class CategoryTest {
 
 
     @Test
-    public void testCategory(){
+    public void testCategory() {
         //Given
         Category category = new Category("elektronika");
 
@@ -56,33 +46,9 @@ public class CategoryTest {
         assertEquals("elektronika", result);
     }
 
-    @Test
-    public void testCategoryIsAuctionSetNotNull(){
-        //Given
-        Category category = new Category("elektronika");
-
-        //When
-
-
-        //Then
-        assertNotNull(category.getAuctions());
-    }
 
     @Test
-    public void testCategoryIsAuctionSetIsEmpty(){
-        //Given
-        Category category = new Category("elektronika");
-
-        //When
-
-        //Then
-        assertTrue(category.getAuctions().isEmpty());
-    }
-
-
-
-    @Test
-    public void testCategoryIsSubcategoriesSetNotNull(){
+    public void testCategoryIsSubcategoriesSetNotNull() {
         //Given
         Category category = new Category("elektronika");
 
@@ -93,7 +59,7 @@ public class CategoryTest {
     }
 
     @Test
-    public void testCategoryIsSubcategoriesSetIsEmpty(){
+    public void testCategoryIsSubcategoriesSetIsEmpty() {
         //Given
         Category subcategory = new Category("elektronika");
 
@@ -103,42 +69,9 @@ public class CategoryTest {
         assertTrue(subcategory.getSubcategories().isEmpty());
     }
 
-    @Test
-    public void testAddAuction() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceNegativeValueException, PasswordTooShortException, CannotModifyAuctionThatEndedException, CannotAddAuctionToCategoryContainingSubcategoriesException {
-        //Given
-        User user = new User("Kowalski", "kowalski", "abc123");
-        Auction auction = new Auction(user, new Category("Category"), "desc1", "auctionTit", BigDecimal.valueOf(123));
-        Category category = new Category("test");
-        //When
-        category.addAuction(auction);
-
-        //Then
-       assertTrue(category.getAuctions().contains(auction));
-
-    }
 
     @Test
-    public void testAddSubcategories() throws AuctionDescriptionTooShortException, AuctionTitleTooShortException, PriceNegativeValueException, PasswordTooShortException, CannotModifyAuctionThatEndedException, CannotAddAuctionToCategoryContainingSubcategoriesException, CannotAddSubcategoryToCategoryContaingAuctionException {
-        //Given
-        User user = new User("Nowak", "kowalski", "abc123");
-
-        Auction auction = new Auction(user, new Category("Category"), "desc1", "auctionTit", BigDecimal.valueOf(123));
-        Category category = new Category("testcategory");
-        Category subcategory = new Category("testsubcategory");
-
-        //When
-        category.addAuction(auction);
-        subcategory.addSubcategory(category);
-
-
-        //Then
-        assertTrue(subcategory.getSubcategories().contains(category));
-
-    }
-
-
-    @Test
-    public void testGetSubcategoryByName() throws CannotAddSubcategoryToCategoryContaingAuctionException {
+    public void testGetSubcategoryByName() {
         //Given
         Category electronics = new Category("Electronics");
         Category komputery = new Category("Komputery");
@@ -154,7 +87,7 @@ public class CategoryTest {
     }
 
     @Test
-    public void testAsListNotNull(){
+    public void testAsListNotNull() {
         //Given
         Category elektronika = new Category("Elektronika");
 
@@ -166,7 +99,7 @@ public class CategoryTest {
     }
 
     @Test
-    public void testAsListIsEmpty() throws CannotAddSubcategoryToCategoryContaingAuctionException {
+    public void testAsListIsEmpty() {
         //Given
         Category category = initializeCategories();
 
@@ -178,7 +111,7 @@ public class CategoryTest {
     }
 
     @Test
-    public void testAsListFirstCategory() throws CannotAddSubcategoryToCategoryContaingAuctionException {
+    public void testAsListFirstCategory() {
         //Given
         Category category = initializeCategories();
 
@@ -191,5 +124,20 @@ public class CategoryTest {
         assertTrue(categoryList.contains(expected));
     }
 
+    @Test
+    public void testSubcategoriesAsListNotNull() {
+        //Given
+        Category electronics = new Category("Electronics");
+        Category computers = new Category("Computers");
+        electronics.addSubcategory(computers);
+
+        //When
+        List<Category> result = electronics.asList();
+
+        //Then
+        assertNotNull(result);
+    }
+
 
 }
+
