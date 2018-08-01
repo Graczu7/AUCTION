@@ -1,4 +1,3 @@
-import exceptions.*;
 import exceptions.auctionHouseExceptions.PriceValueTooLowException;
 import exceptions.auctionHouseExceptions.auctionExceptions.AuctionDescriptionTooShortException;
 import models.Auction;
