@@ -1,3 +1,0 @@
-jan,kowalski,123456
-maria,kowalska,1aa23456
-ula,nowak,1234vv56

@@ -38,7 +38,10 @@ public class AuctionController {
         } catch (AuctionException e) {
             UserView.printFatalError();
             e.printStackTrace();
+        } catch (NullPointerException e) {
+            UserView.printCategoryDoesntExist();
         }
+
     }
 
     public static void addNewOffer(String auctionName, String auctionOwner, BigDecimal auctionLastPrice, User user, BigDecimal userPrice) {
@@ -84,7 +87,7 @@ public class AuctionController {
         } catch (AuctionsNotFoundException e) {
             UserView.printNoAuctionsFoundError();
         } catch (UserNotInDatabaseException e) {
-            UserView.printUserNotFindError();
+            UserView.printUserNotFoundError();
         }
     }
 
@@ -95,7 +98,7 @@ public class AuctionController {
         } catch (AuctionsNotFoundException e) {
             UserView.printNoAuctionsFoundError();
         } catch (UserNotInDatabaseException e) {
-            UserView.printUserNotFindError();
+            UserView.printUserNotFoundError();
         }
     }
 

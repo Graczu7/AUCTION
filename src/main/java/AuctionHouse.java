@@ -4,6 +4,7 @@ import controllers.AuctionController;
 import controllers.UserController;
 import controllers.UserInputController;
 import exceptions.auctionHouseExceptions.categoryExceptions.CannotAddSubcategoryToCategoryContaingAuctionException;
+import exceptions.auctionHouseExceptions.userExceptions.UserNotInDatabaseException;
 import helpers.Categories;
 import helpers.DataManager;
 import helpers.State;
@@ -130,11 +131,15 @@ public class AuctionHouse {
         UserView.printPasswordPrompt();
         String userPassword = UserInputController.getTextFromUser();
 
-        if (UserController.login(userLogin, userPassword)) {
+
+        stateHolder.setLoggedUser(UserController.login(userLogin, userPassword));
+        if (stateHolder.getLoggedUser() != null) {
             stateHolder.setState(State.LOGGED_IN);
         } else {
             stateHolder.setState(State.INIT);
+            UserView.printUserNotFoundError();
         }
+
     }
 
     private void registration() {
@@ -144,11 +149,15 @@ public class AuctionHouse {
         String userLogin = UserInputController.getTextFromUser();
         UserView.printPasswordPrompt();
         String userPassword = UserInputController.getTextFromUser();
-        if (UserController.register(userName, userLogin, userPassword)) {
+
+        stateHolder.setLoggedUser(UserController.register(userName, userLogin, userPassword));
+        if (stateHolder.getLoggedUser() != null) {
             stateHolder.setState(State.LOGGED_IN);
         } else {
             stateHolder.setState(State.INIT);
         }
+
+
     }
 
     private void addNewOffer() {
