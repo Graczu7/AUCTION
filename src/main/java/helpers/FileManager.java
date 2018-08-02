@@ -15,19 +15,8 @@ import java.util.Map;
 
 public class FileManager {
     private static final String DIVIDER = ";";
-    private static final String OBJECT_DIVIDER = ">";
-    private static final String KEY_DIVIDER = "|";
-    private static final String ENTRY_DIVIDER = "$";
     private static final String FILE_NAME = "datafile";
-    private static final String USER_DB = "<USERDB";
-    private static final String AUCTION_LOG_DB = "<AUCTIONLOGDB";
-    private static final String AUCTION_CAT_DB = "<AUCTIONCATDB";
-    private static final String AUCTION_WON_DB = "<AUCTIONWONDB";
-    private static final String OFFER_DB = "<OFFERDB";
-
-
-    private static final FileStateHolder state = new FileStateHolder();
-
+    private static final String USER_DB_FILE = "userDatabase";
 
     public static void loadDatabase() {
 
@@ -38,40 +27,6 @@ public class FileManager {
             BufferedReader bufferedReader = new BufferedReader(fileReader);
 
             while ((line = bufferedReader.readLine()) != null) {
-                if (line.contains(USER_DB)) {
-                    state.db_type = FileStateHolder.DBType.USER_DB;
-                } else if (line.contains(AUCTION_LOG_DB)) {
-                    state.db_type = FileStateHolder.DBType.AUCTION_LOG_DB;
-                } else if (line.contains(AUCTION_CAT_DB)) {
-                    state.db_type = FileStateHolder.DBType.AUCTION_CAT_DB;
-                } else if (line.contains(AUCTION_WON_DB)) {
-                    state.db_type = FileStateHolder.DBType.AUCTION_WON_DB;
-                } else if (line.contains(OFFER_DB)) {
-                    state.db_type = FileStateHolder.DBType.OFFER_DB;
-                }
-
-                switch (state.db_type) {
-                    case USER_DB: {
-                        userReader(line);
-                        break;
-                    }
-                    case AUCTION_LOG_DB: {
-                        auctionByLoginReader(line);
-                        break;
-                    }
-                    case AUCTION_CAT_DB: {
-                        auctionByCategoryReader(line);
-                        break;
-                    }
-                    case AUCTION_WON_DB: {
-                        auctionWonReader(line);
-                        break;
-                    }
-                    case OFFER_DB: {
-                        offerReader(line);
-                        break;
-                    }
-                }
             }
             bufferedReader.close();
         } catch (FileNotFoundException ex) {
@@ -82,21 +37,30 @@ public class FileManager {
         }
     }
 
-    private static void userReader(String initLine) {
-        try {
-            String[] line = initLine.split(USER_DB);
-            if (line.length < 2) {
-                return;
-            }
-            String[] users = line[1].split(OBJECT_DIVIDER);
-            for (String userString : users) {
-                String[] temp = userString.split(DIVIDER);
-                if (temp.length < 3) {
-                    break;
-                }
-                UserDatabase.getInstance().addUserToDataBase(new User(temp[0], temp[1], temp[2]));
-            }
+    private static void userReader() {
+        String line = null;
+        final int USER_NAME = 0;
+        final int USER_LOGIN = 1;
+        final int USER_PASSWORD = 2;
 
+        try {
+            FileReader fileReader = new FileReader(USER_DB_FILE);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+            while ((line = bufferedReader.readLine()) != null) {
+
+                String[] userDBString = line.split(DIVIDER);
+
+                UserDatabase.getInstance().addUserToDataBase(new User(userDBString[USER_NAME], userDBString[USER_LOGIN], userDBString[USER_PASSWORD]));
+
+
+            }
+            bufferedReader.close();
+
+        } catch (FileNotFoundException ex) {
+            System.out.println("Unable to open file '" + FILE_NAME + "'");
+        } catch (IOException ex) {
+            System.out.println("Error reading file '" + FILE_NAME + "'");
         } catch (AuctionHouseException e) {
             System.out.println("Data file corrupted");
             e.printStackTrace();
@@ -142,7 +106,7 @@ public class FileManager {
         }
     }
 
-    private static void auctionByCategoryReader(String initLine)  {
+    private static void auctionByCategoryReader(String initLine) {
         try {
             String[] line = initLine.split(AUCTION_CAT_DB);
             if (line.length < 2) {
@@ -270,25 +234,15 @@ public class FileManager {
             FileWriter fileWriter = new FileWriter(FILE_NAME);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 
-            bufferedWriter.write(USER_DB);
             userWriter(UserDatabase.getInstance().getUsers(), bufferedWriter);
-            bufferedWriter.write("\n");
 
-            bufferedWriter.write(AUCTION_LOG_DB);
             auctionWriter(AuctionsDatabase.getInstance().getAuctionMapByLogin(), bufferedWriter);
-            bufferedWriter.write("\n");
 
-            bufferedWriter.write(AUCTION_CAT_DB);
             auctionWriter(AuctionsDatabase.getInstance().getAuctionMapByCategory(), bufferedWriter);
-            bufferedWriter.write("\n");
 
-            bufferedWriter.write(AUCTION_WON_DB);
             auctionWriter(AuctionsDatabase.getInstance().getAuctionsWonByUser(), bufferedWriter);
-            bufferedWriter.write("\n");
 
-            bufferedWriter.write(OFFER_DB);
             offerWriter(OfferDatabase.getInstance().getOffersMapByAuctions(), bufferedWriter);
-            bufferedWriter.write("\n");
 
             bufferedWriter.close();
         } catch (IOException ex) {
@@ -297,14 +251,17 @@ public class FileManager {
 
     }
 
-    private static void userWriter(Map<String, User> users, BufferedWriter bufferedWriter) throws IOException {
+    private static void userWriter(Map<String, User> users) throws IOException {
+        FileWriter fileWriter = new FileWriter(USER_DB_FILE);
+        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
         for (Map.Entry<String, User> entry : users.entrySet()) {
             bufferedWriter.write(entry.getValue().getName());
             bufferedWriter.write(DIVIDER);
             bufferedWriter.write(entry.getValue().getLogin());
             bufferedWriter.write(DIVIDER);
             bufferedWriter.write(entry.getValue().getPassword());
-            bufferedWriter.write(OBJECT_DIVIDER);
+            bufferedWriter.write("\n");
         }
     }
 
