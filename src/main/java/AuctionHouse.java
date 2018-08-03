@@ -1,3 +1,4 @@
+import DataBases.AuctionsDatabase;
 import controllers.AuctionController;
 import controllers.UserController;
 import controllers.UserInputController;

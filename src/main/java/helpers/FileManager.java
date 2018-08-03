@@ -16,8 +16,8 @@ import java.util.Map;
 public class FileManager {
     private static final String DIVIDER = ";";
     private static final String OBJECT_DIVIDER = ">";
-    private static final String KEY_DIVIDER = "|";
-    private static final String ENTRY_DIVIDER = "$";
+    private static final String KEY_DIVIDER = "\\|";
+    private static final String ENTRY_DIVIDER = "\\$";
     private static final String FILE_NAME = "datafile";
     private static final String USER_DB = "<USERDB";
     private static final String AUCTION_LOG_DB = "<AUCTIONLOGDB";
@@ -88,6 +88,7 @@ public class FileManager {
             if (line.length < 2) {
                 return;
             }
+
             String[] users = line[1].split(OBJECT_DIVIDER);
             for (String userString : users) {
                 String[] temp = userString.split(DIVIDER);
