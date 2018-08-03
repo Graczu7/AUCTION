@@ -16,8 +16,8 @@ import java.util.Map;
 public class FileManager {
     private static final String DIVIDER = ";";
     private static final String OBJECT_DIVIDER = ">";
-    private static final String KEY_DIVIDER = "\\|";
-    private static final String ENTRY_DIVIDER = "\\$";
+    private static final String KEY_DIVIDER = Character.toString ((char) 169);
+    private static final String ENTRY_DIVIDER = Character.toString ((char) 170);
     private static final String FILE_NAME = "datafile";
     private static final String USER_DB = "<USERDB";
     private static final String AUCTION_LOG_DB = "<AUCTIONLOGDB";
